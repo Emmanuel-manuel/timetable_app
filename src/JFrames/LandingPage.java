@@ -136,14 +136,14 @@ public class LandingPage extends javax.swing.JFrame {
         Time.setTime(txtTime, txtDate);  // Calling the setTime method from the Time class
 
         lowerPrimaryJtable();
-        
+
         insertVerticalWords();
 
     }
 
     public void lowerPrimaryJtable() {
         // Create a table model with 6 rows and 13 columns
-        
+
         model = new DefaultTableModel(5, 12);
 
         // Set column headers
@@ -152,8 +152,6 @@ public class LandingPage extends javax.swing.JFrame {
 
         // Set row headers
         String[] rows = {"MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY"};
-
-
 
         // Create the table with the model
         JTable table = new JTable(model);
@@ -209,26 +207,36 @@ public class LandingPage extends javax.swing.JFrame {
         jPanel1.revalidate();
         jPanel1.repaint();
     }
-    
-    public void insertVerticalWords(){
-        // Insert 'BREAK' at the intersection of rows (row index 0-4) and BREAK (column index 2)
-model.setValueAt("B", 0, 2);
-model.setValueAt("R", 1, 2);
-model.setValueAt("E", 2, 2);
-model.setValueAt("A", 3, 2);
-model.setValueAt("K", 4, 2);
-// Insert 'BREAK' at the intersection of rows (row index 0-4) and BREAK (column index 5)
-model.setValueAt("B", 0, 5);
-model.setValueAt("R", 1, 5);
-model.setValueAt("E", 2, 5);
-model.setValueAt("A", 3, 5);
-model.setValueAt("K", 4, 5);
-// Insert 'LUNCH' at the intersection of rows (row index 0-4) and LUNCH (column index 8)
-model.setValueAt("L", 0, 8);
-model.setValueAt("U", 1, 8);
-model.setValueAt("N", 2, 8);
-model.setValueAt("C", 3, 8);
-model.setValueAt("H", 4, 8);
+
+    public void insertVerticalWords() {
+//        // Insert 'BREAK' at the intersection of rows (row index 0-4) and BREAK (column index 2)
+//        model.setValueAt("B", 0, 2);
+//        model.setValueAt("R", 1, 2);
+//        model.setValueAt("E", 2, 2);
+//        model.setValueAt("A", 3, 2);
+//        model.setValueAt("K", 4, 2);
+//// Insert 'BREAK' at the intersection of rows (row index 0-4) and BREAK (column index 5)
+//        model.setValueAt("B", 0, 5);
+//        model.setValueAt("R", 1, 5);
+//        model.setValueAt("E", 2, 5);
+//        model.setValueAt("A", 3, 5);
+//        model.setValueAt("K", 4, 5);
+//// Insert 'LUNCH' at the intersection of rows (row index 0-4) and LUNCH (column index 8)
+//        model.setValueAt("L", 0, 8);
+//        model.setValueAt("U", 1, 8);
+//        model.setValueAt("N", 2, 8);
+//        model.setValueAt("C", 3, 8);
+//        model.setValueAt("H", 4, 8);
+
+// Words to insert and their respective column indices
+    String[] words = {"BREAK", "BREAK", "LUNCH"};
+    int[] columns = {2, 5, 8}; // Corresponding columns
+
+    for (int i = 0; i < words.length; i++) {
+        for (int j = 0; j < words[i].length(); j++) {
+            model.setValueAt(String.valueOf(words[i].charAt(j)), j, columns[i]);
+        }
+    }
 
     }
 
