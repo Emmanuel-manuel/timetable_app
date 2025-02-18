@@ -7,7 +7,6 @@ import java.awt.Font;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import timetable_app.Time;
 
@@ -137,14 +136,14 @@ public class LandingPage extends javax.swing.JFrame {
         Time.setTime(txtTime, txtDate);  // Calling the setTime method from the Time class
 
         lowerPrimaryJtable();
-
+        
         insertVerticalWords();
 
     }
 
     public void lowerPrimaryJtable() {
         // Create a table model with 6 rows and 13 columns
-
+        
         model = new DefaultTableModel(5, 12);
 
         // Set column headers
@@ -153,6 +152,8 @@ public class LandingPage extends javax.swing.JFrame {
 
         // Set row headers
         String[] rows = {"MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY"};
+
+
 
         // Create the table with the model
         JTable table = new JTable(model);
@@ -208,68 +209,26 @@ public class LandingPage extends javax.swing.JFrame {
         jPanel1.revalidate();
         jPanel1.repaint();
     }
-
-    public void insertVerticalWords() {
-//        // Insert 'BREAK' at the intersection of rows (row index 0-4) and BREAK (column index 2)
-//        model.setValueAt("B", 0, 2);
-//        model.setValueAt("R", 1, 2);
-//        model.setValueAt("E", 2, 2);
-//        model.setValueAt("A", 3, 2);
-//        model.setValueAt("K", 4, 2);
-//// Insert 'BREAK' at the intersection of rows (row index 0-4) and BREAK (column index 5)
-//        model.setValueAt("B", 0, 5);
-//        model.setValueAt("R", 1, 5);
-//        model.setValueAt("E", 2, 5);
-//        model.setValueAt("A", 3, 5);
-//        model.setValueAt("K", 4, 5);
-//// Insert 'LUNCH' at the intersection of rows (row index 0-4) and LUNCH (column index 8)
-//        model.setValueAt("L", 0, 8);
-//        model.setValueAt("U", 1, 8);
-//        model.setValueAt("N", 2, 8);
-//        model.setValueAt("C", 3, 8);
-//        model.setValueAt("H", 4, 8);
-
-//ALTERNATIVE
-// Words to insert and their respective column indices
-    String[] words = {"BREAK", "BREAK", "LUNCH"};
-    int[] columns = {2, 5, 8}; // Corresponding columns
-
-//    for (int i = 0; i < words.length; i++) {
-//        for (int j = 0; j < words[i].length(); j++) {
-//            model.setValueAt(String.valueOf(words[i].charAt(j)), j, columns[i]);
-//        }
-//    }
-
-    // Create a custom cell renderer
-        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer() {
-            @Override
-            public java.awt.Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-
-                // Check if the cell contains "BREAK" or "LUNCH"
-                if (value != null && (value.toString().equals("B") || value.toString().equals("R") || value.toString().equals("E") || value.toString().equals("A") || value.toString().equals("K") || value.toString().equals("L") || value.toString().equals("U") || value.toString().equals("N") || value.toString().equals("C") || value.toString().equals("H"))) {
-                    setFont(new Font("Times New Roman", Font.BOLD, 16)); // Set font to bold and size 16
-                    setForeground(Color.BLUE); // Set font color to blue
-                } else {
-                    setFont(table.getFont()); // Use default font for other cells
-                    setForeground(table.getForeground()); // Use default color for other cells
-                }
-
-                return this;
-            }
-        };
-
-        // Apply the custom renderer to the table
-        JTable table = (JTable) ((JScrollPane) jPanel1.getComponent(0)).getViewport().getView();
-        for (int i = 0; i < words.length; i++) {
-            for (int j = 0; j < words[i].length(); j++) {
-                model.setValueAt(String.valueOf(words[i].charAt(j)), j, columns[i]);
-                table.getColumnModel().getColumn(columns[i]).setCellRenderer(renderer);
-            }
-        }
     
-
-    // Other methods (e.g., event handlers) remain unchanged...
+    public void insertVerticalWords(){
+        // Insert 'BREAK' at the intersection of rows (row index 0-4) and BREAK (column index 2)
+model.setValueAt("B", 0, 2);
+model.setValueAt("R", 1, 2);
+model.setValueAt("E", 2, 2);
+model.setValueAt("A", 3, 2);
+model.setValueAt("K", 4, 2);
+// Insert 'BREAK' at the intersection of rows (row index 0-4) and BREAK (column index 5)
+model.setValueAt("B", 0, 5);
+model.setValueAt("R", 1, 5);
+model.setValueAt("E", 2, 5);
+model.setValueAt("A", 3, 5);
+model.setValueAt("K", 4, 5);
+// Insert 'LUNCH' at the intersection of rows (row index 0-4) and LUNCH (column index 8)
+model.setValueAt("L", 0, 8);
+model.setValueAt("U", 1, 8);
+model.setValueAt("N", 2, 8);
+model.setValueAt("C", 3, 8);
+model.setValueAt("H", 4, 8);
 
     }
 
