@@ -1,15 +1,12 @@
 package JFrames;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
+import java.awt.*;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import timetable_app.Time;
+import timetable_app.*;
 
 /**
  *
@@ -24,7 +21,8 @@ public class LandingPage extends javax.swing.JFrame {
     Color mouseEnterColor = new Color(255, 153, 0);
     Color mouseExitColor = new Color(51, 51, 51);
 
-    DefaultTableModel model;
+    DefaultTableModel model; // Table model for data
+    JTable table; // Declare JTable as a global variable
 
     /**
      * Creates new form landing_page
@@ -43,6 +41,7 @@ public class LandingPage extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel2 = new javax.swing.JPanel();
         lbl_menu = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -52,11 +51,28 @@ public class LandingPage extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
+        parentPanel = new javax.swing.JPanel();
+        panel_menu = new javax.swing.JPanel();
+        jPanel6 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        jPanel7 = new javax.swing.JPanel();
+        lbl_manageSubjects = new javax.swing.JLabel();
+        jPanel8 = new javax.swing.JPanel();
+        lbl_dashboard = new javax.swing.JLabel();
+        jPanel11 = new javax.swing.JPanel();
+        lbl_manageTutors = new javax.swing.JLabel();
+        jPanel15 = new javax.swing.JPanel();
+        lbl_logout = new javax.swing.JLabel();
+        panel_display = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
+        radioButton_lower = new javax.swing.JRadioButton();
+        radioButton_upper = new javax.swing.JRadioButton();
+        btn_refresh = new rojerusan.RSMaterialButtonCircle();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1370, 770));
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(1370, 770));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -98,11 +114,11 @@ public class LandingPage extends javax.swing.JFrame {
 
         txtTime.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
         txtTime.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jPanel2.add(txtTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 10, 180, 30));
+        jPanel2.add(txtTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 200, 30));
 
         txtDate.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         txtDate.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jPanel2.add(txtDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 40, 190, 30));
+        jPanel2.add(txtDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 40, 210, 30));
 
         jPanel3.setBackground(new java.awt.Color(51, 51, 51));
 
@@ -130,18 +146,169 @@ public class LandingPage extends javax.swing.JFrame {
         jPanel1.setLayout(new java.awt.BorderLayout());
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 380, 1370, 390));
 
+        parentPanel.setLayout(null);
+
+        panel_menu.setBackground(new java.awt.Color(51, 51, 51));
+        panel_menu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel6.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel4.setFont(new java.awt.Font("Yu Gothic UI Semilight", 1, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Features");
+        jPanel6.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 120, 30));
+
+        panel_menu.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 240, 60));
+
+        jPanel7.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lbl_manageSubjects.setFont(new java.awt.Font("Yu Gothic UI Semilight", 1, 18)); // NOI18N
+        lbl_manageSubjects.setForeground(new java.awt.Color(153, 153, 153));
+        lbl_manageSubjects.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/icons/icons8_Unit_26px.png"))); // NOI18N
+        lbl_manageSubjects.setText("Manage Learning Areas");
+        lbl_manageSubjects.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbl_manageSubjectsMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lbl_manageSubjectsMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lbl_manageSubjectsMouseExited(evt);
+            }
+        });
+        jPanel7.add(lbl_manageSubjects, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 16, 240, 30));
+
+        panel_menu.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 240, 60));
+
+        jPanel8.setBackground(new java.awt.Color(255, 153, 0));
+        jPanel8.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lbl_dashboard.setFont(new java.awt.Font("Yu Gothic UI Semilight", 1, 18)); // NOI18N
+        lbl_dashboard.setForeground(new java.awt.Color(153, 153, 153));
+        lbl_dashboard.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/icons/icons8_Library_32px.png"))); // NOI18N
+        lbl_dashboard.setText("  Dashboard");
+        lbl_dashboard.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lbl_dashboardMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lbl_dashboardMouseExited(evt);
+            }
+        });
+        jPanel8.add(lbl_dashboard, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 16, 180, 30));
+
+        panel_menu.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 240, 60));
+
+        jPanel11.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel11.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lbl_manageTutors.setFont(new java.awt.Font("Yu Gothic UI Semilight", 1, 18)); // NOI18N
+        lbl_manageTutors.setForeground(new java.awt.Color(153, 153, 153));
+        lbl_manageTutors.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/icons/icons8_Collaborator_Male_26px.png"))); // NOI18N
+        lbl_manageTutors.setText("  Manage Tutors");
+        lbl_manageTutors.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbl_manageTutorsMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lbl_manageTutorsMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lbl_manageTutorsMouseExited(evt);
+            }
+        });
+        jPanel11.add(lbl_manageTutors, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 240, 30));
+
+        panel_menu.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 240, 60));
+
+        jPanel15.setBackground(new java.awt.Color(153, 51, 0));
+        jPanel15.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lbl_logout.setFont(new java.awt.Font("Yu Gothic UI Semilight", 1, 18)); // NOI18N
+        lbl_logout.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_logout.setText("  Log Out");
+        lbl_logout.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbl_logoutMouseClicked(evt);
+            }
+        });
+        jPanel15.add(lbl_logout, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 160, 30));
+
+        panel_menu.add(jPanel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 240, 240, 60));
+
+        parentPanel.add(panel_menu);
+        panel_menu.setBounds(0, 0, 240, 310);
+
+        panel_display.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Choose the School Level", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.ABOVE_TOP, new java.awt.Font("Times New Roman", 1, 18), new java.awt.Color(255, 154, 0))); // NOI18N
+        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        buttonGroup1.add(radioButton_lower);
+        radioButton_lower.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        radioButton_lower.setText("Lower Primary");
+        radioButton_lower.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioButton_lowerActionPerformed(evt);
+            }
+        });
+        jPanel5.add(radioButton_lower, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, -1));
+
+        buttonGroup1.add(radioButton_upper);
+        radioButton_upper.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        radioButton_upper.setText("Junior Secondary");
+        radioButton_upper.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioButton_upperActionPerformed(evt);
+            }
+        });
+        jPanel5.add(radioButton_upper, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 30, -1, -1));
+
+        jPanel4.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 270, 70));
+
+        btn_refresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/icons/refresh.png"))); // NOI18N
+        btn_refresh.setText("Refresh");
+        btn_refresh.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_refreshMouseClicked(evt);
+            }
+        });
+        btn_refresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_refreshActionPerformed(evt);
+            }
+        });
+        jPanel4.add(btn_refresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 10, 110, 50));
+
+        panel_display.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 410, 130));
+
+        parentPanel.add(panel_display);
+        panel_display.setBounds(240, 0, 470, 310);
+
+        getContentPane().add(parentPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 1370, 310));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     public void init() {
         Time.setTime(txtTime, txtDate);  // Calling the setTime method from the Time class
 
-        lowerPrimaryJtable();
-
-        insertVerticalWords();
-
+//        lowerPrimaryJtable();
+//        insertVerticalWords();
+    }
+    
+    public void clearComponents(){
+        // Refresh the panel to display the table
+        jPanel1.revalidate();
+        jPanel1.removeAll();
     }
 
+    // to populate Lower primary timetable format
     public void lowerPrimaryJtable() {
         // Create a table model with 6 rows and 13 columns
 
@@ -155,7 +322,7 @@ public class LandingPage extends javax.swing.JFrame {
         String[] rows = {"MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY"};
 
         // Create the table with the model
-        JTable table = new JTable(model);
+        table = new JTable(model);
         table.setRowHeight(70);
         table.setGridColor(Color.BLACK);
 // Make the table non-editable
@@ -209,38 +376,88 @@ public class LandingPage extends javax.swing.JFrame {
         jPanel1.repaint();
     }
 
-    public void insertVerticalWords() {
-//        // Insert 'BREAK' at the intersection of rows (row index 0-4) and BREAK (column index 2)
-//        model.setValueAt("B", 0, 2);
-//        model.setValueAt("R", 1, 2);
-//        model.setValueAt("E", 2, 2);
-//        model.setValueAt("A", 3, 2);
-//        model.setValueAt("K", 4, 2);
-//// Insert 'BREAK' at the intersection of rows (row index 0-4) and BREAK (column index 5)
-//        model.setValueAt("B", 0, 5);
-//        model.setValueAt("R", 1, 5);
-//        model.setValueAt("E", 2, 5);
-//        model.setValueAt("A", 3, 5);
-//        model.setValueAt("K", 4, 5);
-//// Insert 'LUNCH' at the intersection of rows (row index 0-4) and LUNCH (column index 8)
-//        model.setValueAt("L", 0, 8);
-//        model.setValueAt("U", 1, 8);
-//        model.setValueAt("N", 2, 8);
-//        model.setValueAt("C", 3, 8);
-//        model.setValueAt("H", 4, 8);
+    // to populate JSS/ Upper primary timetable format
+    public void jssPrimaryJtable() {
+        // Create a table model with 6 rows and 13 columns
 
-//ALTERNATIVE
+        model = new DefaultTableModel(5, 12);
+
+        // Set column headers
+        String[] columns = {"8:00-8:40", "8:40-9:20", "BREAK", "9:30-10:10", "10:10-10:50", "BREAK", "11:30-12:10", "12:10-12:50", "LUNCH", "2:00-2:40", "2:40-3:20", "3:20-4:00"};
+        model.setColumnIdentifiers(columns);
+
+        // Set row headers
+        String[] rows = {"MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY"};
+
+        // Create the table with the model
+        table = new JTable(model);
+        table.setRowHeight(70);
+        table.setGridColor(Color.BLACK);
+// Make the table non-editable
+        table.setDefaultEditor(Object.class, null);
+
+        // Customize column header
+// Set font style and color for column headers
+        table.getTableHeader().setFont(new Font("Times New Roman", Font.BOLD, 18));
+        table.getTableHeader().setForeground(new Color(0, 0, 139)); // Dark blue color
+
+        // Create row header table
+        DefaultTableModel rowHeaderModel = new DefaultTableModel();
+        rowHeaderModel.setColumnIdentifiers(new String[]{"DAYS"});
+        for (String row : rows) {
+            rowHeaderModel.addRow(new Object[]{row});
+        }
+
+        // This creates a new JTable called rowHeaderTable, which will serve as the row headers
+        JTable rowHeaderTable = new JTable(rowHeaderModel); //Creating the Row Header Table
+        //Ensures that the row heights of rowHeaderTable (row headers) match those of table (main timetable)
+        rowHeaderTable.setRowHeight(table.getRowHeight()); // Synchronizing Row Heights
+        //This makes the rowHeaderTable non-editable, so users cannot modify the row headers.
+        rowHeaderTable.setEnabled(false); // Disable editing on the Row Header Table
+
+        // Set font style and color for row headers
+        rowHeaderTable.setFont(new Font("Times New Roman", Font.BOLD, 16));
+        rowHeaderTable.setForeground(Color.ORANGE.darker());
+
+        table.getColumnModel().getColumn(0).setPreferredWidth(100); // Adjust width of first column
+
+        //Setting the Preferred Size for the Row Header Table
+        rowHeaderTable.setPreferredScrollableViewportSize(new Dimension(100, table.getPreferredSize().height));
+
+        // Disable column reordering
+        table.getTableHeader().setReorderingAllowed(false);
+
+// Synchronize row heights
+        for (int i = 0; i < table.getRowCount(); i++) {
+            rowHeaderTable.setRowHeight(i, table.getRowHeight(i));
+        }
+
+        // Add the table to a scroll pane
+        JScrollPane scrollPane = new JScrollPane(table);
+        scrollPane.setRowHeaderView(rowHeaderTable);
+
+        // Add the scroll pane to jPanel1
+        jPanel1.add(scrollPane, BorderLayout.CENTER);
+
+        // Refresh the panel to display the table
+        jPanel1.revalidate();
+        jPanel1.repaint();
+    }
+
+    // INSERT THE VERTICAL "BREAK and LUNCH) IN COLUMN NUMBER 3, 6 AND 9
+    public void insertVerticalWords() {
+
+//ALTERNATIVE using loops
 // Words to insert and their respective column indices
-    String[] words = {"BREAK", "BREAK", "LUNCH"};
-    int[] columns = {2, 5, 8}; // Corresponding columns
+        String[] words = {"BREAK", "BREAK", "LUNCH"};
+        int[] columns = {2, 5, 8}; // Corresponding columns
 
 //    for (int i = 0; i < words.length; i++) {
 //        for (int j = 0; j < words[i].length(); j++) {
 //            model.setValueAt(String.valueOf(words[i].charAt(j)), j, columns[i]);
 //        }
 //    }
-
-    // Create a custom cell renderer
+        // Create a custom cell renderer
         DefaultTableCellRenderer renderer = new DefaultTableCellRenderer() {
             @Override
             public java.awt.Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
@@ -267,12 +484,42 @@ public class LandingPage extends javax.swing.JFrame {
                 table.getColumnModel().getColumn(columns[i]).setCellRenderer(renderer);
             }
         }
-    
 
-    // Other methods (e.g., event handlers) remain unchanged...
+        // Other methods (e.g., event handlers) remain unchanged...
+    }
+
+    // Insert/Mark the blank cells with spreadsheet like placeholders.
+    public void markBlankCellsWithPlaceholders() {
+        // Columns to skip (BREAK and LUNCH columns)
+        int[] skipColumns = {2, 5, 8};
+
+        // Iterate through the table and mark blank cells with placeholders
+        for (int row = 0; row < model.getRowCount(); row++) {
+            for (int col = 0; col < model.getColumnCount(); col++) {
+                // Skip the specified columns
+                boolean skip = false;
+                for (int skipCol : skipColumns) {
+                    if (col == skipCol) {
+                        skip = true;
+                        break;
+                    }
+                }
+                if (skip) continue; // Skip this column
+
+                // Check if the cell is blank
+                if (model.getValueAt(row, col) == null || model.getValueAt(row, col).toString().isEmpty()) {
+                    // Generate placeholder in spreadsheet format (A1, A2, ..., B1, B2, ...)
+                    String placeholder = String.valueOf((char) ('A' + row)) + (col + 1);
+                    model.setValueAt(placeholder, row, col);
+                }
+            }
+        }
+        // Apply custom renderer for placeholder styling
+    table.setDefaultRenderer(Object.class, new CustomPlaceholderRenderer());
 
     }
 
+    
     private void lbl_closeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_closeMouseClicked
         int a = JOptionPane.showConfirmDialog(null, "Do you really want to Close Application?", "Select", JOptionPane.YES_NO_OPTION);
         if (a == 0) {
@@ -283,19 +530,19 @@ public class LandingPage extends javax.swing.JFrame {
 
     private void lbl_menuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_menuMouseClicked
 
-//        if (panel_menu.isVisible()) {
-//            panel_menu.setVisible(false);
-//            // Adjust panel_display when panel_menu disappears
-//            panel_display.setBounds(0, 0, parentPanel.getWidth(), parentPanel.getHeight());
-//
-//        } else {
-//            panel_menu.setVisible(true);
-//            // Adjust panel_display when panel_menu reappears
-//            panel_display.setBounds(panel_menu.getWidth(), 0, parentPanel.getWidth() - panel_menu.getWidth(), 700);
-//
-//        }
-//        // Force panel_display to re-layout its components
-//        parentPanel.repaint();
+        if (panel_menu.isVisible()) {
+            panel_menu.setVisible(false);
+            // Adjust panel_display when panel_menu disappears
+            panel_display.setBounds(0, 0, parentPanel.getWidth(), parentPanel.getHeight());
+
+        } else {
+            panel_menu.setVisible(true);
+            // Adjust panel_display when panel_menu reappears
+            panel_display.setBounds(panel_menu.getWidth(), 0, parentPanel.getWidth() - panel_menu.getWidth(), 700);
+
+        }
+        // Force panel_display to re-layout its components
+        parentPanel.repaint();
     }//GEN-LAST:event_lbl_menuMouseClicked
 
     private void jPanel2MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseDragged
@@ -310,6 +557,78 @@ public class LandingPage extends javax.swing.JFrame {
         xx = evt.getX();
         xy = evt.getY();
     }//GEN-LAST:event_jPanel2MouseClicked
+
+    private void radioButton_lowerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioButton_lowerActionPerformed
+        // Refresh the panel to display the table
+        jPanel1.removeAll();
+        
+        lowerPrimaryJtable();
+
+        insertVerticalWords();
+        
+        markBlankCellsWithPlaceholders();
+    }//GEN-LAST:event_radioButton_lowerActionPerformed
+
+    private void radioButton_upperActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioButton_upperActionPerformed
+        // Refresh the panel to display the table
+        jPanel1.removeAll();
+        
+        jssPrimaryJtable();
+
+        insertVerticalWords();
+        
+        markBlankCellsWithPlaceholders();
+    }//GEN-LAST:event_radioButton_upperActionPerformed
+
+    private void btn_refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_refreshActionPerformed
+        clearComponents();
+    }//GEN-LAST:event_btn_refreshActionPerformed
+
+    private void btn_refreshMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_refreshMouseClicked
+        clearComponents();
+    }//GEN-LAST:event_btn_refreshMouseClicked
+
+    private void lbl_manageSubjectsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_manageSubjectsMouseClicked
+        ManageSubjects home = new ManageSubjects();
+        home.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_lbl_manageSubjectsMouseClicked
+
+    private void lbl_manageSubjectsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_manageSubjectsMouseEntered
+        jPanel7.setBackground(mouseEnterColor);
+    }//GEN-LAST:event_lbl_manageSubjectsMouseEntered
+
+    private void lbl_manageSubjectsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_manageSubjectsMouseExited
+        jPanel7.setBackground(mouseExitColor);
+    }//GEN-LAST:event_lbl_manageSubjectsMouseExited
+
+    private void lbl_dashboardMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_dashboardMouseEntered
+        jPanel8.setBackground(mouseEnterColor);
+    }//GEN-LAST:event_lbl_dashboardMouseEntered
+
+    private void lbl_dashboardMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_dashboardMouseExited
+//        jPanel6.setBackground(mouseExitColor);
+    }//GEN-LAST:event_lbl_dashboardMouseExited
+
+    private void lbl_manageTutorsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_manageTutorsMouseClicked
+        ManageUsers users = new ManageUsers();
+        users.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_lbl_manageTutorsMouseClicked
+
+    private void lbl_manageTutorsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_manageTutorsMouseEntered
+        jPanel11.setBackground(mouseEnterColor);
+    }//GEN-LAST:event_lbl_manageTutorsMouseEntered
+
+    private void lbl_manageTutorsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_manageTutorsMouseExited
+        jPanel11.setBackground(mouseExitColor);
+    }//GEN-LAST:event_lbl_manageTutorsMouseExited
+
+    private void lbl_logoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_logoutMouseClicked
+        LoginPage login = new LoginPage();
+        login.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_lbl_logoutMouseClicked
 
     /**
      * @param args the command line arguments
@@ -348,13 +667,32 @@ public class LandingPage extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private rojerusan.RSMaterialButtonCircle btn_refresh;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JLabel lbl_close;
+    private javax.swing.JLabel lbl_dashboard;
+    private javax.swing.JLabel lbl_logout;
+    private javax.swing.JLabel lbl_manageSubjects;
+    private javax.swing.JLabel lbl_manageTutors;
     private javax.swing.JLabel lbl_menu;
+    private javax.swing.JPanel panel_display;
+    private javax.swing.JPanel panel_menu;
+    private javax.swing.JPanel parentPanel;
+    private javax.swing.JRadioButton radioButton_lower;
+    private javax.swing.JRadioButton radioButton_upper;
     private javax.swing.JLabel txtDate;
     private javax.swing.JLabel txtTime;
     // End of variables declaration//GEN-END:variables
