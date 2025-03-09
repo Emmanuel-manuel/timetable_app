@@ -210,7 +210,7 @@ public class LandingPage extends javax.swing.JFrame {
         lbl_manageTutors.setFont(new java.awt.Font("Yu Gothic UI Semilight", 1, 18)); // NOI18N
         lbl_manageTutors.setForeground(new java.awt.Color(153, 153, 153));
         lbl_manageTutors.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/icons/icons8_Collaborator_Male_26px.png"))); // NOI18N
-        lbl_manageTutors.setText("  Manage Tutors");
+        lbl_manageTutors.setText("Manage Facilitators");
         lbl_manageTutors.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lbl_manageTutorsMouseClicked(evt);
@@ -300,8 +300,6 @@ public class LandingPage extends javax.swing.JFrame {
     public void init() {
         Time.setTime(txtTime, txtDate);  // Calling the setTime method from the Time class
 
-//        lowerPrimaryJtable();
-//        insertVerticalWords();
     }
 
     public void clearComponents() {
@@ -517,7 +515,7 @@ public class LandingPage extends javax.swing.JFrame {
 
     }
 
-//    for seamless JFrame visibility and disposing, this method causes a 2-seconds delay before disposing the previous JFrame
+//    for seamless JFrame migration, this method causes a 2-seconds delay before disposing the previous JFrame
     public void delayBeforeClosingPreviousJframe() {
         // Create a Timer with a 4000ms (4 seconds) delay
         Timer timer = new Timer(2000, (ActionEvent e) -> {
@@ -598,7 +596,7 @@ public class LandingPage extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_refreshMouseClicked
 
     private void lbl_manageSubjectsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_manageSubjectsMouseClicked
-        ManageSubjects home = new ManageSubjects();
+        ManageLearningArea home = new ManageLearningArea();
         home.setVisible(true);
 
         delayBeforeClosingPreviousJframe();
@@ -622,7 +620,7 @@ public class LandingPage extends javax.swing.JFrame {
     }//GEN-LAST:event_lbl_dashboardMouseExited
 
     private void lbl_manageTutorsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_manageTutorsMouseClicked
-        ManageUsers users = new ManageUsers();
+        ManageFacilitators users = new ManageFacilitators();
         users.setVisible(true);
         
         delayBeforeClosingPreviousJframe();
