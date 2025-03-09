@@ -1,9 +1,11 @@
 package JFrames;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.Timer;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import timetable_app.*;
@@ -301,8 +303,8 @@ public class LandingPage extends javax.swing.JFrame {
 //        lowerPrimaryJtable();
 //        insertVerticalWords();
     }
-    
-    public void clearComponents(){
+
+    public void clearComponents() {
         // Refresh the panel to display the table
         jPanel1.revalidate();
         jPanel1.removeAll();
@@ -452,11 +454,6 @@ public class LandingPage extends javax.swing.JFrame {
         String[] words = {"BREAK", "BREAK", "LUNCH"};
         int[] columns = {2, 5, 8}; // Corresponding columns
 
-//    for (int i = 0; i < words.length; i++) {
-//        for (int j = 0; j < words[i].length(); j++) {
-//            model.setValueAt(String.valueOf(words[i].charAt(j)), j, columns[i]);
-//        }
-//    }
         // Create a custom cell renderer
         DefaultTableCellRenderer renderer = new DefaultTableCellRenderer() {
             @Override
@@ -504,8 +501,9 @@ public class LandingPage extends javax.swing.JFrame {
                         break;
                     }
                 }
-                if (skip) continue; // Skip this column
-
+                if (skip) {
+                    continue; // Skip this column
+                }
                 // Check if the cell is blank
                 if (model.getValueAt(row, col) == null || model.getValueAt(row, col).toString().isEmpty()) {
                     // Generate placeholder in spreadsheet format (A1, A2, ..., B1, B2, ...)
@@ -515,10 +513,21 @@ public class LandingPage extends javax.swing.JFrame {
             }
         }
         // Apply custom renderer for placeholder styling
-    table.setDefaultRenderer(Object.class, new CustomPlaceholderRenderer());
+        table.setDefaultRenderer(Object.class, new CustomPlaceholderRenderer());
 
     }
 
+//    for seamless JFrame visibility and disposing, this method causes a 2-seconds delay before disposing the previous JFrame
+    public void delayBeforeClosingPreviousJframe() {
+        // Create a Timer with a 4000ms (4 seconds) delay
+        Timer timer = new Timer(2000, (ActionEvent e) -> {
+            dispose(); // Dispose the LandingPage JFrame after 4 seconds
+        });
+
+        timer.setRepeats(false); // Ensure the timer only fires once
+        timer.start(); // Start the timer
+    }
+    
     
     private void lbl_closeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_closeMouseClicked
         int a = JOptionPane.showConfirmDialog(null, "Do you really want to Close Application?", "Select", JOptionPane.YES_NO_OPTION);
@@ -561,22 +570,22 @@ public class LandingPage extends javax.swing.JFrame {
     private void radioButton_lowerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioButton_lowerActionPerformed
         // Refresh the panel to display the table
         jPanel1.removeAll();
-        
+
         lowerPrimaryJtable();
 
         insertVerticalWords();
-        
+
         markBlankCellsWithPlaceholders();
     }//GEN-LAST:event_radioButton_lowerActionPerformed
 
     private void radioButton_upperActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioButton_upperActionPerformed
         // Refresh the panel to display the table
         jPanel1.removeAll();
-        
+
         jssPrimaryJtable();
 
         insertVerticalWords();
-        
+
         markBlankCellsWithPlaceholders();
     }//GEN-LAST:event_radioButton_upperActionPerformed
 
@@ -591,7 +600,9 @@ public class LandingPage extends javax.swing.JFrame {
     private void lbl_manageSubjectsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_manageSubjectsMouseClicked
         ManageSubjects home = new ManageSubjects();
         home.setVisible(true);
-        dispose();
+
+        delayBeforeClosingPreviousJframe();
+
     }//GEN-LAST:event_lbl_manageSubjectsMouseClicked
 
     private void lbl_manageSubjectsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_manageSubjectsMouseEntered
@@ -613,7 +624,8 @@ public class LandingPage extends javax.swing.JFrame {
     private void lbl_manageTutorsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_manageTutorsMouseClicked
         ManageUsers users = new ManageUsers();
         users.setVisible(true);
-        dispose();
+        
+        delayBeforeClosingPreviousJframe();
     }//GEN-LAST:event_lbl_manageTutorsMouseClicked
 
     private void lbl_manageTutorsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_manageTutorsMouseEntered
@@ -627,7 +639,8 @@ public class LandingPage extends javax.swing.JFrame {
     private void lbl_logoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_logoutMouseClicked
         LoginPage login = new LoginPage();
         login.setVisible(true);
-        dispose();
+        
+        delayBeforeClosingPreviousJframe();
     }//GEN-LAST:event_lbl_logoutMouseClicked
 
     /**
