@@ -7,11 +7,13 @@ package JFrames;
 
 //import MiniFrames.*;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import timetable_app.*;
@@ -214,29 +216,6 @@ public class ManageFacilitators extends javax.swing.JFrame {
         lbl_menu = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         parentPanel = new javax.swing.JPanel();
-        panel_menu = new javax.swing.JPanel();
-        jPanel4 = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
-        jPanel5 = new javax.swing.JPanel();
-        lbl_homePage = new javax.swing.JLabel();
-        jPanel6 = new javax.swing.JPanel();
-        lbl_dashboard = new javax.swing.JLabel();
-        jPanel7 = new javax.swing.JPanel();
-        lbl_viewIssuedGood = new javax.swing.JLabel();
-        jPanel8 = new javax.swing.JPanel();
-        lbl_manageInventory = new javax.swing.JLabel();
-        jPanel9 = new javax.swing.JPanel();
-        lbl_manageUsers = new javax.swing.JLabel();
-        jPanel10 = new javax.swing.JPanel();
-        lbl_issueGood = new javax.swing.JLabel();
-        jPanel11 = new javax.swing.JPanel();
-        lbl_returnGood = new javax.swing.JLabel();
-        jPanel12 = new javax.swing.JPanel();
-        lbl_viewRecords = new javax.swing.JLabel();
-        jPanel14 = new javax.swing.JPanel();
-        lbl_logout = new javax.swing.JLabel();
-        jPanel13 = new javax.swing.JPanel();
-        lbl_defaulterList = new javax.swing.JLabel();
         panel_display = new javax.swing.JPanel();
         jPanel15 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
@@ -258,6 +237,17 @@ public class ManageFacilitators extends javax.swing.JFrame {
         jPanel16 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbl_userDetails = new rojeru_san.complementos.RSTableMetro();
+        panel_menu = new javax.swing.JPanel();
+        jPanel6 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        jPanel7 = new javax.swing.JPanel();
+        lbl_manageSubjects = new javax.swing.JLabel();
+        jPanel8 = new javax.swing.JPanel();
+        lbl_dashboard = new javax.swing.JLabel();
+        jPanel11 = new javax.swing.JPanel();
+        lbl_manageTutors = new javax.swing.JLabel();
+        jPanel17 = new javax.swing.JPanel();
+        lbl_logout = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -316,7 +306,7 @@ public class ManageFacilitators extends javax.swing.JFrame {
 
         jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 10, 5, 50));
 
-        lbl_menu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/adminIcons/icons8_menu_48px_1.png"))); // NOI18N
+        lbl_menu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/icons/icons8_menu_48px_1.png"))); // NOI18N
         lbl_menu.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lbl_menuMouseClicked(evt);
@@ -326,7 +316,7 @@ public class ManageFacilitators extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Verdana", 0, 20)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/adminIcons/male_user_50px.png"))); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/icons/male_user_50px.png"))); // NOI18N
         jLabel2.setText("Welcome, Admin");
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 10, -1, -1));
 
@@ -335,225 +325,6 @@ public class ManageFacilitators extends javax.swing.JFrame {
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, -1));
 
         parentPanel.setLayout(null);
-
-        panel_menu.setBackground(new java.awt.Color(51, 51, 51));
-        panel_menu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jPanel4.setBackground(new java.awt.Color(51, 51, 51));
-        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel4.setFont(new java.awt.Font("Yu Gothic UI Semilight", 1, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Features");
-        jPanel4.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 16, 230, 30));
-
-        panel_menu.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 220, 60));
-
-        jPanel5.setBackground(new java.awt.Color(51, 51, 51));
-        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        lbl_homePage.setFont(new java.awt.Font("Yu Gothic UI Semilight", 1, 18)); // NOI18N
-        lbl_homePage.setForeground(new java.awt.Color(153, 153, 153));
-        lbl_homePage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/adminIcons/icons8_Home_26px_2.png"))); // NOI18N
-        lbl_homePage.setText("   Home Page");
-        lbl_homePage.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lbl_homePageMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                lbl_homePageMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                lbl_homePageMouseExited(evt);
-            }
-        });
-        jPanel5.add(lbl_homePage, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 16, 190, 30));
-
-        panel_menu.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 250, 60));
-
-        jPanel6.setBackground(new java.awt.Color(51, 51, 51));
-        jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        lbl_dashboard.setFont(new java.awt.Font("Yu Gothic UI Semilight", 1, 18)); // NOI18N
-        lbl_dashboard.setForeground(new java.awt.Color(153, 153, 153));
-        lbl_dashboard.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/adminIcons/icons8_Library_32px.png"))); // NOI18N
-        lbl_dashboard.setText("  Dashboard");
-        lbl_dashboard.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lbl_dashboardMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                lbl_dashboardMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                lbl_dashboardMouseExited(evt);
-            }
-        });
-        jPanel6.add(lbl_dashboard, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 16, 230, 30));
-
-        panel_menu.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 250, 60));
-
-        jPanel7.setBackground(new java.awt.Color(51, 51, 51));
-        jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        lbl_viewIssuedGood.setFont(new java.awt.Font("Yu Gothic UI Semilight", 1, 18)); // NOI18N
-        lbl_viewIssuedGood.setForeground(new java.awt.Color(153, 153, 153));
-        lbl_viewIssuedGood.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/adminIcons/icons8_List_of_Thumbnails_50px.png"))); // NOI18N
-        lbl_viewIssuedGood.setText("View Issued Goods");
-        lbl_viewIssuedGood.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lbl_viewIssuedGoodMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                lbl_viewIssuedGoodMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                lbl_viewIssuedGoodMouseExited(evt);
-            }
-        });
-        jPanel7.add(lbl_viewIssuedGood, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 6, 240, 40));
-
-        panel_menu.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 490, 250, 60));
-
-        jPanel8.setBackground(new java.awt.Color(51, 51, 51));
-        jPanel8.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        lbl_manageInventory.setFont(new java.awt.Font("Yu Gothic UI Semilight", 1, 18)); // NOI18N
-        lbl_manageInventory.setForeground(new java.awt.Color(153, 153, 153));
-        lbl_manageInventory.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/adminIcons/icons8_List_of_Thumbnails_50px.png"))); // NOI18N
-        lbl_manageInventory.setText("Manage Inventory");
-        lbl_manageInventory.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lbl_manageInventoryMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                lbl_manageInventoryMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                lbl_manageInventoryMouseExited(evt);
-            }
-        });
-        jPanel8.add(lbl_manageInventory, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 6, 240, 40));
-
-        panel_menu.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 190, 250, 60));
-
-        jPanel9.setBackground(new java.awt.Color(255, 153, 0));
-        jPanel9.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        lbl_manageUsers.setFont(new java.awt.Font("Yu Gothic UI Semilight", 1, 18)); // NOI18N
-        lbl_manageUsers.setForeground(new java.awt.Color(153, 153, 153));
-        lbl_manageUsers.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/adminIcons/icons8_Read_Online_26px.png"))); // NOI18N
-        lbl_manageUsers.setText("  Manage Users");
-        jPanel9.add(lbl_manageUsers, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 16, 230, 30));
-
-        panel_menu.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 250, 250, 60));
-
-        jPanel10.setBackground(new java.awt.Color(51, 51, 51));
-        jPanel10.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        lbl_issueGood.setFont(new java.awt.Font("Yu Gothic UI Semilight", 1, 18)); // NOI18N
-        lbl_issueGood.setForeground(new java.awt.Color(153, 153, 153));
-        lbl_issueGood.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/adminIcons/icons8_Sell_26px.png"))); // NOI18N
-        lbl_issueGood.setText("  Issue Goods");
-        lbl_issueGood.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lbl_issueGoodMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                lbl_issueGoodMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                lbl_issueGoodMouseExited(evt);
-            }
-        });
-        jPanel10.add(lbl_issueGood, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 16, 230, 30));
-
-        panel_menu.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 310, 250, 60));
-
-        jPanel11.setBackground(new java.awt.Color(51, 51, 51));
-        jPanel11.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        lbl_returnGood.setFont(new java.awt.Font("Yu Gothic UI Semilight", 1, 18)); // NOI18N
-        lbl_returnGood.setForeground(new java.awt.Color(153, 153, 153));
-        lbl_returnGood.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/adminIcons/icons8_Return_Purchase_26px.png"))); // NOI18N
-        lbl_returnGood.setText("  Return Goods");
-        lbl_returnGood.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lbl_returnGoodMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                lbl_returnGoodMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                lbl_returnGoodMouseExited(evt);
-            }
-        });
-        jPanel11.add(lbl_returnGood, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 16, 230, 30));
-
-        panel_menu.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 370, 250, 60));
-
-        jPanel12.setBackground(new java.awt.Color(51, 51, 51));
-        jPanel12.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        lbl_viewRecords.setFont(new java.awt.Font("Yu Gothic UI Semilight", 1, 18)); // NOI18N
-        lbl_viewRecords.setForeground(new java.awt.Color(153, 153, 153));
-        lbl_viewRecords.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/adminIcons/icons8_View_Details_26px.png"))); // NOI18N
-        lbl_viewRecords.setText("  View Records");
-        lbl_viewRecords.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lbl_viewRecordsMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                lbl_viewRecordsMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                lbl_viewRecordsMouseExited(evt);
-            }
-        });
-        jPanel12.add(lbl_viewRecords, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 16, 230, 30));
-
-        panel_menu.add(jPanel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 430, 250, 60));
-
-        jPanel14.setBackground(new java.awt.Color(153, 51, 0));
-        jPanel14.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        lbl_logout.setFont(new java.awt.Font("Yu Gothic UI Semilight", 1, 18)); // NOI18N
-        lbl_logout.setForeground(new java.awt.Color(255, 255, 255));
-        lbl_logout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/adminIcons/icons8_Exit_26px_2.png"))); // NOI18N
-        lbl_logout.setText("  Log Out");
-        lbl_logout.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lbl_logoutMouseClicked(evt);
-            }
-        });
-        jPanel14.add(lbl_logout, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 16, 230, 30));
-
-        panel_menu.add(jPanel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 610, 250, 60));
-
-        jPanel13.setBackground(new java.awt.Color(51, 51, 51));
-        jPanel13.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        lbl_defaulterList.setFont(new java.awt.Font("Yu Gothic UI Semilight", 1, 18)); // NOI18N
-        lbl_defaulterList.setForeground(new java.awt.Color(153, 153, 153));
-        lbl_defaulterList.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/adminIcons/icons8_Conference_26px.png"))); // NOI18N
-        lbl_defaulterList.setText("  Defaulter List");
-        lbl_defaulterList.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lbl_defaulterListMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                lbl_defaulterListMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                lbl_defaulterListMouseExited(evt);
-            }
-        });
-        jPanel13.add(lbl_defaulterList, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 16, 230, 30));
-
-        panel_menu.add(jPanel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 550, 250, 60));
-
-        parentPanel.add(panel_menu);
-        panel_menu.setBounds(0, 0, 250, 700);
 
         panel_display.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -589,12 +360,12 @@ public class ManageFacilitators extends javax.swing.JFrame {
 
         jLabel5.setFont(new java.awt.Font("Verdana", 0, 20)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/AddNewBookIcons/icons8_Contact_26px.png"))); // NOI18N
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/icons/icons8_Contact_26px.png"))); // NOI18N
         jPanel15.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, 60, 50));
 
         jLabel6.setFont(new java.awt.Font("Verdana", 0, 20)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/AddNewBookIcons/icons8_Collaborator_Male_26px.png"))); // NOI18N
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/icons/icons8_Collaborator_Male_26px.png"))); // NOI18N
         jPanel15.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 310, 60, 50));
 
         jLabel10.setFont(new java.awt.Font("Verdana", 0, 20)); // NOI18N
@@ -694,7 +465,6 @@ public class ManageFacilitators extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 30)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/AddNewBookIcons/icons8_Student_Registration_100px_2.png"))); // NOI18N
         jLabel3.setText("  Manage Facilitators'");
         jPanel15.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 300, -1));
 
@@ -709,7 +479,7 @@ public class ManageFacilitators extends javax.swing.JFrame {
         );
         jPanel16Layout.setVerticalGroup(
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 3, Short.MAX_VALUE)
         );
 
         jPanel15.add(jPanel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 65, 259, 3));
@@ -746,9 +516,106 @@ public class ManageFacilitators extends javax.swing.JFrame {
         parentPanel.add(panel_display);
         panel_display.setBounds(250, 0, 1120, 700);
 
-        getContentPane().add(parentPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 1370, 700));
+        panel_menu.setBackground(new java.awt.Color(51, 51, 51));
+        panel_menu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        setSize(new java.awt.Dimension(1366, 766));
+        jPanel6.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel4.setFont(new java.awt.Font("Yu Gothic UI Semilight", 1, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Features");
+        jPanel6.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 120, 30));
+
+        panel_menu.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 250, 60));
+
+        jPanel7.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lbl_manageSubjects.setFont(new java.awt.Font("Yu Gothic UI Semilight", 1, 18)); // NOI18N
+        lbl_manageSubjects.setForeground(new java.awt.Color(153, 153, 153));
+        lbl_manageSubjects.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/icons/icons8_Unit_26px.png"))); // NOI18N
+        lbl_manageSubjects.setText(" Manage Learning Areas");
+        lbl_manageSubjects.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbl_manageSubjectsMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lbl_manageSubjectsMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lbl_manageSubjectsMouseExited(evt);
+            }
+        });
+        jPanel7.add(lbl_manageSubjects, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 250, 40));
+
+        panel_menu.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 250, 60));
+
+        jPanel8.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel8.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lbl_dashboard.setFont(new java.awt.Font("Yu Gothic UI Semilight", 1, 18)); // NOI18N
+        lbl_dashboard.setForeground(new java.awt.Color(153, 153, 153));
+        lbl_dashboard.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/icons/icons8_Library_32px.png"))); // NOI18N
+        lbl_dashboard.setText("Dashboard");
+        lbl_dashboard.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbl_dashboardMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lbl_dashboardMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lbl_dashboardMouseExited(evt);
+            }
+        });
+        jPanel8.add(lbl_dashboard, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 250, 40));
+
+        panel_menu.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 250, 60));
+
+        jPanel11.setBackground(new java.awt.Color(255, 153, 0));
+        jPanel11.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lbl_manageTutors.setFont(new java.awt.Font("Yu Gothic UI Semilight", 1, 18)); // NOI18N
+        lbl_manageTutors.setForeground(new java.awt.Color(153, 153, 153));
+        lbl_manageTutors.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/icons/icons8_Collaborator_Male_26px.png"))); // NOI18N
+        lbl_manageTutors.setText(" Manage Facilitators");
+        lbl_manageTutors.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbl_manageTutorsMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lbl_manageTutorsMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lbl_manageTutorsMouseExited(evt);
+            }
+        });
+        jPanel11.add(lbl_manageTutors, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 240, 30));
+
+        panel_menu.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 250, 60));
+
+        jPanel17.setBackground(new java.awt.Color(153, 51, 0));
+        jPanel17.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lbl_logout.setFont(new java.awt.Font("Yu Gothic UI Semilight", 1, 18)); // NOI18N
+        lbl_logout.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_logout.setText("  Log Out");
+        lbl_logout.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbl_logoutMouseClicked(evt);
+            }
+        });
+        jPanel17.add(lbl_logout, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 160, 30));
+
+        panel_menu.add(jPanel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 240, 250, 60));
+
+        parentPanel.add(panel_menu);
+        panel_menu.setBounds(0, 0, 250, 310);
+
+        getContentPane().add(parentPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 1370, 660));
+
+        setSize(new java.awt.Dimension(1366, 757));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -757,7 +624,17 @@ public class ManageFacilitators extends javax.swing.JFrame {
 
     }
 
+//    for seamless JFrame migration, this method causes a 2-seconds delay before disposing the previous JFrame
+    public void delayBeforeClosingPreviousJframe() {
+        // Create a Timer with a 4000ms (4 seconds) delay
+        Timer timer = new Timer(2000, (ActionEvent e) -> {
+            dispose(); // Dispose the LandingPage JFrame after 4 seconds
+        });
 
+        timer.setRepeats(false); // Ensure the timer only fires once
+        timer.start(); // Start the timer
+    }
+    
     
 
     private void lbl_closeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_closeMouseClicked
@@ -780,122 +657,6 @@ public class ManageFacilitators extends javax.swing.JFrame {
         this.setLocation(x - xx, y - xy);
     }//GEN-LAST:event_jPanel2MouseDragged
 
-    private void lbl_viewIssuedGoodMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_viewIssuedGoodMouseClicked
-        ViewIssuedGoodsDetails viewIssued = new ViewIssuedGoodsDetails();
-        viewIssued.setVisible(true);
-        dispose();
-    }//GEN-LAST:event_lbl_viewIssuedGoodMouseClicked
-
-    private void lbl_viewIssuedGoodMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_viewIssuedGoodMouseEntered
-        jPanel7.setBackground(mouseEnterColor);
-    }//GEN-LAST:event_lbl_viewIssuedGoodMouseEntered
-
-    private void lbl_viewIssuedGoodMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_viewIssuedGoodMouseExited
-        jPanel7.setBackground(mouseExitColor);
-    }//GEN-LAST:event_lbl_viewIssuedGoodMouseExited
-
-    private void lbl_manageInventoryMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_manageInventoryMouseClicked
-
-        ManageInventory inventory = new ManageInventory();
-        inventory.setVisible(true);
-        dispose();
-
-//        Displaying only JPanels
-//        JPanel panel_manageInventory = manageInventory.getPanel_manageInventory();
-//
-//        if (panel_menu.isVisible()) {
-//
-//            // Ensure panel_manageBooks is added to parentPanel
-//            parentPanel.add(panel_manageInventory);
-//            // Set panel_display to invisible
-//            panel_display.setVisible(false);
-//            // Set panel_manageBooks to visible
-//            panel_manageInventory.setVisible(true);
-//            // Set the bounds of panel_manageBooks to fill the entire parentPanel
-//            panel_manageInventory.setBounds(250, 0, parentPanel.getWidth(), parentPanel.getHeight());
-//
-//        } else {
-//            panel_menu.setVisible(true);
-//            // Adjust panel_display when panel_menu reappears
-//            panel_manageInventory.setBounds(panel_menu.getWidth(), 0, parentPanel.getWidth() - panel_menu.getWidth(), 700);
-//
-//        }
-//
-//        // Force panel_display to re-layout its components
-//        parentPanel.repaint();
-
-    }//GEN-LAST:event_lbl_manageInventoryMouseClicked
-
-    private void lbl_manageInventoryMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_manageInventoryMouseEntered
-        jPanel8.setBackground(mouseEnterColor);
-    }//GEN-LAST:event_lbl_manageInventoryMouseEntered
-
-    private void lbl_manageInventoryMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_manageInventoryMouseExited
-        jPanel8.setBackground(mouseExitColor);
-    }//GEN-LAST:event_lbl_manageInventoryMouseExited
-
-    private void lbl_issueGoodMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_issueGoodMouseClicked
-        IssueGoods issue = new IssueGoods();
-        issue.setVisible(true);
-        dispose();
-    }//GEN-LAST:event_lbl_issueGoodMouseClicked
-
-    private void lbl_issueGoodMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_issueGoodMouseEntered
-        jPanel10.setBackground(mouseEnterColor);
-    }//GEN-LAST:event_lbl_issueGoodMouseEntered
-
-    private void lbl_issueGoodMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_issueGoodMouseExited
-        jPanel10.setBackground(mouseExitColor);
-    }//GEN-LAST:event_lbl_issueGoodMouseExited
-
-    private void lbl_returnGoodMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_returnGoodMouseClicked
-        ReturnGood ret = new ReturnGood();
-        ret.setVisible(true);
-        dispose();
-    }//GEN-LAST:event_lbl_returnGoodMouseClicked
-
-    private void lbl_returnGoodMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_returnGoodMouseEntered
-        jPanel11.setBackground(mouseEnterColor);
-    }//GEN-LAST:event_lbl_returnGoodMouseEntered
-
-    private void lbl_returnGoodMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_returnGoodMouseExited
-        jPanel11.setBackground(mouseExitColor);
-    }//GEN-LAST:event_lbl_returnGoodMouseExited
-
-    private void lbl_viewRecordsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_viewRecordsMouseClicked
-        ViewAllRecords view = new ViewAllRecords();
-        view.setVisible(true);
-        dispose();
-    }//GEN-LAST:event_lbl_viewRecordsMouseClicked
-
-    private void lbl_viewRecordsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_viewRecordsMouseEntered
-        jPanel12.setBackground(mouseEnterColor);
-    }//GEN-LAST:event_lbl_viewRecordsMouseEntered
-
-    private void lbl_viewRecordsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_viewRecordsMouseExited
-        jPanel12.setBackground(mouseExitColor);
-    }//GEN-LAST:event_lbl_viewRecordsMouseExited
-
-    private void lbl_logoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_logoutMouseClicked
-        LoginPage login = new LoginPage();
-        login.setVisible(true);
-        dispose();
-    }//GEN-LAST:event_lbl_logoutMouseClicked
-
-    private void lbl_defaulterListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_defaulterListMouseClicked
-        DefaulterList dl = new DefaulterList();
-        dl.setVisible(true);
-        dispose();
-    }//GEN-LAST:event_lbl_defaulterListMouseClicked
-
-    private void lbl_defaulterListMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_defaulterListMouseEntered
-        jPanel13.setBackground(mouseEnterColor);
-    }//GEN-LAST:event_lbl_defaulterListMouseEntered
-
-    private void lbl_defaulterListMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_defaulterListMouseExited
-        jPanel13.setBackground(mouseExitColor);
-    }//GEN-LAST:event_lbl_defaulterListMouseExited
-
     private void lbl_menuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_menuMouseClicked
 
         if (panel_menu.isVisible()) {
@@ -912,28 +673,6 @@ public class ManageFacilitators extends javax.swing.JFrame {
         // Force panel_display to re-layout its components
         parentPanel.repaint();
     }//GEN-LAST:event_lbl_menuMouseClicked
-
-    private void lbl_dashboardMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_dashboardMouseEntered
-        jPanel6.setBackground(mouseEnterColor);
-    }//GEN-LAST:event_lbl_dashboardMouseEntered
-
-    private void lbl_dashboardMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_dashboardMouseExited
-        jPanel6.setBackground(mouseExitColor);
-    }//GEN-LAST:event_lbl_dashboardMouseExited
-
-    private void lbl_homePageMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_homePageMouseEntered
-        jPanel5.setBackground(mouseEnterColor);
-    }//GEN-LAST:event_lbl_homePageMouseEntered
-
-    private void lbl_homePageMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_homePageMouseExited
-        jPanel5.setBackground(mouseExitColor);
-    }//GEN-LAST:event_lbl_homePageMouseExited
-
-    private void lbl_homePageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_homePageMouseClicked
-        Home_page home = new Home_page();
-        home.setVisible(true);
-        dispose();
-    }//GEN-LAST:event_lbl_homePageMouseClicked
 
     private void txt_userIdFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_userIdFocusLost
 
@@ -1015,12 +754,57 @@ public class ManageFacilitators extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txt_contactKeyTyped
 
+    private void lbl_manageSubjectsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_manageSubjectsMouseEntered
+        jPanel7.setBackground(mouseEnterColor);
+    }//GEN-LAST:event_lbl_manageSubjectsMouseEntered
+
+    private void lbl_manageSubjectsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_manageSubjectsMouseExited
+                jPanel7.setBackground(mouseExitColor);
+    }//GEN-LAST:event_lbl_manageSubjectsMouseExited
+
     private void lbl_dashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_dashboardMouseClicked
-        // TODO add your handling code here:
-        Dashboard dash = new Dashboard();
-        dash.setVisible(true);
-        dispose();
+        LandingPage land = new LandingPage();
+        land.setVisible(true);
+
+        delayBeforeClosingPreviousJframe();
     }//GEN-LAST:event_lbl_dashboardMouseClicked
+
+    private void lbl_dashboardMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_dashboardMouseEntered
+        jPanel8.setBackground(mouseEnterColor);
+    }//GEN-LAST:event_lbl_dashboardMouseEntered
+
+    private void lbl_dashboardMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_dashboardMouseExited
+        jPanel6.setBackground(mouseExitColor);
+    }//GEN-LAST:event_lbl_dashboardMouseExited
+
+    private void lbl_manageTutorsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_manageTutorsMouseClicked
+        ManageFacilitators users = new ManageFacilitators();
+        users.setVisible(true);
+
+        delayBeforeClosingPreviousJframe();
+    }//GEN-LAST:event_lbl_manageTutorsMouseClicked
+
+    private void lbl_manageTutorsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_manageTutorsMouseEntered
+        jPanel11.setBackground(mouseEnterColor);
+    }//GEN-LAST:event_lbl_manageTutorsMouseEntered
+
+    private void lbl_manageTutorsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_manageTutorsMouseExited
+//        jPanel11.setBackground(mouseExitColor);
+    }//GEN-LAST:event_lbl_manageTutorsMouseExited
+
+    private void lbl_logoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_logoutMouseClicked
+        LoginPage login = new LoginPage();
+        login.setVisible(true);
+
+        delayBeforeClosingPreviousJframe();
+    }//GEN-LAST:event_lbl_logoutMouseClicked
+
+    private void lbl_manageSubjectsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_manageSubjectsMouseClicked
+        ManageLearningArea mla = new ManageLearningArea();
+        mla.setVisible(true);
+
+        delayBeforeClosingPreviousJframe();
+    }//GEN-LAST:event_lbl_manageSubjectsMouseClicked
 
     /**
      * @param args the command line arguments
@@ -1081,34 +865,22 @@ public class ManageFacilitators extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
-    private javax.swing.JPanel jPanel12;
-    private javax.swing.JPanel jPanel13;
-    private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel16;
+    private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lbl_close;
     private javax.swing.JLabel lbl_dashboard;
-    private javax.swing.JLabel lbl_defaulterList;
-    private javax.swing.JLabel lbl_homePage;
-    private javax.swing.JLabel lbl_issueGood;
     private javax.swing.JLabel lbl_logout;
-    private javax.swing.JLabel lbl_manageInventory;
-    private javax.swing.JLabel lbl_manageUsers;
+    private javax.swing.JLabel lbl_manageSubjects;
+    private javax.swing.JLabel lbl_manageTutors;
     private javax.swing.JLabel lbl_menu;
-    private javax.swing.JLabel lbl_returnGood;
-    private javax.swing.JLabel lbl_viewIssuedGood;
-    private javax.swing.JLabel lbl_viewRecords;
     private javax.swing.JPanel panel_display;
     private javax.swing.JPanel panel_menu;
     private javax.swing.JPanel parentPanel;

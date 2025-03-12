@@ -5,8 +5,8 @@
         <group>
             <file>file:/G:/Netbeans_project/Timetable_App/src/JFrames/LandingPage.java</file>
             <file>file:/G:/Netbeans_project/Timetable_App/src/JFrames/LoginPage.java</file>
-            <file>file:/G:/Netbeans_project/Timetable_App/src/JFrames/ManageSubjects.java</file>
-            <file>file:/G:/Netbeans_project/Timetable_App/src/JFrames/ManageUsers.java</file>
+            <file>file:/G:/Netbeans_project/Timetable_App/src/JFrames/ManageFacilitators.java</file>
+            <file>file:/G:/Netbeans_project/Timetable_App/src/JFrames/ManageLearningArea.java</file>
         </group>
     </open-files>
 </project-private>

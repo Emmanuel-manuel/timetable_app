@@ -1,10 +1,11 @@
 package JFrames;
 
-import default_package.*;
+import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.*;
+import timetable_app.*;
 
 /**
  *
@@ -15,6 +16,19 @@ public class LoginPage extends javax.swing.JFrame {
     /**
      * Creates new form SignupPage
      */
+    
+      //    for seamless JFrame migration, this method causes a 2-seconds delay before disposing the previous JFrame
+    public void delayBeforeClosingPreviousJframe() {
+        // Create a Timer with a 4000ms (4 seconds) delay
+        Timer timer = new Timer(2000, (ActionEvent e) -> {
+            dispose(); // Dispose the LandingPage JFrame after 4 seconds
+        });
+
+        timer.setRepeats(false); // Ensure the timer only fires once
+        timer.start(); // Start the timer
+    }
+    
+    
     public LoginPage() {
         initComponents();
 //        String text_password;
@@ -73,9 +87,10 @@ public class LoginPage extends javax.swing.JFrame {
                 pwd = rs.getString("password");
 
                 JOptionPane.showMessageDialog(this, "Login Successfully");
-                Home_page home = new Home_page();
+                LandingPage home = new LandingPage();
                 home.setVisible(true);
-                this.dispose();
+                
+                delayBeforeClosingPreviousJframe();
 
             } else {
                 JOptionPane.showMessageDialog(this, "Wrong Credentials...");
@@ -255,9 +270,10 @@ public class LoginPage extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_usernameActionPerformed
 
     private void btn_signupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_signupActionPerformed
-        SignupPage page = new SignupPage();
-        page.setVisible(true);
-        this.dispose();
+//        SignupPage page = new SignupPage();
+//        page.setVisible(true);
+//        
+//        delayBeforeClosingPreviousJframe();
 
     }//GEN-LAST:event_btn_signupActionPerformed
 

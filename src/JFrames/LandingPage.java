@@ -169,7 +169,7 @@ public class LandingPage extends javax.swing.JFrame {
         lbl_manageSubjects.setFont(new java.awt.Font("Yu Gothic UI Semilight", 1, 18)); // NOI18N
         lbl_manageSubjects.setForeground(new java.awt.Color(153, 153, 153));
         lbl_manageSubjects.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/icons/icons8_Unit_26px.png"))); // NOI18N
-        lbl_manageSubjects.setText("Manage Learning Areas");
+        lbl_manageSubjects.setText("  Manage Learning Areas");
         lbl_manageSubjects.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lbl_manageSubjectsMouseClicked(evt);
@@ -181,9 +181,9 @@ public class LandingPage extends javax.swing.JFrame {
                 lbl_manageSubjectsMouseExited(evt);
             }
         });
-        jPanel7.add(lbl_manageSubjects, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 16, 240, 30));
+        jPanel7.add(lbl_manageSubjects, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 16, 250, 30));
 
-        panel_menu.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 240, 60));
+        panel_menu.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 250, 60));
 
         jPanel8.setBackground(new java.awt.Color(255, 153, 0));
         jPanel8.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -191,7 +191,7 @@ public class LandingPage extends javax.swing.JFrame {
         lbl_dashboard.setFont(new java.awt.Font("Yu Gothic UI Semilight", 1, 18)); // NOI18N
         lbl_dashboard.setForeground(new java.awt.Color(153, 153, 153));
         lbl_dashboard.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/icons/icons8_Library_32px.png"))); // NOI18N
-        lbl_dashboard.setText("  Dashboard");
+        lbl_dashboard.setText(" Dashboard");
         lbl_dashboard.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 lbl_dashboardMouseEntered(evt);
@@ -200,9 +200,9 @@ public class LandingPage extends javax.swing.JFrame {
                 lbl_dashboardMouseExited(evt);
             }
         });
-        jPanel8.add(lbl_dashboard, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 16, 180, 30));
+        jPanel8.add(lbl_dashboard, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 250, 40));
 
-        panel_menu.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 240, 60));
+        panel_menu.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 250, 60));
 
         jPanel11.setBackground(new java.awt.Color(51, 51, 51));
         jPanel11.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -210,7 +210,7 @@ public class LandingPage extends javax.swing.JFrame {
         lbl_manageTutors.setFont(new java.awt.Font("Yu Gothic UI Semilight", 1, 18)); // NOI18N
         lbl_manageTutors.setForeground(new java.awt.Color(153, 153, 153));
         lbl_manageTutors.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/icons/icons8_Collaborator_Male_26px.png"))); // NOI18N
-        lbl_manageTutors.setText("Manage Facilitators");
+        lbl_manageTutors.setText("  Manage Facilitators");
         lbl_manageTutors.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lbl_manageTutorsMouseClicked(evt);
@@ -222,9 +222,9 @@ public class LandingPage extends javax.swing.JFrame {
                 lbl_manageTutorsMouseExited(evt);
             }
         });
-        jPanel11.add(lbl_manageTutors, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 240, 30));
+        jPanel11.add(lbl_manageTutors, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 250, 40));
 
-        panel_menu.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 240, 60));
+        panel_menu.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 250, 60));
 
         jPanel15.setBackground(new java.awt.Color(153, 51, 0));
         jPanel15.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -237,12 +237,12 @@ public class LandingPage extends javax.swing.JFrame {
                 lbl_logoutMouseClicked(evt);
             }
         });
-        jPanel15.add(lbl_logout, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 160, 30));
+        jPanel15.add(lbl_logout, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 240, 40));
 
-        panel_menu.add(jPanel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 240, 240, 60));
+        panel_menu.add(jPanel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 240, 250, 60));
 
         parentPanel.add(panel_menu);
-        panel_menu.setBounds(0, 0, 240, 310);
+        panel_menu.setBounds(0, 0, 250, 310);
 
         panel_display.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -290,7 +290,7 @@ public class LandingPage extends javax.swing.JFrame {
         panel_display.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 410, 130));
 
         parentPanel.add(panel_display);
-        panel_display.setBounds(240, 0, 470, 310);
+        panel_display.setBounds(250, 0, 470, 310);
 
         getContentPane().add(parentPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 1370, 310));
 
