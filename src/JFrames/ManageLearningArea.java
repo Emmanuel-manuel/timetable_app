@@ -74,14 +74,27 @@ public class ManageLearningArea extends javax.swing.JFrame {
         jPanel15 = new javax.swing.JPanel();
         lbl_logout = new javax.swing.JLabel();
         panel_display = new javax.swing.JPanel();
+        jPanel17 = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        txt_leaningArearId = new app.bolivia.swing.JCTextField();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        txt_learningAreaName = new app.bolivia.swing.JCTextField();
+        btn_delete = new rojerusan.RSMaterialButtonCircle();
+        btn_add = new rojerusan.RSMaterialButtonCircle();
+        btn_update = new rojerusan.RSMaterialButtonCircle();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        cbo_grade = new rojerusan.RSComboMetro();
         jPanel4 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jPanel16 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(1370, 761));
+        setMinimumSize(new java.awt.Dimension(1370, 762));
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(1370, 761));
+        setPreferredSize(new java.awt.Dimension(1370, 762));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(102, 153, 255));
@@ -251,6 +264,111 @@ public class ManageLearningArea extends javax.swing.JFrame {
 
         panel_display.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jPanel17.setBackground(new java.awt.Color(102, 153, 255));
+        jPanel17.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
+        jPanel17.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel9.setFont(new java.awt.Font("Verdana", 0, 20)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setText("Learning Area Id");
+        jPanel17.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 70, 180, -1));
+
+        txt_leaningArearId.setBackground(new java.awt.Color(102, 153, 255));
+        txt_leaningArearId.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
+        txt_leaningArearId.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
+        txt_leaningArearId.setPlaceholder("Learning Area Id ....");
+        txt_leaningArearId.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txt_leaningArearIdFocusLost(evt);
+            }
+        });
+        txt_leaningArearId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_leaningArearIdActionPerformed(evt);
+            }
+        });
+        txt_leaningArearId.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_leaningArearIdKeyTyped(evt);
+            }
+        });
+        jPanel17.add(txt_leaningArearId, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, 260, 40));
+
+        jLabel5.setFont(new java.awt.Font("Verdana", 0, 20)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/icons/icons8_View_Details_26px.png"))); // NOI18N
+        jPanel17.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 50, 50));
+
+        jLabel6.setFont(new java.awt.Font("Verdana", 0, 20)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/icons/icons8_Books_26px.png"))); // NOI18N
+        jPanel17.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 50, 50));
+
+        jLabel10.setFont(new java.awt.Font("Verdana", 0, 20)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setText("Learning Area");
+        jPanel17.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 150, 180, -1));
+
+        txt_learningAreaName.setBackground(new java.awt.Color(102, 153, 255));
+        txt_learningAreaName.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
+        txt_learningAreaName.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
+        txt_learningAreaName.setPlaceholder("Name of the Learning Area ....");
+        txt_learningAreaName.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txt_learningAreaNameFocusLost(evt);
+            }
+        });
+        txt_learningAreaName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_learningAreaNameActionPerformed(evt);
+            }
+        });
+        jPanel17.add(txt_learningAreaName, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 170, 260, 40));
+
+        btn_delete.setBackground(new java.awt.Color(255, 102, 51));
+        btn_delete.setText("DELETE");
+        btn_delete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_deleteActionPerformed(evt);
+            }
+        });
+        jPanel17.add(btn_delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 610, 110, 60));
+
+        btn_add.setBackground(new java.awt.Color(255, 102, 51));
+        btn_add.setText("ADD");
+        btn_add.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_addActionPerformed(evt);
+            }
+        });
+        jPanel17.add(btn_add, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 610, 110, 60));
+
+        btn_update.setBackground(new java.awt.Color(255, 102, 51));
+        btn_update.setText("UPDATE");
+        btn_update.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_updateActionPerformed(evt);
+            }
+        });
+        jPanel17.add(btn_update, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 610, 110, 60));
+
+        jLabel19.setFont(new java.awt.Font("Verdana", 0, 20)); // NOI18N
+        jLabel19.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel19.setText("Grade");
+        jPanel17.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 230, 80, -1));
+
+        jLabel20.setFont(new java.awt.Font("Verdana", 0, 20)); // NOI18N
+        jLabel20.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/icons/icons8_Library_32px.png"))); // NOI18N
+        jPanel17.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 50, 50));
+
+        cbo_grade.setForeground(new java.awt.Color(0, 0, 0));
+        cbo_grade.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Grade 1", "Grade 2 ", "Grade 3", "Grade 4", "Grade 5", "Grade 6", "Grade 7", "Grade 8", "Grade 9" }));
+        cbo_grade.setColorBorde(new java.awt.Color(102, 153, 255));
+        cbo_grade.setColorFondo(new java.awt.Color(255, 153, 0));
+        cbo_grade.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jPanel17.add(cbo_grade, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 260, 190, 30));
+
         jPanel4.setBackground(new java.awt.Color(102, 153, 255));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -276,12 +394,14 @@ public class ManageLearningArea extends javax.swing.JFrame {
 
         jPanel4.add(jPanel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 300, 2));
 
-        panel_display.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 0, 340, 60));
+        jPanel17.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 340, 50));
+
+        panel_display.add(jPanel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 370, 690));
 
         parentPanel.add(panel_display);
-        panel_display.setBounds(250, 0, 1120, 310);
+        panel_display.setBounds(250, 0, 1120, 700);
 
-        getContentPane().add(parentPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 1370, 660));
+        getContentPane().add(parentPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 1370, 700));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -375,6 +495,60 @@ public class ManageLearningArea extends javax.swing.JFrame {
         delayBeforeClosingPreviousJframe();
     }//GEN-LAST:event_lbl_dashboardMouseClicked
 
+    private void txt_leaningArearIdFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_leaningArearIdFocusLost
+
+    }//GEN-LAST:event_txt_leaningArearIdFocusLost
+
+    private void txt_leaningArearIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_leaningArearIdActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_leaningArearIdActionPerformed
+
+    private void txt_leaningArearIdKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_leaningArearIdKeyTyped
+        if (!Character.isDigit(evt.getKeyChar())) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_leaningArearIdKeyTyped
+
+    private void txt_learningAreaNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_learningAreaNameFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_learningAreaNameFocusLost
+
+    private void txt_learningAreaNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_learningAreaNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_learningAreaNameActionPerformed
+
+    private void btn_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteActionPerformed
+        if (deleteUser() == true) {
+            JOptionPane.showMessageDialog(this, "User Deleted Successfully...");
+            clearTable();
+            setUserDetailsToTable();
+        } else {
+            JOptionPane.showMessageDialog(this, "User Deletion failed, Please check your Database Connection...");
+        }
+    }//GEN-LAST:event_btn_deleteActionPerformed
+
+    private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
+        if (addUser() == true) {
+            JOptionPane.showMessageDialog(this, "User Added Successfully...");
+            clearTable();
+            setUserDetailsToTable();
+            clearComponents();
+        } else {
+            JOptionPane.showMessageDialog(this, "User Addition failed, Please check your Database Connection...");
+        }
+    }//GEN-LAST:event_btn_addActionPerformed
+
+    private void btn_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updateActionPerformed
+        if (updateUser() == true) {
+            JOptionPane.showMessageDialog(this, "User Updated Successfully...");
+            clearTable();
+            setUserDetailsToTable();
+            clearComponents();
+        } else {
+            JOptionPane.showMessageDialog(this, "User Updation failed, Please check your Database Connection...");
+        }
+    }//GEN-LAST:event_btn_updateActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -412,13 +586,24 @@ public class ManageLearningArea extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private rojerusan.RSMaterialButtonCircle btn_add;
+    private rojerusan.RSMaterialButtonCircle btn_delete;
+    private rojerusan.RSMaterialButtonCircle btn_update;
+    private rojerusan.RSComboMetro cbo_grade;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel16;
+    private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -436,6 +621,8 @@ public class ManageLearningArea extends javax.swing.JFrame {
     private javax.swing.JPanel parentPanel;
     private javax.swing.JLabel txtDate;
     private javax.swing.JLabel txtTime;
+    private app.bolivia.swing.JCTextField txt_leaningArearId;
+    private app.bolivia.swing.JCTextField txt_learningAreaName;
     // End of variables declaration//GEN-END:variables
 
 }

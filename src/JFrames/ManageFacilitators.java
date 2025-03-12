@@ -235,6 +235,12 @@ public class ManageFacilitators extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jPanel16 = new javax.swing.JPanel();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        cbo_grade = new rojerusan.RSComboMetro();
+        cbo_learningArea = new rojerusan.RSComboMetro();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbl_userDetails = new rojeru_san.complementos.RSTableMetro();
         panel_menu = new javax.swing.JPanel();
@@ -250,7 +256,9 @@ public class ManageFacilitators extends javax.swing.JFrame {
         lbl_logout = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(1370, 762));
         setUndecorated(true);
+        setPreferredSize(new java.awt.Dimension(1370, 762));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -335,7 +343,7 @@ public class ManageFacilitators extends javax.swing.JFrame {
         jLabel9.setFont(new java.awt.Font("Verdana", 0, 20)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("Enter User Id");
-        jPanel15.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 180, 180, -1));
+        jPanel15.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 70, 180, -1));
 
         txt_userId.setBackground(new java.awt.Color(102, 153, 255));
         txt_userId.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
@@ -356,22 +364,22 @@ public class ManageFacilitators extends javax.swing.JFrame {
                 txt_userIdKeyTyped(evt);
             }
         });
-        jPanel15.add(txt_userId, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 210, 260, 40));
+        jPanel15.add(txt_userId, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, 260, 40));
 
         jLabel5.setFont(new java.awt.Font("Verdana", 0, 20)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/icons/icons8_Contact_26px.png"))); // NOI18N
-        jPanel15.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, 60, 50));
+        jPanel15.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 50, 50));
 
         jLabel6.setFont(new java.awt.Font("Verdana", 0, 20)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/icons/icons8_Collaborator_Male_26px.png"))); // NOI18N
-        jPanel15.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 310, 60, 50));
+        jPanel15.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 50, 50));
 
         jLabel10.setFont(new java.awt.Font("Verdana", 0, 20)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("Enter User Name");
-        jPanel15.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 290, 180, -1));
+        jPanel15.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 150, 180, -1));
 
         txt_userName.setBackground(new java.awt.Color(102, 153, 255));
         txt_userName.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
@@ -387,7 +395,7 @@ public class ManageFacilitators extends javax.swing.JFrame {
                 txt_userNameActionPerformed(evt);
             }
         });
-        jPanel15.add(txt_userName, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 320, 260, 40));
+        jPanel15.add(txt_userName, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 170, 260, 40));
 
         btn_delete.setBackground(new java.awt.Color(255, 102, 51));
         btn_delete.setText("DELETE");
@@ -419,7 +427,7 @@ public class ManageFacilitators extends javax.swing.JFrame {
         jLabel13.setFont(new java.awt.Font("Verdana", 0, 20)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setText("Email");
-        jPanel15.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 400, 180, -1));
+        jPanel15.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 230, 180, -1));
 
         txt_email.setBackground(new java.awt.Color(102, 153, 255));
         txt_email.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
@@ -430,17 +438,17 @@ public class ManageFacilitators extends javax.swing.JFrame {
                 txt_emailActionPerformed(evt);
             }
         });
-        jPanel15.add(txt_email, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 430, 270, 40));
+        jPanel15.add(txt_email, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 250, 270, 40));
 
         jLabel16.setFont(new java.awt.Font("Verdana", 0, 20)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(255, 255, 255));
         jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/icons/icons8_Secured_Letter_50px.png"))); // NOI18N
-        jPanel15.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 420, 60, -1));
+        jPanel15.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, 60, -1));
 
         jLabel15.setFont(new java.awt.Font("Verdana", 0, 20)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(255, 255, 255));
         jLabel15.setText("Contact");
-        jPanel15.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 520, 180, -1));
+        jPanel15.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 310, 180, -1));
 
         txt_contact.setBackground(new java.awt.Color(102, 153, 255));
         txt_contact.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
@@ -456,17 +464,17 @@ public class ManageFacilitators extends javax.swing.JFrame {
                 txt_contactKeyTyped(evt);
             }
         });
-        jPanel15.add(txt_contact, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 550, 270, 40));
+        jPanel15.add(txt_contact, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 330, 270, 40));
 
         jLabel14.setFont(new java.awt.Font("Verdana", 0, 20)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
         jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/icons/icons8_Google_Mobile_50px.png"))); // NOI18N
-        jPanel15.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 540, 60, 50));
+        jPanel15.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 320, 60, 50));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 30)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("  Manage Facilitators'");
-        jPanel15.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, 300, -1));
+        jPanel15.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, 300, -1));
 
         jPanel16.setBackground(new java.awt.Color(255, 255, 255));
         jPanel16.setForeground(new java.awt.Color(255, 255, 255));
@@ -482,9 +490,43 @@ public class ManageFacilitators extends javax.swing.JFrame {
             .addGap(0, 3, Short.MAX_VALUE)
         );
 
-        jPanel15.add(jPanel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 65, 259, 3));
+        jPanel15.add(jPanel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 50, 259, 3));
 
-        panel_display.add(jPanel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 370, 766));
+        jLabel17.setFont(new java.awt.Font("Verdana", 0, 20)); // NOI18N
+        jLabel17.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/icons/icons8_Unit_26px.png"))); // NOI18N
+        jPanel15.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 500, 40, 50));
+
+        jLabel18.setFont(new java.awt.Font("Verdana", 0, 20)); // NOI18N
+        jLabel18.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel18.setText("Learning Area");
+        jPanel15.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 490, 180, -1));
+
+        jLabel19.setFont(new java.awt.Font("Verdana", 0, 20)); // NOI18N
+        jLabel19.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel19.setText("Grade");
+        jPanel15.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 400, 80, -1));
+
+        jLabel20.setFont(new java.awt.Font("Verdana", 0, 20)); // NOI18N
+        jLabel20.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/icons/icons8_Library_32px.png"))); // NOI18N
+        jPanel15.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 410, 50, 50));
+
+        cbo_grade.setForeground(new java.awt.Color(0, 0, 0));
+        cbo_grade.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Grade 1", "Grade 2 ", "Grade 3", "Grade 4", "Grade 5", "Grade 6", "Grade 7", "Grade 8", "Grade 9" }));
+        cbo_grade.setColorBorde(new java.awt.Color(102, 153, 255));
+        cbo_grade.setColorFondo(new java.awt.Color(255, 153, 0));
+        cbo_grade.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jPanel15.add(cbo_grade, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 430, 190, 30));
+
+        cbo_learningArea.setForeground(new java.awt.Color(0, 0, 0));
+        cbo_learningArea.setColorBorde(new java.awt.Color(102, 153, 255));
+        cbo_learningArea.setColorFondo(new java.awt.Color(255, 153, 0));
+        cbo_learningArea.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        cbo_learningArea.setPreferredSize(new java.awt.Dimension(200, 30));
+        jPanel15.add(cbo_learningArea, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 520, 280, 35));
+
+        panel_display.add(jPanel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 370, 690));
 
         tbl_userDetails.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -613,7 +655,7 @@ public class ManageFacilitators extends javax.swing.JFrame {
         parentPanel.add(panel_menu);
         panel_menu.setBounds(0, 0, 250, 310);
 
-        getContentPane().add(parentPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 1370, 660));
+        getContentPane().add(parentPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 1370, 690));
 
         setSize(new java.awt.Dimension(1366, 757));
         setLocationRelativeTo(null);
@@ -852,13 +894,19 @@ public class ManageFacilitators extends javax.swing.JFrame {
     private rojerusan.RSMaterialButtonCircle btn_add;
     private rojerusan.RSMaterialButtonCircle btn_delete;
     private rojerusan.RSMaterialButtonCircle btn_update;
+    private rojerusan.RSComboMetro cbo_grade;
+    private rojerusan.RSComboMetro cbo_learningArea;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
