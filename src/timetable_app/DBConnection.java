@@ -19,7 +19,7 @@ public class DBConnection {
     public static Connection getConnection(){
         try{
             Class.forName("com.mysql.jdbc.Driver"); //Register MySql driver
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/shop","root","");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/timetable","root","");
             
         } catch (Exception e){
             // handles error by printing where the error is emanating from

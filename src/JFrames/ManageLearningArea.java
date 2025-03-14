@@ -8,8 +8,14 @@ package JFrames;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import timetable_app.*;
 
 /**
@@ -25,6 +31,10 @@ public class ManageLearningArea extends javax.swing.JFrame {
     Color mouseEnterColor = new Color(255, 153, 0);
     Color mouseExitColor = new Color(51, 51, 51);
 
+    // Global Variables
+    String learningArea, grade, learningAreaId;
+//    int learningAreaId;
+    DefaultTableModel model;
     
     //    for seamless JFrame migration, this method causes a 2-seconds delay before disposing the previous JFrame
     public void delayBeforeClosingPreviousJframe() {
@@ -43,6 +53,148 @@ public class ManageLearningArea extends javax.swing.JFrame {
         initComponents();
         init();
     }
+
+    //to pull the learningArea' details from the db to the table
+    public void setLearningAreaDetailsToTable() {
+
+        try {
+            Connection con = DBConnection.getConnection();
+
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("select * from learning_area_tbl");
+
+            while (rs.next()) {
+                learningAreaId = rs.getString("learning_area_id");
+                learningArea = rs.getString("learning_area");
+                grade = rs.getString("grade");
+
+                Object[] obj = {learningAreaId, learningArea, grade};
+                model = (DefaultTableModel) tbl_learningAreaDetails.getModel();
+                //adds a row array
+                model.addRow(obj);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    //to add Learning Area to the database in 'learning_area' table
+    public boolean addLearningArea() {
+
+        boolean isAdded = false;
+
+        learningAreaId = txt_leaningArearId.getText();
+        learningArea = txt_learningAreaName.getText();
+        grade = (String) cbo_grade.getSelectedItem();
+
+        try {
+            Connection con = DBConnection.getConnection();
+            String sql = "insert into learning_area_tbl (learning_area_id, learning_area, grade) values(?, ?, ?)";
+            PreparedStatement pst = con.prepareStatement(sql);
+
+            //sets the values from the textfield to the colums in the db
+            pst.setString(1, learningAreaId);
+            pst.setString(2, learningArea);
+            pst.setString(3, grade);
+            
+
+            //If a database row is added to output a success message
+            int rowCount = pst.executeUpdate();
+
+            if (rowCount > 0) {
+                isAdded = true;
+            } else {
+                isAdded = false;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //returns the 'isAdded' variable value
+        return isAdded;
+
+    }
+
+    //method to Update the learning area details
+    public boolean updateLearningArea() {
+
+        boolean isUpdated = false;
+
+        learningAreaId = txt_leaningArearId.getText();
+        learningArea = txt_learningAreaName.getText();
+        grade = (String) cbo_grade.getSelectedItem();
+
+        try {
+            Connection con = DBConnection.getConnection();
+            String sql = "update learning_area_tbl set learning_area = ?, grade = ? where learning_area_id = ?";
+            PreparedStatement pst = con.prepareStatement(sql);
+
+            //sets the values from the textfield to the colums in the db
+            pst.setString(1, learningArea);
+            pst.setString(2, grade);
+            pst.setString(3, learningAreaId);
+
+            //If a database row is added to output a success message
+            int rowCount = pst.executeUpdate();
+
+            if (rowCount > 0) {
+                isUpdated = true;
+            } else {
+                isUpdated = false;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //returns the 'isAdded' variable value
+        return isUpdated;
+
+    }
+
+    //method to delete learningArea detail
+    public boolean deleteLearningArea() {
+
+        boolean isDeleted = false;
+
+        learningAreaId = txt_leaningArearId.getText();
+
+        try {
+            Connection con = DBConnection.getConnection();
+            String sql = "delete from learning_area_tbl where learning_area_id = ?";
+            PreparedStatement pst = con.prepareStatement(sql);
+
+            //sets the values from the textfield to the colums in the db
+            pst.setString(1, learningAreaId);
+
+            //If a database row is added to output a success message
+            int rowCount = pst.executeUpdate();
+
+            if (rowCount > 0) {
+                isDeleted = true;
+            } else {
+                isDeleted = false;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //returns the 'isAdded' variable value
+        return isDeleted;
+    }
+
+    //method to clear jtable before adding new data on it
+    public void clearTable() {
+        DefaultTableModel model = (DefaultTableModel) tbl_learningAreaDetails.getModel();
+        model.setRowCount(0);
+    }
+    
+    private void clearComponents() {
+        txt_leaningArearId.setText("");
+        txt_learningAreaName.setText("");
+        cbo_grade.setSelectedIndex(0);
+    }
+
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -74,6 +226,9 @@ public class ManageLearningArea extends javax.swing.JFrame {
         jPanel15 = new javax.swing.JPanel();
         lbl_logout = new javax.swing.JLabel();
         panel_display = new javax.swing.JPanel();
+        panelSearch = new javax.swing.JPanel();
+        txt_learningAreaName1 = new app.bolivia.swing.JCTextField();
+        jLabel7 = new javax.swing.JLabel();
         jPanel17 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         txt_leaningArearId = new app.bolivia.swing.JCTextField();
@@ -90,6 +245,8 @@ public class ManageLearningArea extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jPanel16 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tbl_learningAreaDetails = new rojeru_san.complementos.RSTableMetro();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1370, 762));
@@ -264,6 +421,31 @@ public class ManageLearningArea extends javax.swing.JFrame {
 
         panel_display.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        panelSearch.setBackground(new java.awt.Color(255, 153, 0));
+        panelSearch.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        txt_learningAreaName1.setBackground(new java.awt.Color(102, 153, 255));
+        txt_learningAreaName1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
+        txt_learningAreaName1.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
+        txt_learningAreaName1.setOpaque(false);
+        txt_learningAreaName1.setPlaceholder("Type to Search using the Name of the Learning Area ....");
+        txt_learningAreaName1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txt_learningAreaName1FocusLost(evt);
+            }
+        });
+        txt_learningAreaName1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_learningAreaName1ActionPerformed(evt);
+            }
+        });
+        panelSearch.add(txt_learningAreaName1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 0, 430, 40));
+
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/icons/search.png"))); // NOI18N
+        panelSearch.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 0, 50, 40));
+
+        panel_display.add(panelSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 0, 700, 50));
+
         jPanel17.setBackground(new java.awt.Color(102, 153, 255));
         jPanel17.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
         jPanel17.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -292,7 +474,7 @@ public class ManageLearningArea extends javax.swing.JFrame {
                 txt_leaningArearIdKeyTyped(evt);
             }
         });
-        jPanel17.add(txt_leaningArearId, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, 260, 40));
+        jPanel17.add(txt_leaningArearId, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, 310, 40));
 
         jLabel5.setFont(new java.awt.Font("Verdana", 0, 20)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
@@ -323,7 +505,7 @@ public class ManageLearningArea extends javax.swing.JFrame {
                 txt_learningAreaNameActionPerformed(evt);
             }
         });
-        jPanel17.add(txt_learningAreaName, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 170, 260, 40));
+        jPanel17.add(txt_learningAreaName, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 170, 310, 40));
 
         btn_delete.setBackground(new java.awt.Color(255, 102, 51));
         btn_delete.setText("DELETE");
@@ -396,7 +578,42 @@ public class ManageLearningArea extends javax.swing.JFrame {
 
         jPanel17.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 340, 50));
 
-        panel_display.add(jPanel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 370, 690));
+        panel_display.add(jPanel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 420, 690));
+
+        tbl_learningAreaDetails.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Learning Area Id", "Learning Area", "Grade"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                true, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tbl_learningAreaDetails.setColorBackgoundHead(new java.awt.Color(102, 153, 255));
+        tbl_learningAreaDetails.setColorBordeFilas(new java.awt.Color(102, 153, 255));
+        tbl_learningAreaDetails.setColorFilasBackgound2(new java.awt.Color(255, 255, 255));
+        tbl_learningAreaDetails.setColorSelBackgound(new java.awt.Color(255, 153, 0));
+        tbl_learningAreaDetails.setFont(new java.awt.Font("Yu Gothic UI Light", 0, 25)); // NOI18N
+        tbl_learningAreaDetails.setFuenteFilas(new java.awt.Font("Yu Gothic UI Semibold", 0, 18)); // NOI18N
+        tbl_learningAreaDetails.setFuenteFilasSelect(new java.awt.Font("Yu Gothic UI", 1, 20)); // NOI18N
+        tbl_learningAreaDetails.setFuenteHead(new java.awt.Font("Yu Gothic UI Semibold", 1, 20)); // NOI18N
+        tbl_learningAreaDetails.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        tbl_learningAreaDetails.setRowHeight(22);
+        tbl_learningAreaDetails.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbl_learningAreaDetailsMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tbl_learningAreaDetails);
+
+        panel_display.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 50, 700, 630));
 
         parentPanel.add(panel_display);
         panel_display.setBounds(250, 0, 1120, 700);
@@ -409,6 +626,7 @@ public class ManageLearningArea extends javax.swing.JFrame {
     public void init() {
         Time.setTime(txtTime, txtDate);  // Calling the setTime method from the Time class
 
+        setLearningAreaDetailsToTable();
     }
     
     
@@ -518,20 +736,20 @@ public class ManageLearningArea extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_learningAreaNameActionPerformed
 
     private void btn_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteActionPerformed
-        if (deleteUser() == true) {
-            JOptionPane.showMessageDialog(this, "User Deleted Successfully...");
+        if (deleteLearningArea() == true) {
+            JOptionPane.showMessageDialog(this, "Learning Area Deleted Successfully...");
             clearTable();
-            setUserDetailsToTable();
+            setLearningAreaDetailsToTable();
         } else {
             JOptionPane.showMessageDialog(this, "User Deletion failed, Please check your Database Connection...");
         }
     }//GEN-LAST:event_btn_deleteActionPerformed
 
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
-        if (addUser() == true) {
-            JOptionPane.showMessageDialog(this, "User Added Successfully...");
+        if (addLearningArea() == true) {
+            JOptionPane.showMessageDialog(this, "Learning Area Added Successfully...");
             clearTable();
-            setUserDetailsToTable();
+            setLearningAreaDetailsToTable();
             clearComponents();
         } else {
             JOptionPane.showMessageDialog(this, "User Addition failed, Please check your Database Connection...");
@@ -539,15 +757,33 @@ public class ManageLearningArea extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_addActionPerformed
 
     private void btn_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updateActionPerformed
-        if (updateUser() == true) {
-            JOptionPane.showMessageDialog(this, "User Updated Successfully...");
+        if (updateLearningArea() == true) {
+            JOptionPane.showMessageDialog(this, "Learning Area Updated Successfully...");
             clearTable();
-            setUserDetailsToTable();
+            setLearningAreaDetailsToTable();
             clearComponents();
         } else {
             JOptionPane.showMessageDialog(this, "User Updation failed, Please check your Database Connection...");
         }
     }//GEN-LAST:event_btn_updateActionPerformed
+
+    private void tbl_learningAreaDetailsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_learningAreaDetailsMouseClicked
+
+        int rowNo = tbl_learningAreaDetails.getSelectedRow();
+        TableModel model = tbl_learningAreaDetails.getModel();
+
+        txt_leaningArearId.setText(model.getValueAt(rowNo, 0).toString());
+        txt_learningAreaName.setText(model.getValueAt(rowNo, 1).toString());
+        cbo_grade.setSelectedItem(model.getValueAt(rowNo, 2).toString());
+    }//GEN-LAST:event_tbl_learningAreaDetailsMouseClicked
+
+    private void txt_learningAreaName1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_learningAreaName1FocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_learningAreaName1FocusLost
+
+    private void txt_learningAreaName1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_learningAreaName1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_learningAreaName1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -599,6 +835,7 @@ public class ManageLearningArea extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel15;
@@ -610,19 +847,23 @@ public class ManageLearningArea extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lbl_close;
     private javax.swing.JLabel lbl_dashboard;
     private javax.swing.JLabel lbl_logout;
     private javax.swing.JLabel lbl_manageSubjects;
     private javax.swing.JLabel lbl_manageTutors;
     private javax.swing.JLabel lbl_menu;
+    private javax.swing.JPanel panelSearch;
     private javax.swing.JPanel panel_display;
     private javax.swing.JPanel panel_menu;
     private javax.swing.JPanel parentPanel;
+    private rojeru_san.complementos.RSTableMetro tbl_learningAreaDetails;
     private javax.swing.JLabel txtDate;
     private javax.swing.JLabel txtTime;
     private app.bolivia.swing.JCTextField txt_leaningArearId;
     private app.bolivia.swing.JCTextField txt_learningAreaName;
+    private app.bolivia.swing.JCTextField txt_learningAreaName1;
     // End of variables declaration//GEN-END:variables
 
 }

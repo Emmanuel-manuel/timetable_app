@@ -21,7 +21,9 @@ public class tables {
         try {
             con = DBConnection.getConnection();
             st = con.createStatement();
-//            st.executeUpdate("create table users (id int(11) AUTO_INCREMENT PRIMARY KEY, name varchar(200),email varchar(200),contact varchar(200),role varchar(200),password varchar(20),securityQuestion varchar(500),answer varchar(200),status varchar(20) )");
+//            st.executeUpdate("create table learning_area_tbl (init int(11) AUTO_INCREMENT PRIMARY KEY, learning_area_id int(20),learning_area varchar(200),grade varchar(200) )");
+
+
 
 //            st.executeUpdate("create table employee_details (id int(11) AUTO_INCREMENT PRIMARY KEY, user_id int(20),name varchar(200),email varchar(100),contact int(13) )");
             
