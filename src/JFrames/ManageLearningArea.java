@@ -128,29 +128,58 @@ public class ManageLearningArea extends javax.swing.JFrame {
 
         try {
             Connection con = DBConnection.getConnection();
-            String sql = "insert into learning_area_tbl (learning_area_id, learning_area, grade) values(?, ?, ?)";
-            PreparedStatement pst = con.prepareStatement(sql);
 
-            //sets the values from the textfield to the colums in the db
-            pst.setString(1, learningAreaId);
-            pst.setString(2, learningArea);
-            pst.setString(3, grade);
+            // Check if a record with the same learning_area and grade already exists
+            String checkSql = "SELECT COUNT(*) AS count FROM learning_area_tbl WHERE learning_area = ? AND grade = ?";
+            PreparedStatement checkPst = con.prepareStatement(checkSql);
+            checkPst.setString(1, learningArea);
+            checkPst.setString(2, grade);
 
-            //If a database row is added to output a success message
-            int rowCount = pst.executeUpdate();
+            ResultSet rs = checkPst.executeQuery();
 
-            if (rowCount > 0) {
-                isAdded = true;
-            } else {
-                isAdded = false;
+            if (rs.next()) {
+                int count = rs.getInt("count");
+
+                // If no duplicate record exists, proceed with the insertion
+                if (count == 0) {
+
+                    String sql = "insert into learning_area_tbl (learning_area_id, learning_area, grade) values(?, ?, ?)";
+                    PreparedStatement pst = con.prepareStatement(sql);
+
+                    //sets the values from the textfield to the colums in the db
+                    pst.setString(1, learningAreaId);
+                    pst.setString(2, learningArea);
+                    pst.setString(3, grade);
+
+                    //If a database row is added to output a success message
+                    int rowCount = pst.executeUpdate();
+
+                    // If the insertion is successful, set isAdded to true
+                    if (rowCount > 0) {
+                        isAdded = true;
+                    }
+
+                    // Close the insert PreparedStatement
+                    pst.close();
+
+                } else {
+                    // If a duplicate record exists, show a message to the user
+                    JOptionPane.showMessageDialog(this, "A record with the same Learning Area and Grade already exists!", "Duplicate Entry", JOptionPane.WARNING_MESSAGE);
+                }
             }
+
+            // Close the check PreparedStatement and ResultSet
+            rs.close();
+            checkPst.close();
+            con.close();
 
         } catch (Exception e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error while adding Learning Area: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-        //returns the 'isAdded' variable value
-        return isAdded;
 
+        // Return the status of the operation
+        return isAdded;
     }
 
     //method to Update the learning area details
