@@ -256,9 +256,9 @@ public class ManageFacilitators extends javax.swing.JFrame {
         lbl_logout = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(1370, 762));
+        setMinimumSize(new java.awt.Dimension(1370, 764));
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(1370, 762));
+        setPreferredSize(new java.awt.Dimension(1370, 764));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());

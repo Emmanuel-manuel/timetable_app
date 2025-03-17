@@ -4,11 +4,11 @@
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
     <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-      <Dimension value="[1370, 762]"/>
+      <Dimension value="[1370, 765]"/>
     </Property>
     <Property name="undecorated" type="boolean" value="true"/>
     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-      <Dimension value="[1370, 762]"/>
+      <Dimension value="[1370, 765]"/>
     </Property>
   </Properties>
   <SyntheticProperties>
@@ -432,10 +432,10 @@
                 <Property name="useNullLayout" type="boolean" value="false"/>
               </Layout>
               <SubComponents>
-                <Component class="app.bolivia.swing.JCTextField" name="txt_learningAreaName1">
+                <Component class="app.bolivia.swing.JCTextField" name="txt_searchLearningArea">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="ff" green="99" red="66" type="rgb"/>
+                      <Color blue="0" green="99" red="ff" type="rgb"/>
                     </Property>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="org.netbeans.modules.form.compat2.border.MatteColorBorderInfo">
@@ -445,18 +445,19 @@
                       </Border>
                     </Property>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Tahoma" size="17" style="0"/>
+                      <Font name="Century Gothic" size="21" style="1"/>
                     </Property>
                     <Property name="opaque" type="boolean" value="false"/>
                     <Property name="placeholder" type="java.lang.String" value="Type to Search using the Name of the Learning Area ...."/>
                   </Properties>
                   <Events>
-                    <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txt_learningAreaName1FocusLost"/>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_learningAreaName1ActionPerformed"/>
+                    <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txt_searchLearningAreaFocusLost"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_searchLearningAreaActionPerformed"/>
+                    <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_searchLearningAreaKeyReleased"/>
                   </Events>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="270" y="0" width="430" height="40"/>
+                      <AbsoluteConstraints x="130" y="0" width="570" height="50"/>
                     </Constraint>
                   </Constraints>
                 </Component>
@@ -468,7 +469,7 @@
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="220" y="0" width="50" height="40"/>
+                      <AbsoluteConstraints x="70" y="0" width="50" height="40"/>
                     </Constraint>
                   </Constraints>
                 </Component>
@@ -515,6 +516,7 @@
                 </Component>
                 <Component class="app.bolivia.swing.JCTextField" name="txt_leaningArearId">
                   <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="ff" green="99" red="66" type="rgb"/>
                     </Property>
@@ -819,7 +821,7 @@
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="3" rowCount="0">
-                        <Column editable="true" title="Learning Area Id" type="java.lang.Object"/>
+                        <Column editable="false" title="Learning Area Id" type="java.lang.Object"/>
                         <Column editable="false" title="Learning Area" type="java.lang.Object"/>
                         <Column editable="false" title="Grade" type="java.lang.Object"/>
                       </Table>
@@ -870,7 +872,7 @@
                     <Property name="intercellSpacing" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                       <Dimension value="[0, 0]"/>
                     </Property>
-                    <Property name="rowHeight" type="int" value="22"/>
+                    <Property name="rowHeight" type="int" value="26"/>
                     <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
                       <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                     </Property>
