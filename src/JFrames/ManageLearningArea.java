@@ -187,35 +187,74 @@ public class ManageLearningArea extends javax.swing.JFrame {
 
         boolean isUpdated = false;
 
+        // Get values from the input fields
         learningAreaId = txt_leaningArearId.getText();
         learningArea = txt_learningAreaName.getText();
         grade = (String) cbo_grade.getSelectedItem();
 
         try {
             Connection con = DBConnection.getConnection();
-            String sql = "update learning_area_tbl set learning_area = ?, grade = ? where learning_area_id = ?";
-            PreparedStatement pst = con.prepareStatement(sql);
 
-            //sets the values from the textfield to the colums in the db
-            pst.setString(1, learningArea);
-            pst.setString(2, grade);
-            pst.setString(3, learningAreaId);
+            // Check if another record with the same learning_area and grade already exists (excluding the current record)
+            String checkSql = "SELECT COUNT(*) AS count FROM learning_area_tbl WHERE learning_area = ? AND grade = ? AND learning_area_id != ?";
+            PreparedStatement checkPst = con.prepareStatement(checkSql);
+            checkPst.setString(1, learningArea);
+            checkPst.setString(2, grade);
+            checkPst.setString(3, learningAreaId);
 
-            //If a database row is added to output a success message
-            int rowCount = pst.executeUpdate();
+            ResultSet rs = checkPst.executeQuery();
 
-            if (rowCount > 0) {
-                isUpdated = true;
-            } else {
-                isUpdated = false;
+            if (rs.next()) {
+                int count = rs.getInt("count");
+
+                // If no duplicate record exists, proceed with the update
+                if (count == 0) {
+                    // SQL query to update the learning area
+                    String updateSql = "update learning_area_tbl set learning_area = ?, grade = ? where learning_area_id = ?";
+                    PreparedStatement pst = con.prepareStatement(updateSql);
+
+                    //sets the values from the textfield to the colums in the db
+                    pst.setString(1, learningArea);
+                    pst.setString(2, grade);
+                    pst.setString(3, learningAreaId);
+
+                    //If a database row is added to output a success message
+                    int rowCount = pst.executeUpdate();
+
+                    if (rowCount > 0) {
+                        isUpdated = true;
+                    }
+//            else {
+//                isUpdated = false;
+//            }
+
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        //returns the 'isAdded' variable value
+//        return isUpdated;
+//
+//    }
+// Close the update PreparedStatement
+                    pst.close();
+                } else {
+                    // If a duplicate record exists, show a message to the user
+                    JOptionPane.showMessageDialog(this, "A record with the same Learning Area and Grade already exists!", "Duplicate Entry", JOptionPane.WARNING_MESSAGE);
+                }
             }
+
+            // Close the check PreparedStatement and ResultSet
+            rs.close();
+            checkPst.close();
+            con.close();
 
         } catch (Exception e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error while updating Learning Area: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-        //returns the 'isAdded' variable value
-        return isUpdated;
 
+        // Return the status of the operation
+        return isUpdated;
     }
 
     //method to delete learningArea detail
@@ -818,27 +857,30 @@ public class ManageLearningArea extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_deleteActionPerformed
 
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
-        if (addLearningArea() == true) {
-            JOptionPane.showMessageDialog(this, "Learning Area Added Successfully...");
+        if (addLearningArea()) {
+            JOptionPane.showMessageDialog(this, "Learning Area added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+
             clearTable();
             setLearningAreaDetailsToTable();
             clearComponents();
             autoIncrementLearningAreaId();
         } else {
-            JOptionPane.showMessageDialog(this, "User Addition failed, Please check your Database Connection...");
+            JOptionPane.showMessageDialog(this, "Failed to add Learning Area.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btn_addActionPerformed
 
     private void btn_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updateActionPerformed
-        if (updateLearningArea() == true) {
+
+        if (updateLearningArea()) {
             JOptionPane.showMessageDialog(this, "Learning Area Updated Successfully...");
             clearTable();
             setLearningAreaDetailsToTable();
             clearComponents();
             autoIncrementLearningAreaId();
         } else {
-            JOptionPane.showMessageDialog(this, "User Updation failed, Please check your Database Connection...");
+            JOptionPane.showMessageDialog(this, "User Updation failed, Please check your Database Connection or Duplicate Entry...");
         }
+
     }//GEN-LAST:event_btn_updateActionPerformed
 
     private void tbl_learningAreaDetailsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_learningAreaDetailsMouseClicked
