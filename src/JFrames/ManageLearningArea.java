@@ -224,18 +224,7 @@ public class ManageLearningArea extends javax.swing.JFrame {
                     if (rowCount > 0) {
                         isUpdated = true;
                     }
-//            else {
-//                isUpdated = false;
-//            }
-
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        //returns the 'isAdded' variable value
-//        return isUpdated;
-//
-//    }
-// Close the update PreparedStatement
+                    // Close the update PreparedStatement
                     pst.close();
                 } else {
                     // If a duplicate record exists, show a message to the user

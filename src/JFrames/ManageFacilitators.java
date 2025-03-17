@@ -27,7 +27,6 @@ public class ManageFacilitators extends javax.swing.JFrame {
 
 //    Initialize components
 //    ManageInventory manageInventory = new ManageInventory();
-
     // Gets the window's screen position
     int xx, xy;
 
@@ -184,7 +183,7 @@ public class ManageFacilitators extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) tbl_userDetails.getModel();
         model.setRowCount(0);
     }
-    
+
     private void clearComponents() {
         txt_userId.setText("");
         txt_userName.setText("");
@@ -676,8 +675,6 @@ public class ManageFacilitators extends javax.swing.JFrame {
         timer.setRepeats(false); // Ensure the timer only fires once
         timer.start(); // Start the timer
     }
-    
-    
 
     private void lbl_closeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_closeMouseClicked
         int a = JOptionPane.showConfirmDialog(null, "Do you really want to Close Application?", "Select", JOptionPane.YES_NO_OPTION);
@@ -801,7 +798,7 @@ public class ManageFacilitators extends javax.swing.JFrame {
     }//GEN-LAST:event_lbl_manageSubjectsMouseEntered
 
     private void lbl_manageSubjectsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_manageSubjectsMouseExited
-                jPanel7.setBackground(mouseExitColor);
+        jPanel7.setBackground(mouseExitColor);
     }//GEN-LAST:event_lbl_manageSubjectsMouseExited
 
     private void lbl_dashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_dashboardMouseClicked
@@ -816,7 +813,7 @@ public class ManageFacilitators extends javax.swing.JFrame {
     }//GEN-LAST:event_lbl_dashboardMouseEntered
 
     private void lbl_dashboardMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_dashboardMouseExited
-        jPanel6.setBackground(mouseExitColor);
+        jPanel8.setBackground(mouseExitColor);
     }//GEN-LAST:event_lbl_dashboardMouseExited
 
     private void lbl_manageTutorsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_manageTutorsMouseClicked
