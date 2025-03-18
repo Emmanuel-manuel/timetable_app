@@ -21,7 +21,7 @@ import timetable_app.*;
 public class ManageFacilitators extends javax.swing.JFrame {
 
     // Global Variables
-    String userName, email, contact;
+    String userName, email, contact, grade, learningArea;
     String userId;
     DefaultTableModel model;
 
@@ -37,26 +37,66 @@ public class ManageFacilitators extends javax.swing.JFrame {
     public ManageFacilitators() {
         initComponents();
         init();
-        setUserDetailsToTable();
+        setFacilitatorDetailsToTable();
+        autoIncrementUserId();// Call the method to auto-increment the ID
+    }
+
+    // Method to auto-increment the Learning Area ID and set it in the text field
+    public void autoIncrementUserId() {
+        try {
+            // Establish a database connection
+            Connection con = DBConnection.getConnection();
+
+            // Query to get the maximum value of learning_area_id
+            String sql = "SELECT MAX(facilitator_id) AS max_id FROM facilitator_tbl";
+            PreparedStatement pst = con.prepareStatement(sql);
+
+            // Execute the query
+            ResultSet rs = pst.executeQuery();
+
+            int maxId = 0; // Default value if no records exist
+
+            // Get the maximum learning_area_id from the result set
+            if (rs.next()) {
+                maxId = rs.getInt("max_id");
+            }
+
+            // Increment the maximum ID by 1
+            int newId = maxId + 1;
+
+            // Set the new ID in the text field
+            txt_userId.setText(String.valueOf(newId));
+
+            // Close the database resources
+            rs.close();
+            pst.close();
+            con.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error while auto-incrementing User ID: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     //to pull the users' details from the db to the table
-    public void setUserDetailsToTable() {
+    public void setFacilitatorDetailsToTable() {
 
         try {
             Connection con = DBConnection.getConnection();
 
             Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("select * from employee_details");
+            ResultSet rs = st.executeQuery("select * from facilitator_tbl");
 
             while (rs.next()) {
-                String userId = rs.getString("user_id");
-                String userName = rs.getString("name");
+                String userId = rs.getString("facilitator_id");
+                String userName = rs.getString("username");
                 String email = rs.getString("email");
                 String contact = rs.getString("contact");
+                String grade = rs.getString("username");
+                String learningArea = rs.getString("learning_area");
 
-                Object[] obj = {userId, userName, email, contact};
-                model = (DefaultTableModel) tbl_userDetails.getModel();
+                Object[] obj = {userId, userName, email, contact, grade, learningArea};
+                model = (DefaultTableModel) tbl_facilitatorDetails.getModel();
                 //adds a row array
                 model.addRow(obj);
             }
@@ -67,7 +107,7 @@ public class ManageFacilitators extends javax.swing.JFrame {
     }
 
     //to add user to the database in users table
-    public boolean addUser() {
+    public boolean addFacilitator() {
 
         boolean isAdded = false;
 
@@ -75,41 +115,69 @@ public class ManageFacilitators extends javax.swing.JFrame {
         userName = txt_userName.getText();
         email = txt_email.getText();
         contact = txt_contact.getText();
+        grade = (String) cbo_grade.getSelectedItem();
+        learningArea = (String) cbo_learningArea.getSelectedItem();
 
         try {
-//            Connection con = DBConnection.getConnection();
-//            String sql = "insert into employee_details values(?,?,?,?)";
-//            PreparedStatement pst = con.prepareStatement(sql);
-
             Connection con = DBConnection.getConnection();
-            String sql = "insert into employee_details (user_id, name, email, contact) values(?, ?, ?, ?)";
-            PreparedStatement pst = con.prepareStatement(sql);
 
-            //sets the values from the textfield to the colums in the db
-            pst.setString(1, userId);
-            pst.setString(2, userName);
-            pst.setString(3, email);
-            pst.setString(4, contact);
+            // Check if a record with the same learning_area and grade already exists
+            String checkSql = "SELECT COUNT(*) AS count FROM facilitator_tbl WHERE grade = ? AND learning_area = ?";
+            PreparedStatement checkPst = con.prepareStatement(checkSql);
+            checkPst.setString(1, grade);
+            checkPst.setString(2, learningArea);
 
-            //If a database row is added to output a success message
-            int rowCount = pst.executeUpdate();
+            ResultSet rs = checkPst.executeQuery();
 
-            if (rowCount > 0) {
-                isAdded = true;
-            } else {
-                isAdded = false;
+            if (rs.next()) {
+                int count = rs.getInt("count");
+
+                // If no duplicate record exists, proceed with the insertion
+                if (count == 0) {
+
+                    String sql = "insert into facilitator_tbl (facilitator_id, name, email, contact, grade, learning_area) values(?, ?, ?, ?, ?, ?)";
+                    PreparedStatement pst = con.prepareStatement(sql);
+
+                    //sets the values from the textfield to the colums in the db
+                    pst.setString(1, userId);
+                    pst.setString(2, userName);
+                    pst.setString(3, email);
+                    pst.setString(4, contact);
+                    pst.setString(5, grade);
+                    pst.setString(6, learningArea);
+
+                    //If a database row is added to output a success message
+                    int rowCount = pst.executeUpdate();
+
+                    if (rowCount > 0) {
+                        isAdded = true;
+                    }
+
+                    // Close the insert PreparedStatement
+                    pst.close();
+
+                } else {
+                    // If a duplicate record exists, show a message to the user
+                    JOptionPane.showMessageDialog(this, "A record with the same Learning Area and Grade already exists!", "Duplicate Entry", JOptionPane.WARNING_MESSAGE);
+                }
             }
+
+            // Close the check PreparedStatement and ResultSet
+            rs.close();
+            checkPst.close();
+            con.close();
 
         } catch (Exception e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error while adding Facilitator Details: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-        //returns the 'isAdded' variable value
+
+        // Return the status of the operation
         return isAdded;
-
     }
-
     //method to Update the user details
-    public boolean updateUser() {
+
+    public boolean updateFacilitator() {
 
         boolean isUpdated = false;
 
@@ -117,36 +185,67 @@ public class ManageFacilitators extends javax.swing.JFrame {
         userName = txt_userName.getText();
         email = txt_email.getText();
         contact = txt_contact.getText();
+        grade = (String) cbo_grade.getSelectedItem();
+        learningArea = (String) cbo_learningArea.getSelectedItem();
 
         try {
             Connection con = DBConnection.getConnection();
-            String sql = "update employee_details set name = ?, email = ?, contact = ? where user_id = ?";
-            PreparedStatement pst = con.prepareStatement(sql);
 
-            //sets the values from the textfield to the colums in the db
-            pst.setString(1, userName);
-            pst.setString(2, email);
-            pst.setString(3, contact);
-            pst.setString(4, userId);
+            // Check if another record with the same learning_area and grade already exists (excluding the current record)
+            String checkSql = "SELECT COUNT(*) AS count FROM facilitator_tbl WHERE grade = ? AND learning_area = ? AND facilitator != ?";
+            PreparedStatement checkPst = con.prepareStatement(checkSql);
+            checkPst.setString(1, learningArea);
+            checkPst.setString(2, grade);
+            checkPst.setString(3, userId);
 
-            //If a database row is added to output a success message
-            int rowCount = pst.executeUpdate();
+            ResultSet rs = checkPst.executeQuery();
 
-            if (rowCount > 0) {
-                isUpdated = true;
-            } else {
-                isUpdated = false;
+            if (rs.next()) {
+                int count = rs.getInt("count");
+
+                // If no duplicate record exists, proceed with the update
+                if (count == 0) {
+                    // SQL query to update the learning area
+                    String sql = "update facilitator_tbl set username = ?, email = ?, contact = ?, grade = ?, learning_area = ? where facilitator_id = ?";
+                    PreparedStatement pst = con.prepareStatement(sql);
+
+                    //sets the values from the textfield to the colums in the db
+                    pst.setString(1, userName);
+                    pst.setString(2, email);
+                    pst.setString(3, contact);
+                    pst.setString(4, grade);
+                    pst.setString(5, learningArea);
+                    pst.setString(6, userId);
+
+                    //If a database row is added to output a success message
+                    int rowCount = pst.executeUpdate();
+
+                    if (rowCount > 0) {
+                        isUpdated = true;
+                    }
+                    // Close the update PreparedStatement
+                    pst.close();
+                } else {
+                    // If a duplicate record exists, show a message to the user
+                    JOptionPane.showMessageDialog(this, "A record with the same Learning Area and Grade already exists!", "Duplicate Entry", JOptionPane.WARNING_MESSAGE);
+                }
             }
+
+            // Close the check PreparedStatement and ResultSet
+            rs.close();
+            checkPst.close();
+            con.close();
 
         } catch (Exception e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error while updating Facilitator Deatails: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-        //returns the 'isAdded' variable value
+
+        // Return the status of the operation
         return isUpdated;
-
     }
-
     //method to delete user detail
+
     public boolean deleteUser() {
 
         boolean isDeleted = false;
@@ -180,7 +279,7 @@ public class ManageFacilitators extends javax.swing.JFrame {
 
     //method to clear jtable before adding new data on it
     public void clearTable() {
-        DefaultTableModel model = (DefaultTableModel) tbl_userDetails.getModel();
+        DefaultTableModel model = (DefaultTableModel) tbl_facilitatorDetails.getModel();
         model.setRowCount(0);
     }
 
@@ -241,7 +340,7 @@ public class ManageFacilitators extends javax.swing.JFrame {
         cbo_grade = new rojerusan.RSComboMetro();
         cbo_learningArea = new rojerusan.RSComboMetro();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tbl_userDetails = new rojeru_san.complementos.RSTableMetro();
+        tbl_facilitatorDetails = new rojeru_san.complementos.RSTableMetro();
         panel_menu = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
@@ -527,30 +626,38 @@ public class ManageFacilitators extends javax.swing.JFrame {
 
         panel_display.add(jPanel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 370, 690));
 
-        tbl_userDetails.setModel(new javax.swing.table.DefaultTableModel(
+        tbl_facilitatorDetails.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "User Id", "Name", "Email", "Contact"
+                "U_Id", "Name", "Email", "Contact", "Grade", "Learning_Area"
             }
-        ));
-        tbl_userDetails.setColorBackgoundHead(new java.awt.Color(102, 153, 255));
-        tbl_userDetails.setColorBordeFilas(new java.awt.Color(102, 153, 255));
-        tbl_userDetails.setColorFilasBackgound2(new java.awt.Color(255, 255, 255));
-        tbl_userDetails.setColorSelBackgound(new java.awt.Color(255, 153, 0));
-        tbl_userDetails.setFont(new java.awt.Font("Yu Gothic UI Light", 0, 25)); // NOI18N
-        tbl_userDetails.setFuenteFilas(new java.awt.Font("Yu Gothic UI Semibold", 0, 18)); // NOI18N
-        tbl_userDetails.setFuenteFilasSelect(new java.awt.Font("Yu Gothic UI", 1, 20)); // NOI18N
-        tbl_userDetails.setFuenteHead(new java.awt.Font("Yu Gothic UI Semibold", 1, 20)); // NOI18N
-        tbl_userDetails.setIntercellSpacing(new java.awt.Dimension(0, 0));
-        tbl_userDetails.setRowHeight(22);
-        tbl_userDetails.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tbl_userDetailsMouseClicked(evt);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(tbl_userDetails);
+        tbl_facilitatorDetails.setColorBackgoundHead(new java.awt.Color(102, 153, 255));
+        tbl_facilitatorDetails.setColorBordeFilas(new java.awt.Color(102, 153, 255));
+        tbl_facilitatorDetails.setColorFilasBackgound2(new java.awt.Color(255, 255, 255));
+        tbl_facilitatorDetails.setColorSelBackgound(new java.awt.Color(255, 153, 0));
+        tbl_facilitatorDetails.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        tbl_facilitatorDetails.setFuenteFilas(new java.awt.Font("Yu Gothic UI Semibold", 0, 18)); // NOI18N
+        tbl_facilitatorDetails.setFuenteFilasSelect(new java.awt.Font("Yu Gothic UI", 1, 20)); // NOI18N
+        tbl_facilitatorDetails.setFuenteHead(new java.awt.Font("Yu Gothic UI Semibold", 1, 20)); // NOI18N
+        tbl_facilitatorDetails.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        tbl_facilitatorDetails.setRowHeight(22);
+        tbl_facilitatorDetails.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbl_facilitatorDetailsMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tbl_facilitatorDetails);
 
         panel_display.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 0, 750, 680));
 
@@ -740,7 +847,7 @@ public class ManageFacilitators extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_deleteActionPerformed
 
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
-        if (addUser() == true) {
+        if (addFacilitator() == true) {
             JOptionPane.showMessageDialog(this, "User Added Successfully...");
             clearTable();
             setUserDetailsToTable();
@@ -769,17 +876,17 @@ public class ManageFacilitators extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_emailActionPerformed
 
-    private void tbl_userDetailsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_userDetailsMouseClicked
+    private void tbl_facilitatorDetailsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_facilitatorDetailsMouseClicked
 
-        int rowNo = tbl_userDetails.getSelectedRow();
-        TableModel model = tbl_userDetails.getModel();
+        int rowNo = tbl_facilitatorDetails.getSelectedRow();
+        TableModel model = tbl_facilitatorDetails.getModel();
 
         txt_userId.setText(model.getValueAt(rowNo, 0).toString());
         txt_userName.setText(model.getValueAt(rowNo, 1).toString());
         txt_email.setText(model.getValueAt(rowNo, 2).toString());
         txt_contact.setText(model.getValueAt(rowNo, 3).toString());
 
-    }//GEN-LAST:event_tbl_userDetailsMouseClicked
+    }//GEN-LAST:event_tbl_facilitatorDetailsMouseClicked
 
     private void txt_userIdKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_userIdKeyTyped
         if (!Character.isDigit(evt.getKeyChar())) {
@@ -929,7 +1036,7 @@ public class ManageFacilitators extends javax.swing.JFrame {
     private javax.swing.JPanel panel_display;
     private javax.swing.JPanel panel_menu;
     private javax.swing.JPanel parentPanel;
-    private rojeru_san.complementos.RSTableMetro tbl_userDetails;
+    private rojeru_san.complementos.RSTableMetro tbl_facilitatorDetails;
     private javax.swing.JLabel txtDate;
     private javax.swing.JLabel txtTime;
     private app.bolivia.swing.JCTextField txt_contact;
