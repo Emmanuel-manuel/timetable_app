@@ -8,6 +8,7 @@ package JFrames;
 //import MiniFrames.*;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
+import java.awt.event.ItemEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,9 +22,9 @@ import timetable_app.*;
 public class ManageFacilitators extends javax.swing.JFrame {
 
     // Global Variables
-    String userName, email, contact, grade, learningArea;
-    String userId;
+    String init, userId, userName, email, contact, grade, learningArea;
     DefaultTableModel model;
+    PreparedStatement pst;
 
 //    Initialize components
 //    ManageInventory manageInventory = new ManageInventory();
@@ -38,7 +39,47 @@ public class ManageFacilitators extends javax.swing.JFrame {
         initComponents();
         init();
         setFacilitatorDetailsToTable();
-        autoIncrementUserId();// Call the method to auto-increment the ID
+        // Call the method to auto-increment the ID
+        autoIncrementUserId();
+        autoIncrementInit();
+    }
+
+    // Method to auto-increment the Learning Area ID and set it in the text field
+    public void autoIncrementInit() {
+        try {
+            // Establish a database connection
+            Connection con = DBConnection.getConnection();
+
+            // Query to get the maximum value of init
+            String sql_init = "SELECT MAX(init) AS max_init FROM facilitator_tbl";
+            pst = con.prepareStatement(sql_init);
+
+            // Execute the query
+            ResultSet rs = pst.executeQuery();
+
+            // Default value if no records exist
+            int maxInit = 0;
+
+            // Get the maximum init from the result set
+            if (rs.next()) {
+                maxInit = rs.getInt("max_init");
+            }
+
+            // Increment the maximum init by 1
+            int newInit = maxInit + 1;
+
+            // Set the new init in the text field
+            txt_init.setText(String.valueOf(newInit));
+
+            // Close the database resources
+            rs.close();
+            pst.close();
+            con.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error while auto-incrementing init: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     // Method to auto-increment the Learning Area ID and set it in the text field
@@ -49,7 +90,7 @@ public class ManageFacilitators extends javax.swing.JFrame {
 
             // Query to get the maximum value of learning_area_id
             String sql = "SELECT MAX(facilitator_id) AS max_id FROM facilitator_tbl";
-            PreparedStatement pst = con.prepareStatement(sql);
+            pst = con.prepareStatement(sql);
 
             // Execute the query
             ResultSet rs = pst.executeQuery();
@@ -88,14 +129,15 @@ public class ManageFacilitators extends javax.swing.JFrame {
             ResultSet rs = st.executeQuery("select * from facilitator_tbl");
 
             while (rs.next()) {
+                String init = rs.getString("init");
                 String userId = rs.getString("facilitator_id");
                 String userName = rs.getString("username");
                 String email = rs.getString("email");
                 String contact = rs.getString("contact");
-                String grade = rs.getString("username");
+                String grade = rs.getString("grade");
                 String learningArea = rs.getString("learning_area");
 
-                Object[] obj = {userId, userName, email, contact, grade, learningArea};
+                Object[] obj = {init, userId, userName, email, contact, grade, learningArea};
                 model = (DefaultTableModel) tbl_facilitatorDetails.getModel();
                 //adds a row array
                 model.addRow(obj);
@@ -135,8 +177,8 @@ public class ManageFacilitators extends javax.swing.JFrame {
                 // If no duplicate record exists, proceed with the insertion
                 if (count == 0) {
 
-                    String sql = "insert into facilitator_tbl (facilitator_id, name, email, contact, grade, learning_area) values(?, ?, ?, ?, ?, ?)";
-                    PreparedStatement pst = con.prepareStatement(sql);
+                    String sql = "insert into facilitator_tbl (facilitator_id, username, email, contact, grade, learning_area) values(?, ?, ?, ?, ?, ?)";
+                    pst = con.prepareStatement(sql);
 
                     //sets the values from the textfield to the colums in the db
                     pst.setString(1, userId);
@@ -175,12 +217,14 @@ public class ManageFacilitators extends javax.swing.JFrame {
         // Return the status of the operation
         return isAdded;
     }
-    //method to Update the user details
 
+    //method to Update the user details
     public boolean updateFacilitator() {
 
         boolean isUpdated = false;
 
+        // Get values from the input fields
+        init = txt_init.getText();
         userId = txt_userId.getText();
         userName = txt_userName.getText();
         email = txt_email.getText();
@@ -192,11 +236,11 @@ public class ManageFacilitators extends javax.swing.JFrame {
             Connection con = DBConnection.getConnection();
 
             // Check if another record with the same learning_area and grade already exists (excluding the current record)
-            String checkSql = "SELECT COUNT(*) AS count FROM facilitator_tbl WHERE grade = ? AND learning_area = ? AND facilitator != ?";
+            String checkSql = "SELECT COUNT(*) AS count FROM facilitator_tbl WHERE grade = ? AND learning_area = ? AND init != ?";
             PreparedStatement checkPst = con.prepareStatement(checkSql);
             checkPst.setString(1, learningArea);
             checkPst.setString(2, grade);
-            checkPst.setString(3, userId);
+            checkPst.setString(3, init);
 
             ResultSet rs = checkPst.executeQuery();
 
@@ -206,8 +250,8 @@ public class ManageFacilitators extends javax.swing.JFrame {
                 // If no duplicate record exists, proceed with the update
                 if (count == 0) {
                     // SQL query to update the learning area
-                    String sql = "update facilitator_tbl set username = ?, email = ?, contact = ?, grade = ?, learning_area = ? where facilitator_id = ?";
-                    PreparedStatement pst = con.prepareStatement(sql);
+                    String sql = "update facilitator_tbl set username = ?, email = ?, contact = ?, grade = ?, learning_area = ? where init = ?";
+                    pst = con.prepareStatement(sql);
 
                     //sets the values from the textfield to the colums in the db
                     pst.setString(1, userName);
@@ -215,7 +259,7 @@ public class ManageFacilitators extends javax.swing.JFrame {
                     pst.setString(3, contact);
                     pst.setString(4, grade);
                     pst.setString(5, learningArea);
-                    pst.setString(6, userId);
+                    pst.setString(6, init);
 
                     //If a database row is added to output a success message
                     int rowCount = pst.executeUpdate();
@@ -246,40 +290,82 @@ public class ManageFacilitators extends javax.swing.JFrame {
     }
     //method to delete user detail
 
-    public boolean deleteUser() {
+    public boolean deleteFacilitator() {
 
         boolean isDeleted = false;
 
+        // Get values from the input fields
+        init = txt_init.getText();
 //        studentId = Integer.parseInt(txt_studentId.getText());
-        userId = txt_userId.getText();
 
         try {
             Connection con = DBConnection.getConnection();
-            String sql = "delete from employee_details where user_id = ?";
-            PreparedStatement pst = con.prepareStatement(sql);
+            String sql = "delete from facilitator_tbl where init = ?";
+            pst = con.prepareStatement(sql);
 
             //sets the values from the textfield to the colums in the db
-            pst.setString(1, userId);
+            pst.setString(1, init);
 
             //If a database row is added to output a success message
             int rowCount = pst.executeUpdate();
 
             if (rowCount > 0) {
                 isDeleted = true;
-            } else {
-                isDeleted = false;
             }
+
+            // Close the PreparedStatement
+            pst.close();
+            con.close();
 
         } catch (Exception e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error while deleting Facilitator Details: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-        //returns the 'isAdded' variable value
+
+        // Return the status of the operation
         return isDeleted;
+    }
+
+    // Method to populate cbo_learningArea based on the selected grade
+    private void populateLearningAreasBasedOnGrade() {
+        // Get the selected grade from cbo_grade
+        String selectedGrade = (String) cbo_grade.getSelectedItem();
+
+        // Clear the existing items in cbo_learningArea
+        cbo_learningArea.removeAllItems();
+
+        try {
+            // Establish a database connection
+            Connection con = DBConnection.getConnection();
+
+            // Query to retrieve learning_area values for the selected grade
+            String sql = "SELECT learning_area FROM learning_area_tbl WHERE grade = ?";
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setString(1, selectedGrade);
+
+            // Execute the query
+            ResultSet rs = pst.executeQuery();
+
+            // Populate cbo_learningArea with the retrieved learning_area values
+            while (rs.next()) {
+                String learningArea = rs.getString("learning_area");
+                cbo_learningArea.addItem(learningArea);
+            }
+
+            // Close the database resources
+            rs.close();
+            pst.close();
+            con.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error while populating Learning Areas: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     //method to clear jtable before adding new data on it
     public void clearTable() {
-        DefaultTableModel model = (DefaultTableModel) tbl_facilitatorDetails.getModel();
+        model = (DefaultTableModel) tbl_facilitatorDetails.getModel();
         model.setRowCount(0);
     }
 
@@ -288,8 +374,10 @@ public class ManageFacilitators extends javax.swing.JFrame {
         txt_userName.setText("");
         txt_email.setText("");
         txt_contact.setText("");
+        cbo_grade.setSelectedIndex(0);
+        cbo_learningArea.setSelectedItem(null);
 //        jDateDOB.setDate(null);
-//        cboGender.setSelectedIndex(0);
+
 //        jlabelimage.setIcon(null);
 //        tbl_details.clearSelection();
 //        imagePath = null;
@@ -339,6 +427,7 @@ public class ManageFacilitators extends javax.swing.JFrame {
         jLabel20 = new javax.swing.JLabel();
         cbo_grade = new rojerusan.RSComboMetro();
         cbo_learningArea = new rojerusan.RSComboMetro();
+        txt_init = new app.bolivia.swing.JCTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbl_facilitatorDetails = new rojeru_san.complementos.RSTableMetro();
         panel_menu = new javax.swing.JPanel();
@@ -441,7 +530,7 @@ public class ManageFacilitators extends javax.swing.JFrame {
         jLabel9.setFont(new java.awt.Font("Verdana", 0, 20)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("Enter User Id");
-        jPanel15.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 70, 180, -1));
+        jPanel15.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 70, 150, -1));
 
         txt_userId.setBackground(new java.awt.Color(102, 153, 255));
         txt_userId.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
@@ -462,22 +551,22 @@ public class ManageFacilitators extends javax.swing.JFrame {
                 txt_userIdKeyTyped(evt);
             }
         });
-        jPanel15.add(txt_userId, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, 260, 40));
+        jPanel15.add(txt_userId, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 90, 150, 40));
 
         jLabel5.setFont(new java.awt.Font("Verdana", 0, 20)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/icons/icons8_Contact_26px.png"))); // NOI18N
-        jPanel15.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 50, 50));
+        jPanel15.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 50, 40));
 
         jLabel6.setFont(new java.awt.Font("Verdana", 0, 20)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/icons/icons8_Collaborator_Male_26px.png"))); // NOI18N
-        jPanel15.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 50, 50));
+        jPanel15.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 50, 50));
 
         jLabel10.setFont(new java.awt.Font("Verdana", 0, 20)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("Enter User Name");
-        jPanel15.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 150, 180, -1));
+        jPanel15.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 150, 180, -1));
 
         txt_userName.setBackground(new java.awt.Color(102, 153, 255));
         txt_userName.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
@@ -493,7 +582,7 @@ public class ManageFacilitators extends javax.swing.JFrame {
                 txt_userNameActionPerformed(evt);
             }
         });
-        jPanel15.add(txt_userName, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 170, 260, 40));
+        jPanel15.add(txt_userName, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 170, 250, 40));
 
         btn_delete.setBackground(new java.awt.Color(255, 102, 51));
         btn_delete.setText("DELETE");
@@ -502,7 +591,7 @@ public class ManageFacilitators extends javax.swing.JFrame {
                 btn_deleteActionPerformed(evt);
             }
         });
-        jPanel15.add(btn_delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 610, 110, 60));
+        jPanel15.add(btn_delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 610, 110, 60));
 
         btn_add.setBackground(new java.awt.Color(255, 102, 51));
         btn_add.setText("ADD");
@@ -511,7 +600,7 @@ public class ManageFacilitators extends javax.swing.JFrame {
                 btn_addActionPerformed(evt);
             }
         });
-        jPanel15.add(btn_add, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 610, 110, 60));
+        jPanel15.add(btn_add, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 610, 110, 60));
 
         btn_update.setBackground(new java.awt.Color(255, 102, 51));
         btn_update.setText("UPDATE");
@@ -520,12 +609,12 @@ public class ManageFacilitators extends javax.swing.JFrame {
                 btn_updateActionPerformed(evt);
             }
         });
-        jPanel15.add(btn_update, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 610, 110, 60));
+        jPanel15.add(btn_update, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 610, 110, 60));
 
         jLabel13.setFont(new java.awt.Font("Verdana", 0, 20)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setText("Email");
-        jPanel15.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 230, 180, -1));
+        jPanel15.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 230, 180, -1));
 
         txt_email.setBackground(new java.awt.Color(102, 153, 255));
         txt_email.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
@@ -536,17 +625,17 @@ public class ManageFacilitators extends javax.swing.JFrame {
                 txt_emailActionPerformed(evt);
             }
         });
-        jPanel15.add(txt_email, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 250, 270, 40));
+        jPanel15.add(txt_email, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 250, 250, 40));
 
         jLabel16.setFont(new java.awt.Font("Verdana", 0, 20)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(255, 255, 255));
         jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/icons/icons8_Secured_Letter_50px.png"))); // NOI18N
-        jPanel15.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, 60, -1));
+        jPanel15.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 240, 60, -1));
 
         jLabel15.setFont(new java.awt.Font("Verdana", 0, 20)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(255, 255, 255));
         jLabel15.setText("Contact");
-        jPanel15.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 310, 180, -1));
+        jPanel15.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 310, 180, -1));
 
         txt_contact.setBackground(new java.awt.Color(102, 153, 255));
         txt_contact.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
@@ -562,17 +651,17 @@ public class ManageFacilitators extends javax.swing.JFrame {
                 txt_contactKeyTyped(evt);
             }
         });
-        jPanel15.add(txt_contact, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 330, 270, 40));
+        jPanel15.add(txt_contact, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 330, 250, 40));
 
         jLabel14.setFont(new java.awt.Font("Verdana", 0, 20)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
         jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/icons/icons8_Google_Mobile_50px.png"))); // NOI18N
-        jPanel15.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 320, 60, 50));
+        jPanel15.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, 60, 50));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 30)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("  Manage Facilitators'");
-        jPanel15.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, 300, -1));
+        jPanel15.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 300, -1));
 
         jPanel16.setBackground(new java.awt.Color(255, 255, 255));
         jPanel16.setForeground(new java.awt.Color(255, 255, 255));
@@ -588,54 +677,84 @@ public class ManageFacilitators extends javax.swing.JFrame {
             .addGap(0, 3, Short.MAX_VALUE)
         );
 
-        jPanel15.add(jPanel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 50, 259, 3));
+        jPanel15.add(jPanel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, 259, 3));
 
         jLabel17.setFont(new java.awt.Font("Verdana", 0, 20)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(255, 255, 255));
         jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/icons/icons8_Unit_26px.png"))); // NOI18N
-        jPanel15.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 500, 40, 50));
+        jPanel15.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 500, 30, 50));
 
         jLabel18.setFont(new java.awt.Font("Verdana", 0, 20)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(255, 255, 255));
         jLabel18.setText("Learning Area");
-        jPanel15.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 490, 180, -1));
+        jPanel15.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 490, 180, -1));
 
         jLabel19.setFont(new java.awt.Font("Verdana", 0, 20)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(255, 255, 255));
         jLabel19.setText("Grade");
-        jPanel15.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 400, 80, -1));
+        jPanel15.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 400, 80, -1));
 
         jLabel20.setFont(new java.awt.Font("Verdana", 0, 20)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(255, 255, 255));
         jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/icons/icons8_Library_32px.png"))); // NOI18N
-        jPanel15.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 410, 50, 50));
+        jPanel15.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 410, 50, 50));
 
         cbo_grade.setForeground(new java.awt.Color(0, 0, 0));
-        cbo_grade.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Grade 1", "Grade 2 ", "Grade 3", "Grade 4", "Grade 5", "Grade 6", "Grade 7", "Grade 8", "Grade 9" }));
+        cbo_grade.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Select", "Grade 1", "Grade 2 ", "Grade 3", "Grade 4", "Grade 5", "Grade 6", "Grade 7", "Grade 8", "Grade 9" }));
         cbo_grade.setColorBorde(new java.awt.Color(102, 153, 255));
         cbo_grade.setColorFondo(new java.awt.Color(255, 153, 0));
         cbo_grade.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        jPanel15.add(cbo_grade, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 430, 190, 30));
+        cbo_grade.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbo_gradeItemStateChanged(evt);
+            }
+        });
+        jPanel15.add(cbo_grade, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 430, 170, 30));
 
         cbo_learningArea.setForeground(new java.awt.Color(0, 0, 0));
         cbo_learningArea.setColorBorde(new java.awt.Color(102, 153, 255));
         cbo_learningArea.setColorFondo(new java.awt.Color(255, 153, 0));
         cbo_learningArea.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         cbo_learningArea.setPreferredSize(new java.awt.Dimension(200, 30));
-        jPanel15.add(cbo_learningArea, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 520, 280, 35));
+        jPanel15.add(cbo_learningArea, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 520, 260, 35));
 
-        panel_display.add(jPanel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 370, 690));
+        txt_init.setEditable(false);
+        txt_init.setBackground(new java.awt.Color(102, 153, 255));
+        txt_init.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
+        txt_init.setForeground(new java.awt.Color(255, 0, 0));
+        txt_init.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_init.setText("      ");
+        txt_init.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        txt_init.setPlaceholder("S.no");
+        txt_init.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txt_initFocusLost(evt);
+            }
+        });
+        txt_init.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_initActionPerformed(evt);
+            }
+        });
+        txt_init.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_initKeyTyped(evt);
+            }
+        });
+        jPanel15.add(txt_init, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 90, 60, 40));
+
+        panel_display.add(jPanel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 330, 690));
 
         tbl_facilitatorDetails.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "U_Id", "Name", "Email", "Contact", "Grade", "Learning_Area"
+                "S.no", "U_Id", "Name", "Email", "Contact", "Grade", "Learning_Area"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -659,7 +778,7 @@ public class ManageFacilitators extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(tbl_facilitatorDetails);
 
-        panel_display.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 0, 750, 680));
+        panel_display.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 0, 790, 680));
 
         parentPanel.add(panel_display);
         panel_display.setBounds(250, 0, 1120, 700);
@@ -837,34 +956,41 @@ public class ManageFacilitators extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_userNameActionPerformed
 
     private void btn_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteActionPerformed
-        if (deleteUser() == true) {
-            JOptionPane.showMessageDialog(this, "User Deleted Successfully...");
+        if (deleteFacilitator()) {
+            JOptionPane.showMessageDialog(this, "Facilitator Deleted Successfully!");
             clearTable();
-            setUserDetailsToTable();
+            setFacilitatorDetailsToTable(); // Refresh the table
+            clearComponents(); // Clear input fields
+            autoIncrementUserId();
+            autoIncrementInit();
         } else {
-            JOptionPane.showMessageDialog(this, "User Deletion failed, Please check your Database Connection...");
+            JOptionPane.showMessageDialog(this, "Deletion failed. Please check your input or database connection.");
         }
     }//GEN-LAST:event_btn_deleteActionPerformed
 
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
-        if (addFacilitator() == true) {
-            JOptionPane.showMessageDialog(this, "User Added Successfully...");
+        if (addFacilitator()) {
+            JOptionPane.showMessageDialog(this, "Facilitator Details added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
             clearTable();
-            setUserDetailsToTable();
+            setFacilitatorDetailsToTable();
             clearComponents();
+            autoIncrementUserId();
+            autoIncrementInit();
         } else {
-            JOptionPane.showMessageDialog(this, "User Addition failed, Please check your Database Connection...");
+            JOptionPane.showMessageDialog(this, "Facilitator Details Addition failed.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btn_addActionPerformed
 
     private void btn_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updateActionPerformed
-        if (updateUser() == true) {
-            JOptionPane.showMessageDialog(this, "User Updated Successfully...");
+        if (updateFacilitator()) {
+            JOptionPane.showMessageDialog(this, "Facilitator Details Updated Successfully...");
             clearTable();
-            setUserDetailsToTable();
-            clearComponents();
+            setFacilitatorDetailsToTable();// Refresh the table
+            clearComponents();// Clear input fields
+            autoIncrementUserId();
+            autoIncrementInit();
         } else {
-            JOptionPane.showMessageDialog(this, "User Updation failed, Please check your Database Connection...");
+            JOptionPane.showMessageDialog(this, "Facilitator Details Updation failed, Please check your Database Connection...");
         }
     }//GEN-LAST:event_btn_updateActionPerformed
 
@@ -881,10 +1007,13 @@ public class ManageFacilitators extends javax.swing.JFrame {
         int rowNo = tbl_facilitatorDetails.getSelectedRow();
         TableModel model = tbl_facilitatorDetails.getModel();
 
-        txt_userId.setText(model.getValueAt(rowNo, 0).toString());
-        txt_userName.setText(model.getValueAt(rowNo, 1).toString());
-        txt_email.setText(model.getValueAt(rowNo, 2).toString());
-        txt_contact.setText(model.getValueAt(rowNo, 3).toString());
+        txt_init.setText(model.getValueAt(rowNo, 0).toString());
+        txt_userId.setText(model.getValueAt(rowNo, 1).toString());
+        txt_userName.setText(model.getValueAt(rowNo, 2).toString());
+        txt_email.setText(model.getValueAt(rowNo, 3).toString());
+        txt_contact.setText(model.getValueAt(rowNo, 4).toString());
+        cbo_grade.setSelectedItem(model.getValueAt(rowNo, 5).toString());
+        cbo_learningArea.setSelectedItem(model.getValueAt(rowNo, 6).toString());
 
     }//GEN-LAST:event_tbl_facilitatorDetailsMouseClicked
 
@@ -951,6 +1080,24 @@ public class ManageFacilitators extends javax.swing.JFrame {
 
         delayBeforeClosingPreviousJframe();
     }//GEN-LAST:event_lbl_manageSubjectsMouseClicked
+
+    private void cbo_gradeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbo_gradeItemStateChanged
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+            populateLearningAreasBasedOnGrade();
+        }
+    }//GEN-LAST:event_cbo_gradeItemStateChanged
+
+    private void txt_initFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_initFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_initFocusLost
+
+    private void txt_initActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_initActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_initActionPerformed
+
+    private void txt_initKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_initKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_initKeyTyped
 
     /**
      * @param args the command line arguments
@@ -1041,6 +1188,7 @@ public class ManageFacilitators extends javax.swing.JFrame {
     private javax.swing.JLabel txtTime;
     private app.bolivia.swing.JCTextField txt_contact;
     private app.bolivia.swing.JCTextField txt_email;
+    private app.bolivia.swing.JCTextField txt_init;
     private app.bolivia.swing.JCTextField txt_userId;
     private app.bolivia.swing.JCTextField txt_userName;
     // End of variables declaration//GEN-END:variables
