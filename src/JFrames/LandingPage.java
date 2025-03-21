@@ -71,6 +71,9 @@ public class LandingPage extends javax.swing.JFrame {
         radioButton_lower = new javax.swing.JRadioButton();
         radioButton_upper = new javax.swing.JRadioButton();
         btn_refresh = new rojerusan.RSMaterialButtonCircle();
+        cbo_grade = new rojerusan.RSComboMetro();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1370, 770));
@@ -246,6 +249,8 @@ public class LandingPage extends javax.swing.JFrame {
 
         panel_display.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jPanel4.setBackground(new java.awt.Color(102, 153, 255));
+        jPanel4.setDoubleBuffered(false);
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Choose the School Level", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.ABOVE_TOP, new java.awt.Font("Times New Roman", 1, 18), new java.awt.Color(255, 154, 0))); // NOI18N
@@ -287,7 +292,29 @@ public class LandingPage extends javax.swing.JFrame {
         });
         jPanel4.add(btn_refresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 10, 110, 50));
 
-        panel_display.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 410, 130));
+        cbo_grade.setForeground(new java.awt.Color(0, 0, 0));
+        cbo_grade.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Select" }));
+        cbo_grade.setColorBorde(new java.awt.Color(102, 153, 255));
+        cbo_grade.setColorFondo(new java.awt.Color(255, 153, 0));
+        cbo_grade.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        cbo_grade.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbo_gradeItemStateChanged(evt);
+            }
+        });
+        jPanel4.add(cbo_grade, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 110, 170, 30));
+
+        jLabel19.setFont(new java.awt.Font("Verdana", 0, 20)); // NOI18N
+        jLabel19.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel19.setText("Grade");
+        jPanel4.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 80, 80, -1));
+
+        jLabel20.setFont(new java.awt.Font("Verdana", 0, 20)); // NOI18N
+        jLabel20.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/icons/icons8_Library_32px.png"))); // NOI18N
+        jPanel4.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 50, 50));
+
+        panel_display.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 470, 150));
 
         parentPanel.add(panel_display);
         panel_display.setBounds(250, 0, 470, 310);
@@ -306,6 +333,7 @@ public class LandingPage extends javax.swing.JFrame {
         // Refresh the panel to display the table
         jPanel1.revalidate();
         jPanel1.removeAll();
+        cbo_grade.setSelectedItem(null);
     }
 
     // to populate Lower primary timetable format
@@ -525,8 +553,24 @@ public class LandingPage extends javax.swing.JFrame {
         timer.setRepeats(false); // Ensure the timer only fires once
         timer.start(); // Start the timer
     }
-    
-    
+
+    // method to update the Grades combo box
+    private void updateComboBoxLowerGrades() {
+        // Define the grades to be displayed in the combo box
+        String[] grades = {"Grade 1", "Grade 2", "Grade 3", "Grade 4", "Grade 5", "Grade 6"};
+
+        // Set the combo box model with the grades
+        cbo_grade.setModel(new javax.swing.DefaultComboBoxModel<>(grades));
+    }
+
+    private void updateComboBoxUpperGrades() {
+        // Define the grades to be displayed in the combo box
+        String[] grades = {"Grade 7", "Grade 8", "Grade 9"};
+
+        // Set the combo box model with the grades
+        cbo_grade.setModel(new javax.swing.DefaultComboBoxModel<>(grades));
+    }
+
     private void lbl_closeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_closeMouseClicked
         int a = JOptionPane.showConfirmDialog(null, "Do you really want to Close Application?", "Select", JOptionPane.YES_NO_OPTION);
         if (a == 0) {
@@ -567,20 +611,31 @@ public class LandingPage extends javax.swing.JFrame {
 
     private void radioButton_lowerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioButton_lowerActionPerformed
         // Refresh the panel to display the table
-        jPanel1.removeAll();
+//        jPanel1.removeAll();
+
+        clearComponents();
 
         lowerPrimaryJtable();
+
+        // Call the method to update the combo box^
+        updateComboBoxLowerGrades();
 
         insertVerticalWords();
 
         markBlankCellsWithPlaceholders();
+
     }//GEN-LAST:event_radioButton_lowerActionPerformed
 
     private void radioButton_upperActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioButton_upperActionPerformed
         // Refresh the panel to display the table
-        jPanel1.removeAll();
+//        jPanel1.removeAll();
+
+        clearComponents();
 
         jssPrimaryJtable();
+
+        // Call the method to update the combo box
+        updateComboBoxUpperGrades();
 
         insertVerticalWords();
 
@@ -622,7 +677,7 @@ public class LandingPage extends javax.swing.JFrame {
     private void lbl_manageTutorsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_manageTutorsMouseClicked
         ManageFacilitators users = new ManageFacilitators();
         users.setVisible(true);
-        
+
         delayBeforeClosingPreviousJframe();
     }//GEN-LAST:event_lbl_manageTutorsMouseClicked
 
@@ -637,9 +692,15 @@ public class LandingPage extends javax.swing.JFrame {
     private void lbl_logoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_logoutMouseClicked
         LoginPage login = new LoginPage();
         login.setVisible(true);
-        
+
         delayBeforeClosingPreviousJframe();
     }//GEN-LAST:event_lbl_logoutMouseClicked
+
+    private void cbo_gradeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbo_gradeItemStateChanged
+//        if (evt.getStateChange() == ItemEvent.SELECTED) {
+//            populateLearningAreasBasedOnGrade();
+//        }
+    }//GEN-LAST:event_cbo_gradeItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -680,8 +741,11 @@ public class LandingPage extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private rojerusan.RSMaterialButtonCircle btn_refresh;
     private javax.swing.ButtonGroup buttonGroup1;
+    private rojerusan.RSComboMetro cbo_grade;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel11;
