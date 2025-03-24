@@ -782,10 +782,14 @@ public class LandingPage extends javax.swing.JFrame {
     }//GEN-LAST:event_cbo_gradeItemStateChanged
 
     private void btn_populateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_populateMouseClicked
+        jPanel1.revalidate();
+//        jPanel1.removeAll();
         populateLearningAreas();
     }//GEN-LAST:event_btn_populateMouseClicked
 
     private void btn_populateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_populateActionPerformed
+        jPanel1.revalidate();
+//        jPanel1.removeAll();
         populateLearningAreas();
     }//GEN-LAST:event_btn_populateActionPerformed
 
