@@ -22,6 +22,9 @@ import timetable_app.*;
  */
 public class LandingPage extends javax.swing.JFrame {
 
+    // 2D Array (For Grid Structure)...
+    private TimetableCell[][] timetableCells; // [row][column]
+
     // Gets the window's screen position
     int xx, xy;
 
@@ -367,6 +370,16 @@ public class LandingPage extends javax.swing.JFrame {
         String[] columns = {"8:00-8:35", "8:35-9:10", "BREAK", "9:30-10:05", "10:05-10:40", "BREAK", "11:30-12:05", "12:05-12:40", "LUNCH", "2:00-2:35", "2:35-3:10", "3:10-3:45"};
         model.setColumnIdentifiers(columns);
 
+        // Initializing the timetableCells 
+        timetableCells = new TimetableCell[5][12];
+        for (int row = 0; row < 5; row++) {
+            for (int col = 0; col < 12; col++) {
+                String placeholder = String.valueOf((char) ('A' + row)) + (col + 1);
+                timetableCells[row][col] = new TimetableCell(placeholder);
+                model.setValueAt(placeholder, row, col); // Set placeholder in table
+            }
+        }
+
         // Set row headers
         String[] rows = {"MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY"};
 
@@ -434,6 +447,16 @@ public class LandingPage extends javax.swing.JFrame {
         // Set column headers
         String[] columns = {"8:00-8:40", "8:40-9:20", "BREAK", "9:30-10:10", "10:10-10:50", "BREAK", "11:30-12:10", "12:10-12:50", "LUNCH", "2:00-2:40", "2:40-3:20", "3:20-4:00"};
         model.setColumnIdentifiers(columns);
+
+        // Initializing the timetableCells
+        timetableCells = new TimetableCell[5][12];
+        for (int row = 0; row < 5; row++) {
+            for (int col = 0; col < 12; col++) {
+                String placeholder = String.valueOf((char) ('A' + row)) + (col + 1);
+                timetableCells[row][col] = new TimetableCell(placeholder);
+                model.setValueAt(placeholder, row, col);
+            }
+        }
 
         // Set row headers
         String[] rows = {"MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY"};
@@ -577,25 +600,36 @@ public class LandingPage extends javax.swing.JFrame {
 
         // Populate the learning areas into the timetable cells
         int learningAreaIndex = 0;
-        for (int row = 0; row < model.getRowCount(); row++) {
-            for (int col = 0; col < model.getColumnCount(); col++) {
-                // Skip the BREAK and LUNCH columns
+        for (int row = 0; row < 5; row++) {
+//        for (int row = 0; row < model.getRowCount(); row++) {
+            for (int col = 0; col < 12; col++) {
+//            for (int col = 0; col < model.getColumnCount(); col++) {
+                // Statement to Skip the BREAK and LUNCH columns
                 if (col == 2 || col == 5 || col == 8) {
                     continue;
                 }
 
-                // Check if the cell has a placeholder (A1, A2, ..., B1, B2, ...)
-                String cellValue = model.getValueAt(row, col).toString();
-                if (cellValue.matches("[A-Z]\\d+")) {
-                    // Populate the learning area into the cell
-                    if (learningAreaIndex < learningAreas.size()) {
-                        model.setValueAt(learningAreas.get(learningAreaIndex), row, col);
-                        learningAreaIndex++;
-                    } else {
-                        // If there are no more learning areas, leave the cell as is
-                        break;
-                    }
+//                // Check if the cell has a placeholder (A1, A2, ..., B1, B2, ...)
+//                String cellValue = model.getValueAt(row, col).toString();
+//                if (cellValue.matches("[A-Z]\\d+")) {
+//                    // Populate the learning area into the cell
+//                    if (learningAreaIndex < learningAreas.size()) {
+//                        model.setValueAt(learningAreas.get(learningAreaIndex), row, col);
+//                        learningAreaIndex++;
+//                    } else {
+//                        // If there are no more learning areas, leave the cell as is
+//                        break;
+//                    }
+//                }
+                // Update both the model and timetableCells
+                if (learningAreaIndex < learningAreas.size()) {
+                    timetableCells[row][col].setLearningArea(learningAreas.get(learningAreaIndex));
+                    model.setValueAt(learningAreas.get(learningAreaIndex), row, col);
+                    learningAreaIndex++;
+                } else {
+                    break;
                 }
+
             }
         }
     }
