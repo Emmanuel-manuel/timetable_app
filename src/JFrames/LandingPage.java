@@ -660,6 +660,19 @@ public class LandingPage extends javax.swing.JFrame {
         return learningAreas;
     }
 
+//    helper method to access or populate the data:
+    public void printTimetableData() {
+        for (int row = 0; row < 5; row++) {
+            for (int col = 0; col < 12; col++) {
+                TimetableCell cell = timetableCells[row][col];
+                System.out.printf("Cell %s: %s\n",
+                        cell.getPlaceholder(),
+                        cell.getLearningArea() != null ? cell.getLearningArea() : "Empty"
+                );
+            }
+        }
+    }
+
 //    for seamless JFrame migration, this method causes a 2-seconds delay before disposing the previous JFrame
     public void delayBeforeClosingPreviousJframe() {
         // Create a Timer with a 4000ms (4 seconds) delay
@@ -816,15 +829,15 @@ public class LandingPage extends javax.swing.JFrame {
     }//GEN-LAST:event_cbo_gradeItemStateChanged
 
     private void btn_populateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_populateMouseClicked
-        jPanel1.revalidate();
-//        jPanel1.removeAll();
+
         populateLearningAreas();
+        printTimetableData();
     }//GEN-LAST:event_btn_populateMouseClicked
 
     private void btn_populateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_populateActionPerformed
-        jPanel1.revalidate();
-//        jPanel1.removeAll();
+
         populateLearningAreas();
+        printTimetableData();
     }//GEN-LAST:event_btn_populateActionPerformed
 
     /**
