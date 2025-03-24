@@ -11,4 +11,24 @@ package timetable_app;
  */
 public class TimetableCell {
 
+    private final String placeholder; // e.g., "A1", "B2"
+    private String learningArea;      // e.g., "Mathematics"
+
+    public TimetableCell(String placeholder) {
+        this.placeholder = placeholder;
+        this.learningArea = null; // Initially unassigned
+    }
+
+    // Getters and setters
+    public String getPlaceholder() {
+        return placeholder;
+    }
+
+    public String getLearningArea() {
+        return learningArea;
+    }
+
+    public void setLearningArea(String learningArea) {
+        this.learningArea = learningArea;
+    }
 }
