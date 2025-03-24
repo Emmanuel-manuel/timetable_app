@@ -2,6 +2,12 @@ package JFrames;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -74,6 +80,7 @@ public class LandingPage extends javax.swing.JFrame {
         cbo_grade = new rojerusan.RSComboMetro();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
+        btn_populate = new rojerusan.RSMaterialButtonCircle();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1370, 770));
@@ -290,7 +297,7 @@ public class LandingPage extends javax.swing.JFrame {
                 btn_refreshActionPerformed(evt);
             }
         });
-        jPanel4.add(btn_refresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 10, 110, 50));
+        jPanel4.add(btn_refresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 20, 110, 50));
 
         cbo_grade.setForeground(new java.awt.Color(0, 0, 0));
         cbo_grade.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Select" }));
@@ -313,6 +320,20 @@ public class LandingPage extends javax.swing.JFrame {
         jLabel20.setForeground(new java.awt.Color(255, 255, 255));
         jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/icons/icons8_Library_32px.png"))); // NOI18N
         jPanel4.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 50, 50));
+
+        btn_populate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/icons/refresh.png"))); // NOI18N
+        btn_populate.setText("POPULATE");
+        btn_populate.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_populateMouseClicked(evt);
+            }
+        });
+        btn_populate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_populateActionPerformed(evt);
+            }
+        });
+        jPanel4.add(btn_populate, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 90, 110, 50));
 
         panel_display.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 470, 150));
 
@@ -543,6 +564,68 @@ public class LandingPage extends javax.swing.JFrame {
 
     }
 
+    // POPULATE LEARNING AREAS TO THE TIMETABLE
+    public void populateLearningAreas() {
+        // Get the selected grade from the combo box
+        String selectedGrade = cbo_grade.getSelectedItem().toString();
+
+        // Fetch learning areas from the database
+        List<String> learningAreas = fetchLearningAreasFromDatabase(selectedGrade);
+
+        // Shuffle the learning areas to randomize their order
+        Collections.shuffle(learningAreas);
+
+        // Populate the learning areas into the timetable cells
+        int learningAreaIndex = 0;
+        for (int row = 0; row < model.getRowCount(); row++) {
+            for (int col = 0; col < model.getColumnCount(); col++) {
+                // Skip the BREAK and LUNCH columns
+                if (col == 2 || col == 5 || col == 8) {
+                    continue;
+                }
+
+                // Check if the cell has a placeholder (A1, A2, ..., B1, B2, ...)
+                String cellValue = model.getValueAt(row, col).toString();
+                if (cellValue.matches("[A-Z]\\d+")) {
+                    // Populate the learning area into the cell
+                    if (learningAreaIndex < learningAreas.size()) {
+                        model.setValueAt(learningAreas.get(learningAreaIndex), row, col);
+                        learningAreaIndex++;
+                    } else {
+                        // If there are no more learning areas, leave the cell as is
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    private List<String> fetchLearningAreasFromDatabase(String grade) {
+        List<String> learningAreas = new ArrayList<>();
+
+        // Database connection details
+        try (Connection con = DBConnection.getConnection()) {
+
+            // SQL query to fetch learning areas for the selected grade
+            String query = "SELECT learning_area FROM learning_area_tbl WHERE grade = ?";
+
+            try (PreparedStatement pstmt = con.prepareStatement(query)) {
+                pstmt.setString(1, grade);
+                ResultSet rs = pstmt.executeQuery();
+
+                // Add learning areas to the list
+                while (rs.next()) {
+                    learningAreas.add(rs.getString("learning_area"));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error fetching learning areas from the database.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return learningAreas;
+    }
+
 //    for seamless JFrame migration, this method causes a 2-seconds delay before disposing the previous JFrame
     public void delayBeforeClosingPreviousJframe() {
         // Create a Timer with a 4000ms (4 seconds) delay
@@ -611,8 +694,6 @@ public class LandingPage extends javax.swing.JFrame {
 
     private void radioButton_lowerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioButton_lowerActionPerformed
         // Refresh the panel to display the table
-//        jPanel1.removeAll();
-
         clearComponents();
 
         lowerPrimaryJtable();
@@ -628,8 +709,6 @@ public class LandingPage extends javax.swing.JFrame {
 
     private void radioButton_upperActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioButton_upperActionPerformed
         // Refresh the panel to display the table
-//        jPanel1.removeAll();
-
         clearComponents();
 
         jssPrimaryJtable();
@@ -702,6 +781,14 @@ public class LandingPage extends javax.swing.JFrame {
 //        }
     }//GEN-LAST:event_cbo_gradeItemStateChanged
 
+    private void btn_populateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_populateMouseClicked
+        populateLearningAreas();
+    }//GEN-LAST:event_btn_populateMouseClicked
+
+    private void btn_populateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_populateActionPerformed
+        populateLearningAreas();
+    }//GEN-LAST:event_btn_populateActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -739,6 +826,7 @@ public class LandingPage extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private rojerusan.RSMaterialButtonCircle btn_populate;
     private rojerusan.RSMaterialButtonCircle btn_refresh;
     private javax.swing.ButtonGroup buttonGroup1;
     private rojerusan.RSComboMetro cbo_grade;
