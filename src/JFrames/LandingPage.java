@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -79,10 +80,13 @@ public class LandingPage extends javax.swing.JFrame {
         jPanel5 = new javax.swing.JPanel();
         radioButton_lower = new javax.swing.JRadioButton();
         radioButton_upper = new javax.swing.JRadioButton();
-        btn_refresh = new rojerusan.RSMaterialButtonCircle();
         cbo_grade = new rojerusan.RSComboMetro();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
+        panelRules = new javax.swing.JPanel();
+        cbo_learning_area = new rojerusan.RSComboMetro();
+        jLabel3 = new javax.swing.JLabel();
+        btn_refresh = new rojerusan.RSMaterialButtonCircle();
         btn_populate = new rojerusan.RSMaterialButtonCircle();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -274,7 +278,7 @@ public class LandingPage extends javax.swing.JFrame {
                 radioButton_lowerActionPerformed(evt);
             }
         });
-        jPanel5.add(radioButton_lower, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, -1));
+        jPanel5.add(radioButton_lower, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, -1, -1));
 
         buttonGroup1.add(radioButton_upper);
         radioButton_upper.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
@@ -284,9 +288,58 @@ public class LandingPage extends javax.swing.JFrame {
                 radioButton_upperActionPerformed(evt);
             }
         });
-        jPanel5.add(radioButton_upper, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 30, -1, -1));
+        jPanel5.add(radioButton_upper, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 30, -1, -1));
 
-        jPanel4.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 270, 70));
+        jPanel4.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 250, 70));
+
+        cbo_grade.setForeground(new java.awt.Color(0, 0, 0));
+        cbo_grade.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Select" }));
+        cbo_grade.setColorBorde(new java.awt.Color(102, 153, 255));
+        cbo_grade.setColorFondo(new java.awt.Color(255, 153, 0));
+        cbo_grade.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        cbo_grade.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbo_gradeItemStateChanged(evt);
+            }
+        });
+        cbo_grade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbo_gradeActionPerformed(evt);
+            }
+        });
+        jPanel4.add(cbo_grade, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 30, 170, 30));
+
+        jLabel19.setFont(new java.awt.Font("Verdana", 0, 20)); // NOI18N
+        jLabel19.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel19.setText("Grade");
+        jPanel4.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 0, 80, -1));
+
+        jLabel20.setFont(new java.awt.Font("Verdana", 0, 20)); // NOI18N
+        jLabel20.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/icons/icons8_Library_32px.png"))); // NOI18N
+        jPanel4.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 20, 30, 40));
+
+        panel_display.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 470, 80));
+
+        panelRules.setBackground(new java.awt.Color(204, 153, 0));
+        panelRules.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "RULES", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 1, 18))); // NOI18N
+        panelRules.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        cbo_learning_area.setForeground(new java.awt.Color(0, 0, 0));
+        cbo_learning_area.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Select" }));
+        cbo_learning_area.setColorBorde(new java.awt.Color(102, 153, 255));
+        cbo_learning_area.setColorFondo(new java.awt.Color(255, 153, 0));
+        cbo_learning_area.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        cbo_learning_area.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbo_learning_areaItemStateChanged(evt);
+            }
+        });
+        panelRules.add(cbo_learning_area, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 170, 30));
+
+        jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jLabel3.setText("LEARNING AREA");
+        panelRules.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, -1, -1));
 
         btn_refresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/icons/refresh.png"))); // NOI18N
         btn_refresh.setText("Refresh");
@@ -300,29 +353,7 @@ public class LandingPage extends javax.swing.JFrame {
                 btn_refreshActionPerformed(evt);
             }
         });
-        jPanel4.add(btn_refresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 20, 110, 50));
-
-        cbo_grade.setForeground(new java.awt.Color(0, 0, 0));
-        cbo_grade.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Select" }));
-        cbo_grade.setColorBorde(new java.awt.Color(102, 153, 255));
-        cbo_grade.setColorFondo(new java.awt.Color(255, 153, 0));
-        cbo_grade.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        cbo_grade.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cbo_gradeItemStateChanged(evt);
-            }
-        });
-        jPanel4.add(cbo_grade, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 110, 170, 30));
-
-        jLabel19.setFont(new java.awt.Font("Verdana", 0, 20)); // NOI18N
-        jLabel19.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel19.setText("Grade");
-        jPanel4.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 80, 80, -1));
-
-        jLabel20.setFont(new java.awt.Font("Verdana", 0, 20)); // NOI18N
-        jLabel20.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/icons/icons8_Library_32px.png"))); // NOI18N
-        jPanel4.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 50, 50));
+        panelRules.add(btn_refresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 170, 110, 50));
 
         btn_populate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/icons/refresh.png"))); // NOI18N
         btn_populate.setText("POPULATE");
@@ -336,9 +367,9 @@ public class LandingPage extends javax.swing.JFrame {
                 btn_populateActionPerformed(evt);
             }
         });
-        jPanel4.add(btn_populate, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 90, 110, 50));
+        panelRules.add(btn_populate, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 170, 110, 50));
 
-        panel_display.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 470, 150));
+        panel_display.add(panelRules, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 470, 230));
 
         parentPanel.add(panel_display);
         panel_display.setBounds(250, 0, 470, 310);
@@ -609,18 +640,6 @@ public class LandingPage extends javax.swing.JFrame {
                     continue;
                 }
 
-//                // Check if the cell has a placeholder (A1, A2, ..., B1, B2, ...)
-//                String cellValue = model.getValueAt(row, col).toString();
-//                if (cellValue.matches("[A-Z]\\d+")) {
-//                    // Populate the learning area into the cell
-//                    if (learningAreaIndex < learningAreas.size()) {
-//                        model.setValueAt(learningAreas.get(learningAreaIndex), row, col);
-//                        learningAreaIndex++;
-//                    } else {
-//                        // If there are no more learning areas, leave the cell as is
-//                        break;
-//                    }
-//                }
                 // Update both the model and timetableCells
                 if (learningAreaIndex < learningAreas.size()) {
                     timetableCells[row][col].setLearningArea(learningAreas.get(learningAreaIndex));
@@ -670,6 +689,41 @@ public class LandingPage extends javax.swing.JFrame {
                         cell.getLearningArea() != null ? cell.getLearningArea() : "Empty"
                 );
             }
+        }
+    }
+
+    private void populateLearningAreas(String grade) {
+        // Clear existing items
+        cbo_learning_area.removeAllItems();
+
+        // Add default item
+        cbo_learning_area.addItem("-- Select Learning Area --");
+
+        try {
+            // Database connection
+            Connection con = DBConnection.getConnection();
+
+            // SQL query to fetch learning areas for the selected grade
+            String sql = "SELECT DISTINCT learning_area FROM facilitator_tbl WHERE grade = ?";
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, grade);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            // Populate the combo box
+            while (rs.next()) {
+                cbo_learning_area.addItem(rs.getString("learning_area"));
+            }
+
+            // Close resources
+            rs.close();
+            pstmt.close();
+            con.close();
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error fetching learning areas: " + e.getMessage(),
+                    "Database Error", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
         }
     }
 
@@ -840,6 +894,20 @@ public class LandingPage extends javax.swing.JFrame {
         printTimetableData();
     }//GEN-LAST:event_btn_populateActionPerformed
 
+    private void cbo_learning_areaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbo_learning_areaItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbo_learning_areaItemStateChanged
+
+    private void cbo_gradeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbo_gradeActionPerformed
+        // Get the selected grade
+        String selectedGrade = (String) cbo_grade.getSelectedItem();
+
+        if (selectedGrade != null && !selectedGrade.isEmpty()) {
+            // Fetch and populate learning areas
+            populateLearningAreas(selectedGrade);
+        }
+    }//GEN-LAST:event_cbo_gradeActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -881,10 +949,12 @@ public class LandingPage extends javax.swing.JFrame {
     private rojerusan.RSMaterialButtonCircle btn_refresh;
     private javax.swing.ButtonGroup buttonGroup1;
     private rojerusan.RSComboMetro cbo_grade;
+    private rojerusan.RSComboMetro cbo_learning_area;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel11;
@@ -902,6 +972,7 @@ public class LandingPage extends javax.swing.JFrame {
     private javax.swing.JLabel lbl_manageSubjects;
     private javax.swing.JLabel lbl_manageTutors;
     private javax.swing.JLabel lbl_menu;
+    private javax.swing.JPanel panelRules;
     private javax.swing.JPanel panel_display;
     private javax.swing.JPanel panel_menu;
     private javax.swing.JPanel parentPanel;
