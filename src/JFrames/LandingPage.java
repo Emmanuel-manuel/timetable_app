@@ -12,6 +12,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.Timer;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -93,6 +94,8 @@ public class LandingPage extends javax.swing.JFrame {
         jPanel9 = new javax.swing.JPanel();
         radioButton_morning = new javax.swing.JRadioButton();
         radioButton_evening = new javax.swing.JRadioButton();
+        radioButton_lastLesson = new javax.swing.JRadioButton();
+        radioButton_midMorning = new javax.swing.JRadioButton();
         jPanel13 = new javax.swing.JPanel();
         txt_noOfLessons = new app.bolivia.swing.JCTextField();
         jPanel12 = new javax.swing.JPanel();
@@ -334,7 +337,7 @@ public class LandingPage extends javax.swing.JFrame {
         jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/icons/icons8_Library_32px.png"))); // NOI18N
         jPanel4.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 30, 30, 30));
 
-        panel_display.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 450, 80));
+        panel_display.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 450, 70));
 
         panelRules.setBackground(new java.awt.Color(204, 153, 0));
         panelRules.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "RULES", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 1, 18))); // NOI18N
@@ -350,7 +353,7 @@ public class LandingPage extends javax.swing.JFrame {
                 cbo_learning_areaItemStateChanged(evt);
             }
         });
-        panelRules.add(cbo_learning_area, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 180, 30));
+        panelRules.add(cbo_learning_area, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 200, 30));
 
         jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel3.setText("LEARNING AREA");
@@ -360,14 +363,14 @@ public class LandingPage extends javax.swing.JFrame {
         jPanel10.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         radioButton_doubleLesson.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        radioButton_doubleLesson.setText("Double");
+        radioButton_doubleLesson.setText("Double lesson");
         jPanel10.add(radioButton_doubleLesson, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
 
         radioButton_singleLesson.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         radioButton_singleLesson.setText("Single");
-        jPanel10.add(radioButton_singleLesson, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 20, -1, -1));
+        jPanel10.add(radioButton_singleLesson, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 20, -1, -1));
 
-        panelRules.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 180, 50));
+        panelRules.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, 200, 50));
 
         jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Session Hours", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 0, 12))); // NOI18N
         jPanel9.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -378,9 +381,17 @@ public class LandingPage extends javax.swing.JFrame {
 
         radioButton_evening.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         radioButton_evening.setText("Evening");
-        jPanel9.add(radioButton_evening, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 20, -1, -1));
+        jPanel9.add(radioButton_evening, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 20, -1, -1));
 
-        panelRules.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 180, 50));
+        radioButton_lastLesson.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        radioButton_lastLesson.setText("Last");
+        jPanel9.add(radioButton_lastLesson, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 50, -1, -1));
+
+        radioButton_midMorning.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        radioButton_midMorning.setText("Mid-Morning");
+        jPanel9.add(radioButton_midMorning, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, -1, -1));
+
+        panelRules.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 200, 80));
 
         jPanel13.setBackground(new java.awt.Color(204, 153, 0));
         jPanel13.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Number of Lessons per week", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 14))); // NOI18N
@@ -403,7 +414,7 @@ public class LandingPage extends javax.swing.JFrame {
         });
         jPanel13.add(txt_noOfLessons, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 180, 40));
 
-        panelRules.add(jPanel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 20, 200, 70));
+        panelRules.add(jPanel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 20, 200, 70));
 
         jPanel12.setBackground(new java.awt.Color(204, 153, 0));
         jPanel12.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Add the rules", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 14))); // NOI18N
@@ -413,7 +424,7 @@ public class LandingPage extends javax.swing.JFrame {
         btn_Add.setFont(new java.awt.Font("Century Gothic", 1, 13)); // NOI18N
         jPanel12.add(btn_Add, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 110, 50));
 
-        panelRules.add(jPanel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 90, 120, 60));
+        panelRules.add(jPanel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 90, 120, 70));
 
         jPanel16.setBackground(new java.awt.Color(204, 153, 0));
         jPanel16.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Delete the rules", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 14))); // NOI18N
@@ -424,7 +435,7 @@ public class LandingPage extends javax.swing.JFrame {
         btn_Delete.setFont(new java.awt.Font("Century Gothic", 1, 13)); // NOI18N
         jPanel16.add(btn_Delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 120, 50));
 
-        panelRules.add(jPanel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 90, 120, 60));
+        panelRules.add(jPanel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 90, 120, 70));
 
         jPanel17.setBackground(new java.awt.Color(204, 153, 0));
         jPanel17.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Click to Populate Timetable", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 14))); // NOI18N
@@ -442,7 +453,7 @@ public class LandingPage extends javax.swing.JFrame {
                 btn_populateActionPerformed(evt);
             }
         });
-        jPanel17.add(btn_populate, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 110, 50));
+        jPanel17.add(btn_populate, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 110, 50));
 
         btn_refresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/icons/refresh.png"))); // NOI18N
         btn_refresh.setText("Refresh");
@@ -458,9 +469,9 @@ public class LandingPage extends javax.swing.JFrame {
         });
         jPanel17.add(btn_refresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 20, 90, 50));
 
-        panelRules.add(jPanel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 150, 240, 70));
+        panelRules.add(jPanel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 160, 240, 80));
 
-        panel_display.add(panelRules, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 450, 230));
+        panel_display.add(panelRules, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 450, 240));
 
         parentPanel.add(panel_display);
         panel_display.setBounds(250, 0, 450, 310);
@@ -488,8 +499,8 @@ public class LandingPage extends javax.swing.JFrame {
 
     // to populate Lower primary timetable format
     public void lowerPrimaryJtable() {
-        // Create a table model with 6 rows and 13 columns
 
+// Create a table model with 6 rows and 13 columns
         model = new DefaultTableModel(5, 12);
 
         // Set column headers
@@ -511,10 +522,21 @@ public class LandingPage extends javax.swing.JFrame {
 
         // Create the table with the model
         table = new JTable(model);
-        table.setRowHeight(70);
+
+        // ===== CRITICAL INITIALIZATION POINT =====
+        table.setDefaultRenderer(Object.class, new CustomPlaceholderRenderer());  // Must be set BEFORE other table configurations
+
+        // Configuring table appearance
+        table.setRowHeight(70);// Optimal height for readability
         table.setGridColor(Color.BLACK);
 // Make the table non-editable
         table.setDefaultEditor(Object.class, null);
+
+        // Set column widths
+        table.getColumnModel().getColumn(0).setMinWidth(100);  // First column wider
+        for (int i = 1; i < table.getColumnCount(); i++) {
+            table.getColumnModel().getColumn(i).setMinWidth(80);  // Other columns
+        }
 
         // Customize column header
 // Set font style and color for column headers
@@ -539,9 +561,8 @@ public class LandingPage extends javax.swing.JFrame {
         rowHeaderTable.setFont(new Font("Times New Roman", Font.BOLD, 16));
         rowHeaderTable.setForeground(Color.ORANGE.darker());
 
-        table.getColumnModel().getColumn(0).setPreferredWidth(100); // Adjust width of first column
-
-        //Setting the Preferred Size for the Row Header Table
+//        table.getColumnModel().getColumn(0).setPreferredWidth(100); // Adjust width of first column
+//Setting the Preferred Size for the Row Header Table
         rowHeaderTable.setPreferredScrollableViewportSize(new Dimension(100, table.getPreferredSize().height));
 
         // Disable column reordering
@@ -589,10 +610,21 @@ public class LandingPage extends javax.swing.JFrame {
 
         // Create the table with the model
         table = new JTable(model);
-        table.setRowHeight(70);
+
+        // ===== CRITICAL INITIALIZATION POINT =====
+        table.setDefaultRenderer(Object.class, new CustomPlaceholderRenderer());  // Must be set BEFORE other table configurations
+
+        // Configuring table appearance
+        table.setRowHeight(70);// Optimal height for readability
         table.setGridColor(Color.BLACK);
 // Make the table non-editable
         table.setDefaultEditor(Object.class, null);
+
+        // Set column widths
+        table.getColumnModel().getColumn(0).setMinWidth(100);  // First column wider
+        for (int i = 1; i < table.getColumnCount(); i++) {
+            table.getColumnModel().getColumn(i).setMinWidth(80);  // Other columns
+        }
 
         // Customize column header
 // Set font style and color for column headers
@@ -617,8 +649,7 @@ public class LandingPage extends javax.swing.JFrame {
         rowHeaderTable.setFont(new Font("Times New Roman", Font.BOLD, 16));
         rowHeaderTable.setForeground(Color.ORANGE.darker());
 
-        table.getColumnModel().getColumn(0).setPreferredWidth(100); // Adjust width of first column
-
+//        table.getColumnModel().getColumn(0).setPreferredWidth(100); // Adjust width of first column
         //Setting the Preferred Size for the Row Header Table
         rowHeaderTable.setPreferredScrollableViewportSize(new Dimension(100, table.getPreferredSize().height));
 
@@ -651,34 +682,65 @@ public class LandingPage extends javax.swing.JFrame {
         int[] columns = {2, 5, 8}; // Corresponding columns
 
         // Create a custom cell renderer
-        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer() {
+//        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer() {
+//            @Override
+//            public java.awt.Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+//                super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+//
+//                // Check if the cell contains "BREAK" or "LUNCH"
+//                if (value != null && (value.toString().equals("B") || value.toString().equals("R") || value.toString().equals("E") || value.toString().equals("A") || value.toString().equals("K") || value.toString().equals("L") || value.toString().equals("U") || value.toString().equals("N") || value.toString().equals("C") || value.toString().equals("H"))) {
+//                    setFont(new Font("Times New Roman", Font.BOLD, 16)); // Set font to bold and size 16
+//                    setForeground(Color.BLUE); // Set font color to blue
+//                } else {
+//                    setFont(table.getFont()); // Use default font for other cells
+//                    setForeground(table.getForeground()); // Use default color for other cells
+//                }
+//
+//                return this;
+//            }
+//        };
+//
+//        // Apply the custom renderer to the table
+//        JTable table = (JTable) ((JScrollPane) jPanel1.getComponent(0)).getViewport().getView();
+//        for (int i = 0; i < words.length; i++) {
+//            for (int j = 0; j < words[i].length(); j++) {
+//                model.setValueAt(String.valueOf(words[i].charAt(j)), j, columns[i]);
+//                table.getColumnModel().getColumn(columns[i]).setCellRenderer(renderer);
+//            }
+//        }
+        DefaultTableCellRenderer verticalRenderer = new DefaultTableCellRenderer() {
             @Override
-            public java.awt.Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            public Component getTableCellRendererComponent(JTable table, Object value,
+                    boolean isSelected, boolean hasFocus, int row, int column) {
                 super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
-                // Check if the cell contains "BREAK" or "LUNCH"
-                if (value != null && (value.toString().equals("B") || value.toString().equals("R") || value.toString().equals("E") || value.toString().equals("A") || value.toString().equals("K") || value.toString().equals("L") || value.toString().equals("U") || value.toString().equals("N") || value.toString().equals("C") || value.toString().equals("H"))) {
-                    setFont(new Font("Times New Roman", Font.BOLD, 16)); // Set font to bold and size 16
-                    setForeground(Color.BLUE); // Set font color to blue
+                // Selection styling
+                if (isSelected) {
+                    setBackground(table.getSelectionBackground());
+                    setForeground(table.getSelectionForeground());
                 } else {
-                    setFont(table.getFont()); // Use default font for other cells
-                    setForeground(table.getForeground()); // Use default color for other cells
+                    setBackground(table.getBackground());
                 }
+
+                // Special styling for vertical words
+                setFont(new Font("Times New Roman", Font.BOLD, 16));
+                setForeground(Color.BLUE);
+                // Keep vertical text alignment
+                setHorizontalAlignment(SwingConstants.CENTER);
+                setVerticalAlignment(SwingConstants.CENTER);
 
                 return this;
             }
         };
 
-        // Apply the custom renderer to the table
-        JTable table = (JTable) ((JScrollPane) jPanel1.getComponent(0)).getViewport().getView();
+        table = (JTable) ((JScrollPane) jPanel1.getComponent(0)).getViewport().getView();
         for (int i = 0; i < words.length; i++) {
             for (int j = 0; j < words[i].length(); j++) {
                 model.setValueAt(String.valueOf(words[i].charAt(j)), j, columns[i]);
-                table.getColumnModel().getColumn(columns[i]).setCellRenderer(renderer);
             }
+            table.getColumnModel().getColumn(columns[i]).setCellRenderer(verticalRenderer);
         }
 
-        // Other methods (e.g., event handlers) remain unchanged...
     }
 
     // Insert/Mark the blank cells with spreadsheet like placeholders.
@@ -1089,7 +1151,9 @@ public class LandingPage extends javax.swing.JFrame {
     private javax.swing.JPanel parentPanel;
     private javax.swing.JRadioButton radioButton_doubleLesson;
     private javax.swing.JRadioButton radioButton_evening;
+    private javax.swing.JRadioButton radioButton_lastLesson;
     private javax.swing.JRadioButton radioButton_lower;
+    private javax.swing.JRadioButton radioButton_midMorning;
     private javax.swing.JRadioButton radioButton_morning;
     private javax.swing.JRadioButton radioButton_singleLesson;
     private javax.swing.JRadioButton radioButton_upper;
