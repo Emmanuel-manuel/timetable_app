@@ -921,56 +921,6 @@ public class LandingPage extends javax.swing.JFrame {
         }
     }
 
-//    public void populateLearningArea() {
-//        // Clear existing allocations first
-//        for (int row = 0; row < 5; row++) {
-//            for (int col = 0; col < 12; col++) {
-//                // Skip BREAK/LUNCH columns
-//                if (col == 2 || col == 5 || col == 8) {
-//                    continue;
-//                }
-//
-//                timetableCells[row][col].setLearningArea(null);
-//                String placeholder = String.valueOf((char) ('A' + row)) + (col + 1);
-//                model.setValueAt(placeholder, row, col);
-//            }
-//        }
-//
-//        // Get the selected grade from the combo box
-//        String selectedGrade = cbo_grade.getSelectedItem().toString();
-//
-//        // Fetch learning areas from the database
-//        List<String> learningAreas = fetchLearningAreasFromDatabase(selectedGrade);
-//
-//        // First, populate the timetable with random learning areas (without considering rules)
-//        int learningAreaIndex = 0;
-//        for (int row = 0; row < 5; row++) {
-//            for (int col = 0; col < 12; col++) {
-//                // Skip BREAK/LUNCH columns
-//                if (col == 2 || col == 5 || col == 8) {
-//                    continue;
-//                }
-//
-//                // Fill with learning areas if available
-//                if (learningAreaIndex < learningAreas.size()) {
-//                    timetableCells[row][col].setLearningArea(learningAreas.get(learningAreaIndex));
-//                    model.setValueAt(learningAreas.get(learningAreaIndex), row, col);
-//                    learningAreaIndex++;
-//                }
-//            }
-//        }
-//
-//        // Now apply the rules from the rules table
-//        randomAllocation(timetableCells, model);
-//
-//        // Refresh the display
-//        jPanel1.revalidate();
-//        jPanel1.repaint();
-//
-//        // Print the timetable data for debugging
-//        printTimetableData();
-//
-//    }
 //    for seamless JFrame migration, this method causes a 2-seconds delay before disposing the previous JFrame
     public void delayBeforeClosingPreviousJframe() {
         // Create a Timer with a 4000ms (4 seconds) delay
