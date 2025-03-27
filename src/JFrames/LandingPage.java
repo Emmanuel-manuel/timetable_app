@@ -343,7 +343,7 @@ public class LandingPage extends javax.swing.JFrame {
         panel_display.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 450, 70));
 
         panelRules.setBackground(new java.awt.Color(204, 153, 0));
-        panelRules.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "RULES", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 1, 18))); // NOI18N
+        panelRules.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "RULES", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 1, 16))); // NOI18N
         panelRules.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         cbo_learning_area.setForeground(new java.awt.Color(0, 0, 0));
@@ -353,7 +353,7 @@ public class LandingPage extends javax.swing.JFrame {
         cbo_learning_area.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         panelRules.add(cbo_learning_area, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 200, 30));
 
-        jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         jLabel3.setText("LEARNING AREA");
         panelRules.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, -1));
 
@@ -420,15 +420,15 @@ public class LandingPage extends javax.swing.JFrame {
         jPanel12.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btn_Add.setText("CLICK TOADD");
-        btn_Add.setFont(new java.awt.Font("Century Gothic", 1, 13)); // NOI18N
+        btn_Add.setFont(new java.awt.Font("Century Gothic", 1, 11)); // NOI18N
         btn_Add.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_AddActionPerformed(evt);
             }
         });
-        jPanel12.add(btn_Add, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 110, 50));
+        jPanel12.add(btn_Add, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 100, 40));
 
-        panelRules.add(jPanel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 80, 120, 70));
+        panelRules.add(jPanel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 80, 100, 70));
 
         jPanel16.setBackground(new java.awt.Color(204, 153, 0));
         jPanel16.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Delete the rules", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 14))); // NOI18N
@@ -436,10 +436,10 @@ public class LandingPage extends javax.swing.JFrame {
 
         btn_Delete.setBackground(new java.awt.Color(204, 51, 0));
         btn_Delete.setText("CLICK TO DELETE");
-        btn_Delete.setFont(new java.awt.Font("Century Gothic", 1, 13)); // NOI18N
-        jPanel16.add(btn_Delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 120, 50));
+        btn_Delete.setFont(new java.awt.Font("Century Gothic", 1, 11)); // NOI18N
+        jPanel16.add(btn_Delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 100, 40));
 
-        panelRules.add(jPanel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 80, 120, 70));
+        panelRules.add(jPanel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 80, 120, 70));
 
         jPanel17.setBackground(new java.awt.Color(204, 153, 0));
         jPanel17.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Click to Populate Timetable", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 14))); // NOI18N
@@ -461,9 +461,9 @@ public class LandingPage extends javax.swing.JFrame {
                 btn_refreshActionPerformed(evt);
             }
         });
-        jPanel17.add(btn_refresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 20, 90, 50));
+        jPanel17.add(btn_refresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 20, 90, 50));
 
-        panelRules.add(jPanel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 150, 240, 80));
+        panelRules.add(jPanel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 150, 220, 80));
 
         panel_display.add(panelRules, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 450, 240));
 
@@ -766,37 +766,85 @@ public class LandingPage extends javax.swing.JFrame {
 
     // POPULATE LEARNING AREAS TO THE TIMETABLE
     public void populateLearningAreas() {
+//        // Get the selected grade from the combo box
+//        String selectedGrade = cbo_grade.getSelectedItem().toString();
+//
+//        // Fetch learning areas from the database
+//        List<String> learningAreas = fetchLearningAreasFromDatabase(selectedGrade);
+//
+//        // Shuffle the learning areas to randomize their order
+//        Collections.shuffle(learningAreas);
+//
+//        // Populate the learning areas into the timetable cells
+//        int learningAreaIndex = 0;
+//        for (int row = 0; row < 5; row++) {
+////        for (int row = 0; row < model.getRowCount(); row++) {
+//            for (int col = 0; col < 12; col++) {
+////            for (int col = 0; col < model.getColumnCount(); col++) {
+//                // Statement to Skip the BREAK and LUNCH columns
+//                if (col == 2 || col == 5 || col == 8) {
+//                    continue;
+//                }
+//
+//                // Update both the model and timetableCells
+//                if (learningAreaIndex < learningAreas.size()) {
+//                    timetableCells[row][col].setLearningArea(learningAreas.get(learningAreaIndex));
+//                    model.setValueAt(learningAreas.get(learningAreaIndex), row, col);
+//                    learningAreaIndex++;
+//                } else {
+//                    break;
+//                }
+//
+//            }
+//        }
+        // Clear existing allocations first
+        for (int row = 0; row < 5; row++) {
+            for (int col = 0; col < 12; col++) {
+                // Skip BREAK/LUNCH columns
+                if (col == 2 || col == 5 || col == 8) {
+                    continue;
+                }
+
+                timetableCells[row][col].setLearningArea(null);
+                String placeholder = String.valueOf((char) ('A' + row)) + (col + 1);
+                model.setValueAt(placeholder, row, col);
+            }
+        }
+
         // Get the selected grade from the combo box
         String selectedGrade = cbo_grade.getSelectedItem().toString();
 
         // Fetch learning areas from the database
         List<String> learningAreas = fetchLearningAreasFromDatabase(selectedGrade);
 
-        // Shuffle the learning areas to randomize their order
-        Collections.shuffle(learningAreas);
-
-        // Populate the learning areas into the timetable cells
+        // First, populate the timetable with random learning areas (without considering rules)
         int learningAreaIndex = 0;
         for (int row = 0; row < 5; row++) {
-//        for (int row = 0; row < model.getRowCount(); row++) {
             for (int col = 0; col < 12; col++) {
-//            for (int col = 0; col < model.getColumnCount(); col++) {
-                // Statement to Skip the BREAK and LUNCH columns
+                // Skip BREAK/LUNCH columns
                 if (col == 2 || col == 5 || col == 8) {
                     continue;
                 }
 
-                // Update both the model and timetableCells
+                // Fill with learning areas if available
                 if (learningAreaIndex < learningAreas.size()) {
                     timetableCells[row][col].setLearningArea(learningAreas.get(learningAreaIndex));
                     model.setValueAt(learningAreas.get(learningAreaIndex), row, col);
                     learningAreaIndex++;
-                } else {
-                    break;
                 }
-
             }
         }
+
+        // Now apply the rules from the rules table
+        randomAllocation(timetableCells, model);
+
+        // Refresh the display
+        jPanel1.revalidate();
+        jPanel1.repaint();
+
+        // Print the timetable data for debugging
+        printTimetableData();
+
     }
 
     private List<String> fetchLearningAreasFromDatabase(String grade) {
@@ -838,8 +886,8 @@ public class LandingPage extends javax.swing.JFrame {
         }
     }
 
-    private void populateLearningAreas(String grade) {
-        // Clear existing items
+    private void populateLearningAreastoCombobox(String grade) {
+        //Clear existing items
         cbo_learning_area.removeAllItems();
 
         // Add default item
@@ -873,6 +921,56 @@ public class LandingPage extends javax.swing.JFrame {
         }
     }
 
+//    public void populateLearningArea() {
+//        // Clear existing allocations first
+//        for (int row = 0; row < 5; row++) {
+//            for (int col = 0; col < 12; col++) {
+//                // Skip BREAK/LUNCH columns
+//                if (col == 2 || col == 5 || col == 8) {
+//                    continue;
+//                }
+//
+//                timetableCells[row][col].setLearningArea(null);
+//                String placeholder = String.valueOf((char) ('A' + row)) + (col + 1);
+//                model.setValueAt(placeholder, row, col);
+//            }
+//        }
+//
+//        // Get the selected grade from the combo box
+//        String selectedGrade = cbo_grade.getSelectedItem().toString();
+//
+//        // Fetch learning areas from the database
+//        List<String> learningAreas = fetchLearningAreasFromDatabase(selectedGrade);
+//
+//        // First, populate the timetable with random learning areas (without considering rules)
+//        int learningAreaIndex = 0;
+//        for (int row = 0; row < 5; row++) {
+//            for (int col = 0; col < 12; col++) {
+//                // Skip BREAK/LUNCH columns
+//                if (col == 2 || col == 5 || col == 8) {
+//                    continue;
+//                }
+//
+//                // Fill with learning areas if available
+//                if (learningAreaIndex < learningAreas.size()) {
+//                    timetableCells[row][col].setLearningArea(learningAreas.get(learningAreaIndex));
+//                    model.setValueAt(learningAreas.get(learningAreaIndex), row, col);
+//                    learningAreaIndex++;
+//                }
+//            }
+//        }
+//
+//        // Now apply the rules from the rules table
+//        randomAllocation(timetableCells, model);
+//
+//        // Refresh the display
+//        jPanel1.revalidate();
+//        jPanel1.repaint();
+//
+//        // Print the timetable data for debugging
+//        printTimetableData();
+//
+//    }
 //    for seamless JFrame migration, this method causes a 2-seconds delay before disposing the previous JFrame
     public void delayBeforeClosingPreviousJframe() {
         // Create a Timer with a 4000ms (4 seconds) delay
@@ -909,22 +1007,26 @@ public class LandingPage extends javax.swing.JFrame {
         // Validate inputs
         if (learningArea.isEmpty() || learningArea.equals("--Select Learning Area--")) {
             JOptionPane.showMessageDialog(this, "Please select a learning area", "Error", JOptionPane.ERROR_MESSAGE);
+            cbo_learning_area.requestFocus();
             return;
         }
 
         if (noOfLessons.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please enter number of lessons", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Please enter number of lessons", "Input Error", JOptionPane.ERROR_MESSAGE);
+            txt_noOfLessons.requestFocus();
             return;
         }
 
         try {
             int lessons = Integer.parseInt(noOfLessons);
-            if (lessons <= 0) {
-                JOptionPane.showMessageDialog(this, "Number of lessons must be positive", "Error", JOptionPane.ERROR_MESSAGE);
+            if (lessons <= 0 || lessons > 10) { //reasonable max number of 10 lessons
+                JOptionPane.showMessageDialog(this, "Number of lessons must be between 1 and 10", "Input Error", JOptionPane.ERROR_MESSAGE);
+                txt_noOfLessons.selectAll();
+                txt_noOfLessons.requestFocus();
                 return;
             }
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Please enter a valid number for lessons", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Please enter a valid number for lessons", "Input Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -935,7 +1037,7 @@ public class LandingPage extends javax.swing.JFrame {
         } else if (radioButton_singleLesson.isSelected()) {
             lessonType = "Single";
         } else {
-            JOptionPane.showMessageDialog(this, "Please select lesson type (Single/Double)", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Please select lesson type (Single/Double)", "Selection Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -950,7 +1052,7 @@ public class LandingPage extends javax.swing.JFrame {
         } else if (radioButton_lastLesson.isSelected()) {
             timeOfDay = "Last Lesson";
         } else {
-            JOptionPane.showMessageDialog(this, "Please select time of day", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Please select time of day", "Selection Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -971,6 +1073,125 @@ public class LandingPage extends javax.swing.JFrame {
         // txt_noOfLessons.setText("");
         // Clear radio button selections
         // buttonGroup1.clearSelection(); //e.t.c
+    }
+
+    // Helper method to get available cells based on time of day
+    private List<Point> getAvailableCellsForTime(String timeOfDay) {
+        List<Point> cells = new ArrayList<>();
+
+        switch (timeOfDay) {
+            case "Morning":
+                // Cells A1-A4, B1-B4, etc. (rows 0-4, columns 0-3)
+                for (int row = 0; row < 5; row++) {
+                    for (int col = 0; col < 4; col++) {
+                        cells.add(new Point(row, col));
+                    }
+                }
+                break;
+
+            case "Mid-Morning":
+                // Cells A5-A8, B5-B8, etc. (rows 0-4, columns 4-7)
+                for (int row = 0; row < 5; row++) {
+                    for (int col = 4; col < 8; col++) {
+                        // Skip column 5 (BREAK)
+                        if (col != 5) {
+                            cells.add(new Point(row, col));
+                        }
+                    }
+                }
+                break;
+
+            case "Evening":
+                // Cells A10-A11, B10-B11, etc. (rows 0-4, columns 9-10)
+                for (int row = 0; row < 5; row++) {
+                    for (int col = 9; col < 11; col++) {
+                        cells.add(new Point(row, col));
+                    }
+                }
+                break;
+
+            case "Last Lesson":
+                // Cells A12, B12, etc. (rows 0-4, column 11)
+                for (int row = 0; row < 5; row++) {
+                    cells.add(new Point(row, 11));
+                }
+                break;
+        }
+
+        return cells;
+    }
+
+// Method to randomly allocate learning areas based on rules
+    private void randomAllocation(TimetableCell[][] timetableCells, DefaultTableModel model) {
+        // Get data from rules table
+        DefaultTableModel rulesModel = (DefaultTableModel) tbl_rules.getModel();
+        int rowCount = rulesModel.getRowCount();
+
+        // Process each rule
+        for (int i = 0; i < rowCount; i++) {
+            String learningArea = rulesModel.getValueAt(i, 0).toString();
+            int noOfLessons = Integer.parseInt(rulesModel.getValueAt(i, 1).toString());
+            String lessonType = rulesModel.getValueAt(i, 2).toString();
+            String timeOfDay = rulesModel.getValueAt(i, 3).toString();
+
+            // Calculate how many slots we need (double lessons take 2 slots)
+            int slotsNeeded = lessonType.equals("Double") ? noOfLessons / 2 : noOfLessons;
+
+            // Get available cells for this time of day
+            List<Point> availableCells = getAvailableCellsForTime(timeOfDay);
+            Collections.shuffle(availableCells); // Randomize
+
+            // Try to allocate the lessons
+            int allocated = 0;
+            for (Point cell : availableCells) {
+                int row = cell.x;
+                int col = cell.y;
+
+                // Skip BREAK/LUNCH columns (2,5,8)
+                if (col == 2 || col == 5 || col == 8) {
+                    continue;
+                }
+
+                // Check if cell is available (still has placeholder)
+                if (timetableCells[row][col].getLearningArea() == null
+                        && model.getValueAt(row, col).toString().matches("[A-E]\\d+")) {
+
+                    // For double lessons, check if next cell is also available (same row)
+                    if (lessonType.equals("Double") && col < model.getColumnCount() - 1
+                            && timetableCells[row][col + 1].getLearningArea() == null
+                            && model.getValueAt(row, col + 1).toString().matches("[A-E]\\d+")) {
+
+                        // Allocate double lesson
+                        timetableCells[row][col].setLearningArea(learningArea);
+                        timetableCells[row][col + 1].setLearningArea(learningArea);
+                        model.setValueAt(learningArea, row, col);
+                        model.setValueAt(learningArea, row, col + 1);
+                        allocated++;
+
+                        // Skip next cell since we used it
+                        i++;
+                    } // For single lessons
+                    else if (lessonType.equals("Single")) {
+                        timetableCells[row][col].setLearningArea(learningArea);
+                        model.setValueAt(learningArea, row, col);
+                        allocated++;
+                    }
+
+                    // If we've allocated all needed slots, move to next learning area
+                    if (allocated >= slotsNeeded) {
+                        break;
+                    }
+                }
+            }
+
+            // If we couldn't allocate all lessons
+            if (allocated < slotsNeeded) {
+                JOptionPane.showMessageDialog(this,
+                        "Could not fully allocate " + learningArea
+                        + ". Only allocated " + allocated + " out of " + slotsNeeded + " required slots.",
+                        "Allocation Warning", JOptionPane.WARNING_MESSAGE);
+            }
+        }
     }
 
     private void lbl_closeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_closeMouseClicked
@@ -1097,7 +1318,7 @@ public class LandingPage extends javax.swing.JFrame {
     private void btn_populateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_populateActionPerformed
 
         populateLearningAreas();
-        printTimetableData();
+//        printTimetableData();
     }//GEN-LAST:event_btn_populateActionPerformed
 
     private void cbo_gradeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbo_gradeActionPerformed
@@ -1106,7 +1327,7 @@ public class LandingPage extends javax.swing.JFrame {
 
         if (selectedGrade != null && !selectedGrade.isEmpty()) {
             // Fetch and populate learning areas
-            populateLearningAreas(selectedGrade);
+            populateLearningAreastoCombobox(selectedGrade);
         }
     }//GEN-LAST:event_cbo_gradeActionPerformed
 
