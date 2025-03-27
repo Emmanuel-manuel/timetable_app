@@ -37,6 +37,115 @@ public class LandingPage extends javax.swing.JFrame {
     DefaultTableModel model; // Table model for data
     JTable table; // Declare JTable as a global variable
 
+//    ... LOGIC FOR RANDOM ALLOCATION OF LEARNONG AREAS ...
+    //    clearing the TimeTable cells
+    private void clearTimetableCells() {
+        for (int row = 0; row < 5; row++) {
+            for (int col = 0; col < 12; col++) {
+                if (col != 2 && col != 5 && col != 8) { // Skip BREAK/LUNCH columns
+                    timetableCells[row][col].setLearningArea(null);
+                    String placeholder = String.valueOf((char) ('A' + row)) + (col + 1);
+                    model.setValueAt(placeholder, row, col);
+                }
+            }
+        }
+    }
+
+    private void applySchedulingRules(TimetableCell[][] timetableCells,
+            DefaultTableModel model,
+            List<String> learningAreas) {
+        DefaultTableModel rulesModel = (DefaultTableModel) tbl_rules.getModel();
+
+        for (int i = 0; i < rulesModel.getRowCount(); i++) {
+            String learningArea = rulesModel.getValueAt(i, 0).toString();
+            int noOfLessons = Integer.parseInt(rulesModel.getValueAt(i, 1).toString());
+            String lessonType = rulesModel.getValueAt(i, 2).toString();
+            String timeOfDay = rulesModel.getValueAt(i, 3).toString();
+
+            // Remove this learning area from the general pool
+            learningAreas.remove(learningArea);
+
+            // Allocate according to rules
+            allocateSubject(learningArea, noOfLessons, lessonType, timeOfDay);
+        }
+    }
+
+    private void allocateSubject(String learningArea, int noOfLessons,
+            String lessonType, String timeOfDay) {
+        List<Point> availableCells = getAvailableCellsForTime(timeOfDay);
+        Collections.shuffle(availableCells);
+
+        int slotsNeeded = lessonType.equals("Double") ? noOfLessons / 2 : noOfLessons;
+        int allocated = 0;
+
+        for (Point cell : availableCells) {
+            int row = cell.x;
+            int col = cell.y;
+
+            if (isCellAvailable(row, col)) {
+                if (lessonType.equals("Double") && isCellAvailable(row, col + 1)) {
+                    // Allocate double lesson
+                    setCellLearningArea(row, col, learningArea);
+                    setCellLearningArea(row, col + 1, learningArea);
+                    allocated++;
+                } else if (lessonType.equals("Single")) {
+                    // Allocate single lesson
+                    setCellLearningArea(row, col, learningArea);
+                    allocated++;
+                }
+
+                if (allocated >= slotsNeeded) {
+                    break;
+                }
+            }
+        }
+
+        if (allocated < slotsNeeded) {
+            JOptionPane.showMessageDialog(this,
+                    "Warning: Couldn't fully allocate " + learningArea
+                    + " (" + allocated + "/" + slotsNeeded + " slots allocated)",
+                    "Allocation Warning", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+
+    private void fillRemainingSlots(TimetableCell[][] timetableCells,
+            DefaultTableModel model,
+            List<String> learningAreas) {
+        Collections.shuffle(learningAreas);
+        int index = 0;
+
+        for (int row = 0; row < 5; row++) {
+            for (int col = 0; col < 12; col++) {
+                if (isCellAvailable(row, col) && index < learningAreas.size()) {
+                    setCellLearningArea(row, col, learningAreas.get(index));
+                    index++;
+                }
+            }
+        }
+    }
+
+    private boolean isCellAvailable(int row, int col) {
+        // Check if column is BREAK/LUNCH
+        if (col == 2 || col == 5 || col == 8) {
+            return false;
+        }
+
+        // Check if cell is within bounds
+        if (row < 0 || row >= 5 || col < 0 || col >= 12) {
+            return false;
+        }
+
+        // Check if cell is empty (still has placeholder)
+        return timetableCells[row][col].getLearningArea() == null
+                && model.getValueAt(row, col).toString().matches("[A-E]\\d+");
+    }
+
+    private void setCellLearningArea(int row, int col, String learningArea) {
+        timetableCells[row][col].setLearningArea(learningArea);
+        model.setValueAt(learningArea, row, col);
+    }
+// ... LOGIC ENDS HERE ...
+
     /**
      * Creates new form landing_page
      */
@@ -766,84 +875,72 @@ public class LandingPage extends javax.swing.JFrame {
 
     // POPULATE LEARNING AREAS TO THE TIMETABLE
     public void populateLearningAreas() {
+//         // 1. Clear existing allocations
+        clearTimetableCells();
+
+        // 2. Get the selected grade
+        String selectedGrade = cbo_grade.getSelectedItem().toString();
+
+        // 3. Fetch learning areas from database
+        List<String> learningAreas = fetchLearningAreasFromDatabase(selectedGrade);
+
+        // 4. First apply rule-based allocation
+        applySchedulingRules(timetableCells, model, learningAreas);
+
+        // 5. Then fill remaining slots with other subjects
+        fillRemainingSlots(timetableCells, model, learningAreas);
+
+        // 6. Refresh display
+        jPanel1.revalidate();
+        jPanel1.repaint();
+        printTimetableData();
+//        // Clear existing allocations first
+//        for (int row = 0; row < 5; row++) {
+//            for (int col = 0; col < 12; col++) {
+//                // Skip BREAK/LUNCH columns
+//                if (col == 2 || col == 5 || col == 8) {
+//                    continue;
+//                }
+//
+//                timetableCells[row][col].setLearningArea(null);
+//                String placeholder = String.valueOf((char) ('A' + row)) + (col + 1);
+//                model.setValueAt(placeholder, row, col);
+//            }
+//        }
+//
 //        // Get the selected grade from the combo box
 //        String selectedGrade = cbo_grade.getSelectedItem().toString();
 //
 //        // Fetch learning areas from the database
 //        List<String> learningAreas = fetchLearningAreasFromDatabase(selectedGrade);
 //
-//        // Shuffle the learning areas to randomize their order
-//        Collections.shuffle(learningAreas);
-//
-//        // Populate the learning areas into the timetable cells
+//        // First, populate the timetable with random learning areas (without considering rules)
 //        int learningAreaIndex = 0;
 //        for (int row = 0; row < 5; row++) {
-////        for (int row = 0; row < model.getRowCount(); row++) {
 //            for (int col = 0; col < 12; col++) {
-////            for (int col = 0; col < model.getColumnCount(); col++) {
-//                // Statement to Skip the BREAK and LUNCH columns
+//                // Skip BREAK/LUNCH columns
 //                if (col == 2 || col == 5 || col == 8) {
 //                    continue;
 //                }
 //
-//                // Update both the model and timetableCells
+//                // Fill with learning areas if available
 //                if (learningAreaIndex < learningAreas.size()) {
 //                    timetableCells[row][col].setLearningArea(learningAreas.get(learningAreaIndex));
 //                    model.setValueAt(learningAreas.get(learningAreaIndex), row, col);
 //                    learningAreaIndex++;
-//                } else {
-//                    break;
 //                }
-//
 //            }
 //        }
-        // Clear existing allocations first
-        for (int row = 0; row < 5; row++) {
-            for (int col = 0; col < 12; col++) {
-                // Skip BREAK/LUNCH columns
-                if (col == 2 || col == 5 || col == 8) {
-                    continue;
-                }
-
-                timetableCells[row][col].setLearningArea(null);
-                String placeholder = String.valueOf((char) ('A' + row)) + (col + 1);
-                model.setValueAt(placeholder, row, col);
-            }
-        }
-
-        // Get the selected grade from the combo box
-        String selectedGrade = cbo_grade.getSelectedItem().toString();
-
-        // Fetch learning areas from the database
-        List<String> learningAreas = fetchLearningAreasFromDatabase(selectedGrade);
-
-        // First, populate the timetable with random learning areas (without considering rules)
-        int learningAreaIndex = 0;
-        for (int row = 0; row < 5; row++) {
-            for (int col = 0; col < 12; col++) {
-                // Skip BREAK/LUNCH columns
-                if (col == 2 || col == 5 || col == 8) {
-                    continue;
-                }
-
-                // Fill with learning areas if available
-                if (learningAreaIndex < learningAreas.size()) {
-                    timetableCells[row][col].setLearningArea(learningAreas.get(learningAreaIndex));
-                    model.setValueAt(learningAreas.get(learningAreaIndex), row, col);
-                    learningAreaIndex++;
-                }
-            }
-        }
-
-        // Now apply the rules from the rules table
-        randomAllocation(timetableCells, model);
-
-        // Refresh the display
-        jPanel1.revalidate();
-        jPanel1.repaint();
-
-        // Print the timetable data for debugging
-        printTimetableData();
+//
+//        // Now apply the rules from the rules table
+//        randomAllocation(timetableCells, model);
+//
+//        // Refresh the display
+//        jPanel1.revalidate();
+//        jPanel1.repaint();
+//
+//        // Print the timetable data for debugging
+//        printTimetableData();
 
     }
 
