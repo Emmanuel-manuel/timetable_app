@@ -972,9 +972,7 @@ public class LandingPage extends javax.swing.JFrame {
     }//GEN-LAST:event_lbl_logoutMouseClicked
 
     private void cbo_gradeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbo_gradeItemStateChanged
-//        if (evt.getStateChange() == ItemEvent.SELECTED) {
-//            populateLearningAreasBasedOnGrade();
-//        }
+
     }//GEN-LAST:event_cbo_gradeItemStateChanged
 
     private void btn_populateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_populateMouseClicked
