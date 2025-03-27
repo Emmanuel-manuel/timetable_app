@@ -682,32 +682,6 @@ public class LandingPage extends javax.swing.JFrame {
         int[] columns = {2, 5, 8}; // Corresponding columns
 
         // Create a custom cell renderer
-//        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer() {
-//            @Override
-//            public java.awt.Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-//                super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-//
-//                // Check if the cell contains "BREAK" or "LUNCH"
-//                if (value != null && (value.toString().equals("B") || value.toString().equals("R") || value.toString().equals("E") || value.toString().equals("A") || value.toString().equals("K") || value.toString().equals("L") || value.toString().equals("U") || value.toString().equals("N") || value.toString().equals("C") || value.toString().equals("H"))) {
-//                    setFont(new Font("Times New Roman", Font.BOLD, 16)); // Set font to bold and size 16
-//                    setForeground(Color.BLUE); // Set font color to blue
-//                } else {
-//                    setFont(table.getFont()); // Use default font for other cells
-//                    setForeground(table.getForeground()); // Use default color for other cells
-//                }
-//
-//                return this;
-//            }
-//        };
-//
-//        // Apply the custom renderer to the table
-//        JTable table = (JTable) ((JScrollPane) jPanel1.getComponent(0)).getViewport().getView();
-//        for (int i = 0; i < words.length; i++) {
-//            for (int j = 0; j < words[i].length(); j++) {
-//                model.setValueAt(String.valueOf(words[i].charAt(j)), j, columns[i]);
-//                table.getColumnModel().getColumn(columns[i]).setCellRenderer(renderer);
-//            }
-//        }
         DefaultTableCellRenderer verticalRenderer = new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value,
