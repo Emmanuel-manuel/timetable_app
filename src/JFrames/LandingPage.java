@@ -1034,7 +1034,10 @@ public class LandingPage extends javax.swing.JFrame {
                 // Cells A1-A4, B1-B4, etc. (rows 0-4, columns 0-3)
                 for (int row = 0; row < 5; row++) {
                     for (int col = 0; col < 4; col++) {
-                        cells.add(new Point(row, col));
+                        // Skip BREAK column (col 2)
+                        if (col != 2) {
+                            cells.add(new Point(row, col));
+                        }
                     }
                 }
                 break;
@@ -1043,7 +1046,7 @@ public class LandingPage extends javax.swing.JFrame {
                 // Cells A5-A8, B5-B8, etc. (rows 0-4, columns 4-7)
                 for (int row = 0; row < 5; row++) {
                     for (int col = 4; col < 8; col++) {
-                        // Skip column 5 (BREAK)
+                        // Skip BREAK column (col 5)
                         if (col != 5) {
                             cells.add(new Point(row, col));
                         }
@@ -1052,23 +1055,80 @@ public class LandingPage extends javax.swing.JFrame {
                 break;
 
             case "Evening":
-                // Cells A10-A11, B10-B11, etc. (rows 0-4, columns 9-10)
-                for (int row = 0; row < 5; row++) {
-                    for (int col = 9; col < 11; col++) {
-                        cells.add(new Point(row, col));
+                // For rows 0 and 1 (Monday and Tuesday): columns 9-12 (indices 8-11)
+                for (int row = 0; row < 2; row++) { // Only first two rows
+                    for (int col = 8; col < 12; col++) {
+                        // Skip LUNCH column (col 8) and ensure we don't exceed column bounds
+                        if (col != 8 && col < timetableCells[0].length) {
+                            cells.add(new Point(row, col));
+                        }
+                    }
+                }
+                // For rows 2-4 (Wednesday-Friday): columns 9-10 (indices 8-9)
+                for (int row = 2; row < 5; row++) {
+                    for (int col = 8; col < 10; col++) {
+                        // Skip LUNCH column (col 8)
+                        if (col != 8) {
+                            cells.add(new Point(row, col));
+                        }
                     }
                 }
                 break;
 
             case "Last Lesson":
                 // Cells A12, B12, etc. (rows 0-4, column 11)
-                for (int row = 0; row < 5; row++) {
-                    cells.add(new Point(row, 11));
+                // Only add if column exists (some timetables might have fewer columns)
+                if (timetableCells[0].length > 11) {
+                    for (int row = 0; row < 5; row++) {
+                        cells.add(new Point(row, 11));
+                    }
                 }
                 break;
         }
 
         return cells;
+//        List<Point> cells = new ArrayList<>();
+//
+//        switch (timeOfDay) {
+//            case "Morning":
+//                // Cells A1-A4, B1-B4, etc. (rows 0-4, columns 0-3)
+//                for (int row = 0; row < 5; row++) {
+//                    for (int col = 0; col < 4; col++) {
+//                        cells.add(new Point(row, col));
+//                    }
+//                }
+//                break;
+//
+//            case "Mid-Morning":
+//                // Cells A5-A8, B5-B8, etc. (rows 0-4, columns 4-7)
+//                for (int row = 0; row < 5; row++) {
+//                    for (int col = 4; col < 8; col++) {
+//                        // Skip column 5 (BREAK)
+//                        if (col != 5) {
+//                            cells.add(new Point(row, col));
+//                        }
+//                    }
+//                }
+//                break;
+//
+//            case "Evening":
+//                // Cells A10-A11, B10-B11, etc. (rows 0-4, columns 9-10)
+//                for (int row = 0; row < 5; row++) {
+//                    for (int col = 9; col < 11; col++) {
+//                        cells.add(new Point(row, col));
+//                    }
+//                }
+//                break;
+//
+//            case "Last Lesson":
+//                // Cells A12, B12, etc. (rows 0-4, column 11)
+//                for (int row = 0; row < 5; row++) {
+//                    cells.add(new Point(row, 11));
+//                }
+//                break;
+//        }
+//
+//        return cells;
     }
 
 // Method to randomly allocate learning areas based on rules
