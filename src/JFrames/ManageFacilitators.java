@@ -536,16 +536,6 @@ public class ManageFacilitators extends javax.swing.JFrame {
         txt_userId.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
         txt_userId.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
         txt_userId.setPlaceholder("Enter User Id ....");
-        txt_userId.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txt_userIdFocusLost(evt);
-            }
-        });
-        txt_userId.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_userIdActionPerformed(evt);
-            }
-        });
         txt_userId.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txt_userIdKeyTyped(evt);
@@ -572,16 +562,6 @@ public class ManageFacilitators extends javax.swing.JFrame {
         txt_userName.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
         txt_userName.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
         txt_userName.setPlaceholder("Enter User Name ....");
-        txt_userName.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txt_userNameFocusLost(evt);
-            }
-        });
-        txt_userName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_userNameActionPerformed(evt);
-            }
-        });
         jPanel15.add(txt_userName, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 170, 250, 40));
 
         btn_delete.setBackground(new java.awt.Color(255, 102, 51));
@@ -620,11 +600,6 @@ public class ManageFacilitators extends javax.swing.JFrame {
         txt_email.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
         txt_email.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
         txt_email.setPlaceholder("Please Enter Email ....");
-        txt_email.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_emailActionPerformed(evt);
-            }
-        });
         jPanel15.add(txt_email, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 250, 250, 40));
 
         jLabel16.setFont(new java.awt.Font("Verdana", 0, 20)); // NOI18N
@@ -641,11 +616,6 @@ public class ManageFacilitators extends javax.swing.JFrame {
         txt_contact.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
         txt_contact.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
         txt_contact.setPlaceholder("Please Enter Phone Number ....");
-        txt_contact.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_contactActionPerformed(evt);
-            }
-        });
         txt_contact.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txt_contactKeyTyped(evt);
@@ -726,21 +696,6 @@ public class ManageFacilitators extends javax.swing.JFrame {
         txt_init.setText("      ");
         txt_init.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         txt_init.setPlaceholder("S.no");
-        txt_init.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txt_initFocusLost(evt);
-            }
-        });
-        txt_init.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_initActionPerformed(evt);
-            }
-        });
-        txt_init.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txt_initKeyTyped(evt);
-            }
-        });
         jPanel15.add(txt_init, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 90, 60, 40));
 
         panel_display.add(jPanel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 330, 690));
@@ -939,22 +894,6 @@ public class ManageFacilitators extends javax.swing.JFrame {
         parentPanel.repaint();
     }//GEN-LAST:event_lbl_menuMouseClicked
 
-    private void txt_userIdFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_userIdFocusLost
-
-    }//GEN-LAST:event_txt_userIdFocusLost
-
-    private void txt_userIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_userIdActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_userIdActionPerformed
-
-    private void txt_userNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_userNameFocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_userNameFocusLost
-
-    private void txt_userNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_userNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_userNameActionPerformed
-
     private void btn_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteActionPerformed
         if (deleteFacilitator()) {
             JOptionPane.showMessageDialog(this, "Facilitator Deleted Successfully!");
@@ -993,14 +932,6 @@ public class ManageFacilitators extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Facilitator Details Updation failed, Please check your Database Connection...");
         }
     }//GEN-LAST:event_btn_updateActionPerformed
-
-    private void txt_contactActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_contactActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_contactActionPerformed
-
-    private void txt_emailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_emailActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_emailActionPerformed
 
     private void tbl_facilitatorDetailsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_facilitatorDetailsMouseClicked
 
@@ -1086,18 +1017,6 @@ public class ManageFacilitators extends javax.swing.JFrame {
             populateLearningAreasBasedOnGrade();
         }
     }//GEN-LAST:event_cbo_gradeItemStateChanged
-
-    private void txt_initFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_initFocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_initFocusLost
-
-    private void txt_initActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_initActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_initActionPerformed
-
-    private void txt_initKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_initKeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_initKeyTyped
 
     /**
      * @param args the command line arguments

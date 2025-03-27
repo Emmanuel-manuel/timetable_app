@@ -54,8 +54,9 @@ public class LandingPage extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
-        buttonGroup2 = new javax.swing.ButtonGroup();
+        buttonGroup_schoolLevel = new javax.swing.ButtonGroup();
+        buttonGroup_session = new javax.swing.ButtonGroup();
+        buttonGroup_lesson = new javax.swing.ButtonGroup();
         jPanel2 = new javax.swing.JPanel();
         lbl_menu = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -106,6 +107,8 @@ public class LandingPage extends javax.swing.JFrame {
         btn_populate = new rojerusan.RSMaterialButtonCircle();
         btn_refresh = new rojerusan.RSMaterialButtonCircle();
         panel_rulesTbl = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbl_rules = new rojerusan.RSTableMetro();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1370, 770));
@@ -288,7 +291,7 @@ public class LandingPage extends javax.swing.JFrame {
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Choose the School Level", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.ABOVE_TOP, new java.awt.Font("Times New Roman", 1, 18), new java.awt.Color(255, 154, 0))); // NOI18N
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        buttonGroup1.add(radioButton_lower);
+        buttonGroup_schoolLevel.add(radioButton_lower);
         radioButton_lower.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         radioButton_lower.setText("Lower Primary");
         radioButton_lower.addActionListener(new java.awt.event.ActionListener() {
@@ -298,7 +301,7 @@ public class LandingPage extends javax.swing.JFrame {
         });
         jPanel5.add(radioButton_lower, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, -1));
 
-        buttonGroup1.add(radioButton_upper);
+        buttonGroup_schoolLevel.add(radioButton_upper);
         radioButton_upper.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         radioButton_upper.setText("Junior Secondary");
         radioButton_upper.addActionListener(new java.awt.event.ActionListener() {
@@ -348,11 +351,6 @@ public class LandingPage extends javax.swing.JFrame {
         cbo_learning_area.setColorBorde(new java.awt.Color(102, 153, 255));
         cbo_learning_area.setColorFondo(new java.awt.Color(255, 153, 0));
         cbo_learning_area.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        cbo_learning_area.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cbo_learning_areaItemStateChanged(evt);
-            }
-        });
         panelRules.add(cbo_learning_area, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 200, 30));
 
         jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
@@ -362,10 +360,12 @@ public class LandingPage extends javax.swing.JFrame {
         jPanel10.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Double/ Single Lesson", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 0, 12))); // NOI18N
         jPanel10.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        buttonGroup_lesson.add(radioButton_doubleLesson);
         radioButton_doubleLesson.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         radioButton_doubleLesson.setText("Double lesson");
         jPanel10.add(radioButton_doubleLesson, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
 
+        buttonGroup_lesson.add(radioButton_singleLesson);
         radioButton_singleLesson.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         radioButton_singleLesson.setText("Single");
         jPanel10.add(radioButton_singleLesson, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 20, -1, -1));
@@ -375,18 +375,22 @@ public class LandingPage extends javax.swing.JFrame {
         jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Session Hours", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 0, 12))); // NOI18N
         jPanel9.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        buttonGroup_session.add(radioButton_morning);
         radioButton_morning.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         radioButton_morning.setText("Morning");
         jPanel9.add(radioButton_morning, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
 
+        buttonGroup_session.add(radioButton_evening);
         radioButton_evening.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         radioButton_evening.setText("Evening");
         jPanel9.add(radioButton_evening, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 20, -1, -1));
 
+        buttonGroup_session.add(radioButton_lastLesson);
         radioButton_lastLesson.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         radioButton_lastLesson.setText("Last");
         jPanel9.add(radioButton_lastLesson, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 50, -1, -1));
 
+        buttonGroup_session.add(radioButton_midMorning);
         radioButton_midMorning.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         radioButton_midMorning.setText("Mid-Morning");
         jPanel9.add(radioButton_midMorning, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, -1, -1));
@@ -394,7 +398,7 @@ public class LandingPage extends javax.swing.JFrame {
         panelRules.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 200, 80));
 
         jPanel13.setBackground(new java.awt.Color(204, 153, 0));
-        jPanel13.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Number of Lessons per week", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 14))); // NOI18N
+        jPanel13.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Lessons/ week", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 14))); // NOI18N
         jPanel13.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txt_noOfLessons.setBackground(new java.awt.Color(102, 153, 255));
@@ -402,19 +406,14 @@ public class LandingPage extends javax.swing.JFrame {
         txt_noOfLessons.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txt_noOfLessons.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
         txt_noOfLessons.setPlaceholder("Integer Values (1-10) ....");
-        txt_noOfLessons.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txt_noOfLessonsFocusLost(evt);
+        txt_noOfLessons.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_noOfLessonsKeyTyped(evt);
             }
         });
-        txt_noOfLessons.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_noOfLessonsActionPerformed(evt);
-            }
-        });
-        jPanel13.add(txt_noOfLessons, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 180, 40));
+        jPanel13.add(txt_noOfLessons, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 170, -1));
 
-        panelRules.add(jPanel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 20, 200, 70));
+        panelRules.add(jPanel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 20, 200, 60));
 
         jPanel12.setBackground(new java.awt.Color(204, 153, 0));
         jPanel12.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Add the rules", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 14))); // NOI18N
@@ -422,9 +421,14 @@ public class LandingPage extends javax.swing.JFrame {
 
         btn_Add.setText("CLICK TOADD");
         btn_Add.setFont(new java.awt.Font("Century Gothic", 1, 13)); // NOI18N
+        btn_Add.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_AddActionPerformed(evt);
+            }
+        });
         jPanel12.add(btn_Add, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 110, 50));
 
-        panelRules.add(jPanel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 90, 120, 70));
+        panelRules.add(jPanel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 80, 120, 70));
 
         jPanel16.setBackground(new java.awt.Color(204, 153, 0));
         jPanel16.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Delete the rules", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 14))); // NOI18N
@@ -435,7 +439,7 @@ public class LandingPage extends javax.swing.JFrame {
         btn_Delete.setFont(new java.awt.Font("Century Gothic", 1, 13)); // NOI18N
         jPanel16.add(btn_Delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 120, 50));
 
-        panelRules.add(jPanel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 90, 120, 70));
+        panelRules.add(jPanel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 80, 120, 70));
 
         jPanel17.setBackground(new java.awt.Color(204, 153, 0));
         jPanel17.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Click to Populate Timetable", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 0, 14))); // NOI18N
@@ -443,11 +447,6 @@ public class LandingPage extends javax.swing.JFrame {
 
         btn_populate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/icons/refresh.png"))); // NOI18N
         btn_populate.setText("POPULATE");
-        btn_populate.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btn_populateMouseClicked(evt);
-            }
-        });
         btn_populate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_populateActionPerformed(evt);
@@ -457,11 +456,6 @@ public class LandingPage extends javax.swing.JFrame {
 
         btn_refresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/icons/refresh.png"))); // NOI18N
         btn_refresh.setText("Refresh");
-        btn_refresh.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btn_refreshMouseClicked(evt);
-            }
-        });
         btn_refresh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_refreshActionPerformed(evt);
@@ -469,7 +463,7 @@ public class LandingPage extends javax.swing.JFrame {
         });
         jPanel17.add(btn_refresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 20, 90, 50));
 
-        panelRules.add(jPanel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 160, 240, 80));
+        panelRules.add(jPanel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 150, 240, 80));
 
         panel_display.add(panelRules, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 450, 240));
 
@@ -477,6 +471,27 @@ public class LandingPage extends javax.swing.JFrame {
         panel_display.setBounds(250, 0, 450, 310);
 
         panel_rulesTbl.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        tbl_rules.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Learning Area", "No. of Lessons", "Double/Single", "Time of Day"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tbl_rules);
+
+        panel_rulesTbl.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 670, 310));
+
         parentPanel.add(panel_rulesTbl);
         panel_rulesTbl.setBounds(700, 0, 670, 310);
 
@@ -886,6 +901,78 @@ public class LandingPage extends javax.swing.JFrame {
         cbo_grade.setModel(new javax.swing.DefaultComboBoxModel<>(grades));
     }
 
+    private void setRules() {
+        // Get values from components
+        String learningArea = cbo_learning_area.getSelectedItem().toString();
+        String noOfLessons = txt_noOfLessons.getText().trim();
+
+        // Validate inputs
+        if (learningArea.isEmpty() || learningArea.equals("--Select Learning Area--")) {
+            JOptionPane.showMessageDialog(this, "Please select a learning area", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (noOfLessons.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter number of lessons", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try {
+            int lessons = Integer.parseInt(noOfLessons);
+            if (lessons <= 0) {
+                JOptionPane.showMessageDialog(this, "Number of lessons must be positive", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Please enter a valid number for lessons", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Determine Double/Single Lesson value
+        String lessonType = "";
+        if (radioButton_doubleLesson.isSelected()) {
+            lessonType = "Double";
+        } else if (radioButton_singleLesson.isSelected()) {
+            lessonType = "Single";
+        } else {
+            JOptionPane.showMessageDialog(this, "Please select lesson type (Single/Double)", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Determine Time of Day value
+        String timeOfDay = "";
+        if (radioButton_morning.isSelected()) {
+            timeOfDay = "Morning";
+        } else if (radioButton_midMorning.isSelected()) {
+            timeOfDay = "Mid-Morning";
+        } else if (radioButton_evening.isSelected()) {
+            timeOfDay = "Evening";
+        } else if (radioButton_lastLesson.isSelected()) {
+            timeOfDay = "Last Lesson";
+        } else {
+            JOptionPane.showMessageDialog(this, "Please select time of day", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Create a new row for the table
+        Object[] rowData = new Object[]{
+            learningArea,
+            noOfLessons,
+            lessonType,
+            timeOfDay
+        };
+
+        // Get the table model and add the row
+        DefaultTableModel model = (DefaultTableModel) tbl_rules.getModel();
+        model.addRow(rowData);
+
+        // Clear inputs if needed (optional)
+        // cbo_learning_area.setSelectedIndex(0);
+        // txt_noOfLessons.setText("");
+        // Clear radio button selections
+        // buttonGroup1.clearSelection(); //e.t.c
+    }
+
     private void lbl_closeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_closeMouseClicked
         int a = JOptionPane.showConfirmDialog(null, "Do you really want to Close Application?", "Select", JOptionPane.YES_NO_OPTION);
         if (a == 0) {
@@ -957,10 +1044,6 @@ public class LandingPage extends javax.swing.JFrame {
         clearComponents();
     }//GEN-LAST:event_btn_refreshActionPerformed
 
-    private void btn_refreshMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_refreshMouseClicked
-        clearComponents();
-    }//GEN-LAST:event_btn_refreshMouseClicked
-
     private void lbl_manageSubjectsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_manageSubjectsMouseClicked
         ManageLearningArea home = new ManageLearningArea();
         home.setVisible(true);
@@ -1011,21 +1094,11 @@ public class LandingPage extends javax.swing.JFrame {
 
     }//GEN-LAST:event_cbo_gradeItemStateChanged
 
-    private void btn_populateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_populateMouseClicked
-
-        populateLearningAreas();
-        printTimetableData();
-    }//GEN-LAST:event_btn_populateMouseClicked
-
     private void btn_populateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_populateActionPerformed
 
         populateLearningAreas();
         printTimetableData();
     }//GEN-LAST:event_btn_populateActionPerformed
-
-    private void cbo_learning_areaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbo_learning_areaItemStateChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbo_learning_areaItemStateChanged
 
     private void cbo_gradeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbo_gradeActionPerformed
         // Get the selected grade
@@ -1037,13 +1110,15 @@ public class LandingPage extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_cbo_gradeActionPerformed
 
-    private void txt_noOfLessonsFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_noOfLessonsFocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_noOfLessonsFocusLost
+    private void btn_AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AddActionPerformed
+        setRules();
+    }//GEN-LAST:event_btn_AddActionPerformed
 
-    private void txt_noOfLessonsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_noOfLessonsActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_noOfLessonsActionPerformed
+    private void txt_noOfLessonsKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_noOfLessonsKeyTyped
+        if (!Character.isDigit(evt.getKeyChar())) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_noOfLessonsKeyTyped
 
     /**
      * @param args the command line arguments
@@ -1086,8 +1161,9 @@ public class LandingPage extends javax.swing.JFrame {
     private rojerusan.RSMaterialButtonCircle btn_Delete;
     private rojerusan.RSMaterialButtonCircle btn_populate;
     private rojerusan.RSMaterialButtonCircle btn_refresh;
-    private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.ButtonGroup buttonGroup2;
+    private javax.swing.ButtonGroup buttonGroup_lesson;
+    private javax.swing.ButtonGroup buttonGroup_schoolLevel;
+    private javax.swing.ButtonGroup buttonGroup_session;
     private rojerusan.RSComboMetro cbo_grade;
     private rojerusan.RSComboMetro cbo_learning_area;
     private javax.swing.JLabel jLabel1;
@@ -1112,6 +1188,7 @@ public class LandingPage extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbl_close;
     private javax.swing.JLabel lbl_dashboard;
     private javax.swing.JLabel lbl_logout;
@@ -1131,6 +1208,7 @@ public class LandingPage extends javax.swing.JFrame {
     private javax.swing.JRadioButton radioButton_morning;
     private javax.swing.JRadioButton radioButton_singleLesson;
     private javax.swing.JRadioButton radioButton_upper;
+    private rojerusan.RSTableMetro tbl_rules;
     private javax.swing.JLabel txtDate;
     private javax.swing.JLabel txtTime;
     private app.bolivia.swing.JCTextField txt_noOfLessons;

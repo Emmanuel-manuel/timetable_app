@@ -522,11 +522,6 @@ public class ManageLearningArea extends javax.swing.JFrame {
                 txt_searchLearningAreaFocusLost(evt);
             }
         });
-        txt_searchLearningArea.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_searchLearningAreaActionPerformed(evt);
-            }
-        });
         txt_searchLearningArea.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txt_searchLearningAreaKeyReleased(evt);
@@ -553,16 +548,6 @@ public class ManageLearningArea extends javax.swing.JFrame {
         txt_leaningArearId.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
         txt_leaningArearId.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
         txt_leaningArearId.setPlaceholder("Learning Area Id ....");
-        txt_leaningArearId.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txt_leaningArearIdFocusLost(evt);
-            }
-        });
-        txt_leaningArearId.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_leaningArearIdActionPerformed(evt);
-            }
-        });
         txt_leaningArearId.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txt_leaningArearIdKeyTyped(evt);
@@ -589,16 +574,6 @@ public class ManageLearningArea extends javax.swing.JFrame {
         txt_learningAreaName.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(255, 255, 255)));
         txt_learningAreaName.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
         txt_learningAreaName.setPlaceholder("Name of the Learning Area ....");
-        txt_learningAreaName.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txt_learningAreaNameFocusLost(evt);
-            }
-        });
-        txt_learningAreaName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_learningAreaNameActionPerformed(evt);
-            }
-        });
         jPanel17.add(txt_learningAreaName, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 170, 310, 40));
 
         btn_delete.setBackground(new java.awt.Color(255, 102, 51));
@@ -806,27 +781,11 @@ public class ManageLearningArea extends javax.swing.JFrame {
         delayBeforeClosingPreviousJframe();
     }//GEN-LAST:event_lbl_dashboardMouseClicked
 
-    private void txt_leaningArearIdFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_leaningArearIdFocusLost
-
-    }//GEN-LAST:event_txt_leaningArearIdFocusLost
-
-    private void txt_leaningArearIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_leaningArearIdActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_leaningArearIdActionPerformed
-
     private void txt_leaningArearIdKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_leaningArearIdKeyTyped
         if (!Character.isDigit(evt.getKeyChar())) {
             evt.consume();
         }
     }//GEN-LAST:event_txt_leaningArearIdKeyTyped
-
-    private void txt_learningAreaNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_learningAreaNameFocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_learningAreaNameFocusLost
-
-    private void txt_learningAreaNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_learningAreaNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_learningAreaNameActionPerformed
 
     private void btn_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteActionPerformed
         if (deleteLearningArea() == true) {
@@ -882,10 +841,6 @@ public class ManageLearningArea extends javax.swing.JFrame {
         setLearningAreaDetailsToTable();
         clearComponents();
     }//GEN-LAST:event_txt_searchLearningAreaFocusLost
-
-    private void txt_searchLearningAreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_searchLearningAreaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_searchLearningAreaActionPerformed
 
     private void txt_searchLearningAreaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_searchLearningAreaKeyReleased
 
