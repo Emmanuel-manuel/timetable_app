@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JViewport;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -191,7 +192,7 @@ public class LandingPage extends javax.swing.JFrame {
 
                     // Map timetable columns to lesson columns (skipping BREAK/LUNCH columns 2,5,8)
                     int[] timetableCols = {0, 1, 3, 4, 6, 7, 9, 10, 11}; // These map to lesson1-lesson9
-                    for (int i = 0; i < 9; i++) {
+                    for (int i = 0; i < timetableCols.length; i++) {
                         Object value = table.getValueAt(row, timetableCols[i]);
                         pstmt.setString(3 + i, value != null ? value.toString() : null);
                     }
@@ -201,7 +202,7 @@ public class LandingPage extends javax.swing.JFrame {
                 }
 
                 pstmt.executeBatch();
-                JOptionPane.showMessageDialog(this, "Timetable saved successfully!",
+                JOptionPane.showMessageDialog(this, "Timetable saved successfully for " + grade,
                         "Success", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (SQLException e) {
@@ -213,9 +214,16 @@ public class LandingPage extends javax.swing.JFrame {
 
 //    helper method to get the row headers:
     private String getDayForRow(int row) {
-        JScrollPane scrollPane = (JScrollPane) jPanel1.getComponent(0);
-        JTable rowHeaderTable = (JTable) scrollPane.getRowHeader().getView();
-        return rowHeaderTable.getValueAt(row, 0).toString();
+        try {
+            JScrollPane scrollPane = (JScrollPane) jPanel1.getComponent(0);
+            JViewport rowHeader = scrollPane.getRowHeader();
+            JTable rowHeaderTable = (JTable) rowHeader.getView();
+            return rowHeaderTable.getValueAt(row, 0).toString();
+        } catch (Exception e) {
+            // Fallback to default day names if row header fails
+            String[] days = {"MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY"};
+            return row < days.length ? days[row] : "DAY " + (row + 1);
+        }
     }
 //  ... LOGIC OF SAVING TO DATABASE ENDS HERE ...
 
@@ -790,6 +798,13 @@ public class LandingPage extends javax.swing.JFrame {
         // Create the table with the model
         table = new JTable(model);
 
+        // Adding mouse click listener for saving timetable
+        table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                saveTimetableToDatabase();
+            }
+        });
+
         // ===== CRITICAL INITIALIZATION POINT =====
         table.setDefaultRenderer(Object.class, new CustomPlaceholderRenderer());  // Must be set BEFORE other table configurations
 
@@ -877,6 +892,13 @@ public class LandingPage extends javax.swing.JFrame {
 
         // Create the table with the model
         table = new JTable(model);
+
+        // Adding mouse click listener for saving timetable
+        table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                saveTimetableToDatabase();
+            }
+        });
 
         // ===== CRITICAL INITIALIZATION POINT =====
         table.setDefaultRenderer(Object.class, new CustomPlaceholderRenderer());  // Must be set BEFORE other table configurations
