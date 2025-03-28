@@ -2,6 +2,8 @@ package JFrames;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,6 +11,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -16,6 +20,10 @@ import javax.swing.SwingConstants;
 import javax.swing.Timer;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import timetable_app.*;
 
 /**
@@ -145,6 +153,135 @@ public class LandingPage extends javax.swing.JFrame {
         model.setValueAt(learningArea, row, col);
     }
 // ... LOGIC ENDS HERE ...
+
+//    ... LOGIC OF SAVING THE GENERATED TIMETABLE TO THE DATABASE ...
+    private void saveTimetableToDatabase() {
+        if (table == null || cbo_grade.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(this, "Please generate a timetable first and select a grade",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        String grade = cbo_grade.getSelectedItem().toString();
+        String dateCreated = txtDate.getText();
+
+        try (Connection con = DBConnection.getConnection()) {
+            // Clear existing entries for this grade
+            String clearSql = "DELETE FROM timetable_tbl WHERE grade = ?";
+            try (PreparedStatement clearStmt = con.prepareStatement(clearSql)) {
+                clearStmt.setString(1, grade);
+                clearStmt.executeUpdate();
+            }
+
+            // Insert new entries
+            String insertSql = "INSERT INTO timetable_tbl (grade, day, lesson1, lesson2, lesson3, "
+                    + "lesson4, lesson5, lesson6, lesson7, lesson8, lesson9, date_created) "
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+            try (PreparedStatement pstmt = con.prepareStatement(insertSql)) {
+                // Get row header table (days)
+                JTable rowHeaderTable = (JTable) ((JScrollPane) jPanel1.getComponent(0)).getRowHeader().getView();
+
+                for (int row = 0; row < 5; row++) {
+                    String day = rowHeaderTable.getValueAt(row, 0).toString();
+
+                    pstmt.setString(1, grade);
+                    pstmt.setString(2, day);
+
+                    // Map timetable columns to lesson columns (skipping BREAK/LUNCH columns 2,5,8)
+                    int[] timetableCols = {0, 1, 3, 4, 6, 7, 9, 10, 11}; // These map to lesson1-lesson9
+                    for (int i = 0; i < 9; i++) {
+                        Object value = table.getValueAt(row, timetableCols[i]);
+                        pstmt.setString(3 + i, value != null ? value.toString() : null);
+                    }
+
+                    pstmt.setString(12, dateCreated);
+                    pstmt.addBatch();
+                }
+
+                pstmt.executeBatch();
+                JOptionPane.showMessageDialog(this, "Timetable saved successfully!",
+                        "Success", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error saving timetable: " + e.getMessage(),
+                    "Database Error", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+    }
+
+//    helper method to get the row headers:
+    private String getDayForRow(int row) {
+        JScrollPane scrollPane = (JScrollPane) jPanel1.getComponent(0);
+        JTable rowHeaderTable = (JTable) scrollPane.getRowHeader().getView();
+        return rowHeaderTable.getValueAt(row, 0).toString();
+    }
+//  ... LOGIC OF SAVING TO DATABASE ENDS HERE ...
+
+//    ... LOGIC TO CONVERT TO EXCEL/ SPREADSHEET ...
+    // Generate Spreadsheet Report
+    private void ConvertExcel() {
+
+        try {
+            Connection con = DBConnection.getConnection();
+            String sql = "select * from issue_book_details";
+
+            PreparedStatement pst = con.prepareStatement(sql);
+            ResultSet rs = pst.executeQuery();
+
+            // Create a new Spreadsheet
+            Workbook workbook = new XSSFWorkbook();
+            Sheet sheet = workbook.createSheet("Issued_Books_List");
+
+            // Create header row
+            Row headerRow = sheet.createRow(0);
+            headerRow.createCell(0).setCellValue("Sno");
+            headerRow.createCell(1).setCellValue("Book ID");
+            headerRow.createCell(2).setCellValue("Book Name");
+            headerRow.createCell(3).setCellValue("Student ID");
+            headerRow.createCell(4).setCellValue("Student Name");
+            headerRow.createCell(5).setCellValue("Date Issued");
+            headerRow.createCell(6).setCellValue("Due Date");
+            headerRow.createCell(7).setCellValue("Status");
+
+            // Populate data rows
+            int rowIndex = 1;
+            while (rs.next()) {
+                Row dataRow = sheet.createRow(rowIndex++);
+                dataRow.createCell(0).setCellValue(rs.getString("id"));
+                dataRow.createCell(1).setCellValue(rs.getString("book_id"));
+                dataRow.createCell(2).setCellValue(rs.getString("book_name"));
+                dataRow.createCell(3).setCellValue(rs.getString("student_id"));
+                dataRow.createCell(4).setCellValue(rs.getString("student_name"));
+                dataRow.createCell(5).setCellValue(rs.getString("issue_date"));
+                dataRow.createCell(6).setCellValue(rs.getString("due_date"));
+                dataRow.createCell(7).setCellValue(rs.getString("status"));
+            }
+
+            // Auto-size columns
+            for (int columnIndex = 0; columnIndex < 9; columnIndex++) {
+                sheet.autoSizeColumn(columnIndex);
+            }
+
+            JOptionPane.showMessageDialog(null, "Converting in process...");
+            // Save the workbook to a file
+            String filePath = "C:/LIBRARY_APP/Issued_books_report.xlsx";
+            FileOutputStream fileOut = new FileOutputStream(filePath);
+            workbook.write(fileOut);
+            fileOut.close();
+
+            pst.close();
+            con.close();
+
+            JOptionPane.showMessageDialog(null, "Report generated successfully. And saved in Drive C:/, in directory LIBRARY_APP ");
+
+        } catch (SQLException | IOException ex) {
+//            ex.printStackTrace();
+            Logger.getLogger(LandingPage.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+//    .... LOGIC OF CONVERTING TO SPREADSHEET ENDS HERE ...
 
     /**
      * Creates new form landing_page
@@ -894,54 +1031,6 @@ public class LandingPage extends javax.swing.JFrame {
         jPanel1.revalidate();
         jPanel1.repaint();
         printTimetableData();
-//        // Clear existing allocations first
-//        for (int row = 0; row < 5; row++) {
-//            for (int col = 0; col < 12; col++) {
-//                // Skip BREAK/LUNCH columns
-//                if (col == 2 || col == 5 || col == 8) {
-//                    continue;
-//                }
-//
-//                timetableCells[row][col].setLearningArea(null);
-//                String placeholder = String.valueOf((char) ('A' + row)) + (col + 1);
-//                model.setValueAt(placeholder, row, col);
-//            }
-//        }
-//
-//        // Get the selected grade from the combo box
-//        String selectedGrade = cbo_grade.getSelectedItem().toString();
-//
-//        // Fetch learning areas from the database
-//        List<String> learningAreas = fetchLearningAreasFromDatabase(selectedGrade);
-//
-//        // First, populate the timetable with random learning areas (without considering rules)
-//        int learningAreaIndex = 0;
-//        for (int row = 0; row < 5; row++) {
-//            for (int col = 0; col < 12; col++) {
-//                // Skip BREAK/LUNCH columns
-//                if (col == 2 || col == 5 || col == 8) {
-//                    continue;
-//                }
-//
-//                // Fill with learning areas if available
-//                if (learningAreaIndex < learningAreas.size()) {
-//                    timetableCells[row][col].setLearningArea(learningAreas.get(learningAreaIndex));
-//                    model.setValueAt(learningAreas.get(learningAreaIndex), row, col);
-//                    learningAreaIndex++;
-//                }
-//            }
-//        }
-//
-//        // Now apply the rules from the rules table
-//        randomAllocation(timetableCells, model);
-//
-//        // Refresh the display
-//        jPanel1.revalidate();
-//        jPanel1.repaint();
-//
-//        // Print the timetable data for debugging
-//        printTimetableData();
-
     }
 
     private List<String> fetchLearningAreasFromDatabase(String grade) {
@@ -1184,48 +1273,6 @@ public class LandingPage extends javax.swing.JFrame {
         }
 
         return cells;
-//        List<Point> cells = new ArrayList<>();
-//
-//        switch (timeOfDay) {
-//            case "Morning":
-//                // Cells A1-A4, B1-B4, etc. (rows 0-4, columns 0-3)
-//                for (int row = 0; row < 5; row++) {
-//                    for (int col = 0; col < 4; col++) {
-//                        cells.add(new Point(row, col));
-//                    }
-//                }
-//                break;
-//
-//            case "Mid-Morning":
-//                // Cells A5-A8, B5-B8, etc. (rows 0-4, columns 4-7)
-//                for (int row = 0; row < 5; row++) {
-//                    for (int col = 4; col < 8; col++) {
-//                        // Skip column 5 (BREAK)
-//                        if (col != 5) {
-//                            cells.add(new Point(row, col));
-//                        }
-//                    }
-//                }
-//                break;
-//
-//            case "Evening":
-//                // Cells A10-A11, B10-B11, etc. (rows 0-4, columns 9-10)
-//                for (int row = 0; row < 5; row++) {
-//                    for (int col = 9; col < 11; col++) {
-//                        cells.add(new Point(row, col));
-//                    }
-//                }
-//                break;
-//
-//            case "Last Lesson":
-//                // Cells A12, B12, etc. (rows 0-4, column 11)
-//                for (int row = 0; row < 5; row++) {
-//                    cells.add(new Point(row, 11));
-//                }
-//                break;
-//        }
-//
-//        return cells;
     }
 
 // Method to randomly allocate learning areas based on rules
