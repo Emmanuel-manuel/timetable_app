@@ -37,7 +37,7 @@ public class LandingPage extends javax.swing.JFrame {
     private TimetableCell[][] timetableCells; // [row][column]
 
     // Gets the window's screen position
-    int xx, xy;
+    int xx, xy;// For window dragging
 
     //Global variable for Hover Effect
     Color mouseEnterColor = new Color(255, 153, 0);
@@ -47,84 +47,7 @@ public class LandingPage extends javax.swing.JFrame {
     JTable table; // Declare JTable as a global variable
 
 //    ... LOGIC FOR RANDOM ALLOCATION OF LEARNONG AREAS ...
-    private void applySchedulingRules(TimetableCell[][] timetableCells,
-            DefaultTableModel model,
-            List<String> learningAreas) {
-        DefaultTableModel rulesModel = (DefaultTableModel) tbl_rules.getModel();
-
-        for (int i = 0; i < rulesModel.getRowCount(); i++) {
-            String learningArea = rulesModel.getValueAt(i, 0).toString();
-            int noOfLessons = Integer.parseInt(rulesModel.getValueAt(i, 1).toString());
-            String lessonType = rulesModel.getValueAt(i, 2).toString();
-            String timeOfDay = rulesModel.getValueAt(i, 3).toString();
-
-            // Remove this learning area from the general pool
-            learningAreas.remove(learningArea);
-
-            // Allocate according to rules
-            allocateSubject(learningArea, noOfLessons, lessonType, timeOfDay);
-        }
-    }
-
-    private void allocateSubject(String learningArea, int noOfLessons,
-            String lessonType, String timeOfDay) {
-        List<Point> availableCells = getAvailableCellsForTime(timeOfDay);
-        Collections.shuffle(availableCells);
-
-        int slotsNeeded = lessonType.equals("Double") ? noOfLessons / 2 : noOfLessons;
-        int allocated = 0;
-
-        for (Point cell : availableCells) {
-            int row = cell.x;
-            int col = cell.y;
-
-            if (isCellAvailable(row, col)) {
-                if (lessonType.equals("Double") && isCellAvailable(row, col + 1)) {
-                    // Allocate double lesson
-                    setCellLearningArea(row, col, learningArea);
-                    setCellLearningArea(row, col + 1, learningArea);
-                    allocated++;
-                } else if (lessonType.equals("Single")) {
-                    // Allocate single lesson
-                    setCellLearningArea(row, col, learningArea);
-                    allocated++;
-                }
-
-                if (allocated >= slotsNeeded) {
-                    break;
-                }
-            }
-        }
-
-        if (allocated < slotsNeeded) {
-            JOptionPane.showMessageDialog(this,
-                    "Warning: Couldn't fully allocate " + learningArea
-                    + " (" + allocated + "/" + slotsNeeded + " slots allocated)",
-                    "Allocation Warning", JOptionPane.WARNING_MESSAGE);
-        }
-    }
-
-    private void fillRemainingSlots(TimetableCell[][] timetableCells,
-            DefaultTableModel model,
-            List<String> learningAreas) {
-        Collections.shuffle(learningAreas);
-        int index = 0;
-
-        for (int row = 0; row < 5; row++) {
-            for (int col = 0; col < 12; col++) {
-                if (isCellAvailable(row, col) && index < learningAreas.size()) {
-                    setCellLearningArea(row, col, learningAreas.get(index));
-                    index++;
-                }
-            }
-        }
-    }
-
-    private void setCellLearningArea(int row, int col, String learningArea) {
-        timetableCells[row][col].setLearningArea(learningArea);
-        model.setValueAt(learningArea, row, col);
-    }
-
+    // ==== SCHEDULING LOGIC ====
     // Helper method 1: Clear timetable
     //    clearing the TimeTable cells
     private void clearTimetableCells() {
@@ -166,21 +89,12 @@ public class LandingPage extends javax.swing.JFrame {
         int allocated = 0;
 
         for (Point slot : availableSlots) {
-            int row = slot.x;
-            int col = slot.y;
 
-            if (isCellAvailable(row, col)) {
-                if (type.equals("Double") && isCellAvailable(row, col + 1)) {
-                    // Allocate double period
-                    setCellValue(row, col, subject);
-                    setCellValue(row, col + 1, subject);
-                    allocated++;
-                } else if (type.equals("Single")) {
-                    // Allocate single period
-                    setCellValue(row, col, subject);
-                    allocated++;
-                }
+            boolean isDouble = type.equals("Double");
+            boolean success = setCellValue(slot.x, slot.y, subject, isDouble);
 
+            if (success) {
+                allocated += isDouble ? 1 : 1; // Double lessons count as 1 slot (2 cells)
                 if (allocated >= requiredSlots) {
                     break;
                 }
@@ -240,7 +154,7 @@ public class LandingPage extends javax.swing.JFrame {
                 for (int row = 0; row < 2; row++) { // Only first two rows
                     for (int col = 8; col < 12; col++) {
                         // Skip LUNCH column (col 8) and ensure we don't exceed column bounds
-                        if (col != 8 && col < timetableCells[0].length) {
+                        if (col != 8) {
                             cells.add(new Point(row, col));
                         }
                     }
@@ -280,9 +194,38 @@ public class LandingPage extends javax.swing.JFrame {
     }
 
 // Helper method 7: Set cell value
+    /**
+     * Sets a value in a cell (with validation for double lessons). Returns true
+     * if successful, false if cell is unavailable.
+     */
+    // For single lessons (original)
     private void setCellValue(int row, int col, String value) {
         timetableCells[row][col].setLearningArea(value);
         model.setValueAt(value, row, col);
+    }
+
+    // For double lessons (new)
+    private boolean setCellValue(int row, int col, String value, boolean isDoubleLesson) {
+        // Check if cell is available
+        if (!isCellAvailable(row, col)) {
+            return false;
+        }
+
+        // For double lessons, check next cell
+        if (isDoubleLesson && (!isCellAvailable(row, col + 1))) {
+            return false;
+        }
+
+        // Update cells
+        timetableCells[row][col].setLearningArea(value);
+        model.setValueAt(value, row, col);
+
+        if (isDoubleLesson) {
+            timetableCells[row][col + 1].setLearningArea(value);
+            model.setValueAt(value, row, col + 1);
+        }
+
+        return true;
     }
 
 // Helper method 8: Show warning
@@ -917,6 +860,7 @@ public class LandingPage extends javax.swing.JFrame {
         cbo_grade.setSelectedItem(null);
     }
 
+    // ==== UI INITIALIZATION ====
     // to populate Lower primary timetable format
     public void lowerPrimaryJtable() {
 
