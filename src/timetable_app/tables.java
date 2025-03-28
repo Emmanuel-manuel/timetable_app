@@ -27,8 +27,7 @@ public class tables {
             //statement to create facilitator table
 //            st.executeUpdate("create table facilitator_tbl (init int(11) AUTO_INCREMENT PRIMARY KEY, facilitator_id int(20),username varchar(200),email varchar(200),contact int(10),grade varchar(200),learning_area varchar(200) )");
             //statement to create facilitator table
-            st.executeUpdate("create table timetable_tbl (init int(11) AUTO_INCREMENT PRIMARY KEY, grade varchar(200),lesson1 varchar(200),lesson2 varchar(200),lesson3 varchar(200),lesson4 varchar(200),lesson5 varchar(200),lesson6 varchar(200),lesson7 varchar(200),lesson8 varchar(200),lesson9 varchar(200),date_created varchar(200) )");
-
+//            st.executeUpdate("create table timetable_tbl (init int(11) AUTO_INCREMENT PRIMARY KEY, grade varchar(200), day varchar(200),lesson1 varchar(200),lesson2 varchar(200),lesson3 varchar(200),lesson4 varchar(200),lesson5 varchar(200),lesson6 varchar(200),lesson7 varchar(200),lesson8 varchar(200),lesson9 varchar(200),date_created varchar(200) )");
             JOptionPane.showMessageDialog(null, "Table Created Successfully");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);

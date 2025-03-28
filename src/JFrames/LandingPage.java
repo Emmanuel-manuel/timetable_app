@@ -47,19 +47,6 @@ public class LandingPage extends javax.swing.JFrame {
     JTable table; // Declare JTable as a global variable
 
 //    ... LOGIC FOR RANDOM ALLOCATION OF LEARNONG AREAS ...
-    //    clearing the TimeTable cells
-    private void clearTimetableCells() {
-        for (int row = 0; row < 5; row++) {
-            for (int col = 0; col < 12; col++) {
-                if (col != 2 && col != 5 && col != 8) { // Skip BREAK/LUNCH columns
-                    timetableCells[row][col].setLearningArea(null);
-                    String placeholder = String.valueOf((char) ('A' + row)) + (col + 1);
-                    model.setValueAt(placeholder, row, col);
-                }
-            }
-        }
-    }
-
     private void applySchedulingRules(TimetableCell[][] timetableCells,
             DefaultTableModel model,
             List<String> learningAreas) {
@@ -133,28 +120,186 @@ public class LandingPage extends javax.swing.JFrame {
         }
     }
 
-    private boolean isCellAvailable(int row, int col) {
-        // Check if column is BREAK/LUNCH
-        if (col == 2 || col == 5 || col == 8) {
-            return false;
-        }
-
-        // Check if cell is within bounds
-        if (row < 0 || row >= 5 || col < 0 || col >= 12) {
-            return false;
-        }
-
-        // Check if cell is empty (still has placeholder)
-        return timetableCells[row][col].getLearningArea() == null
-                && model.getValueAt(row, col).toString().matches("[A-E]\\d+");
-    }
-
     private void setCellLearningArea(int row, int col, String learningArea) {
         timetableCells[row][col].setLearningArea(learningArea);
         model.setValueAt(learningArea, row, col);
     }
-// ... LOGIC ENDS HERE ...
 
+    // Helper method 1: Clear timetable
+    //    clearing the TimeTable cells
+    private void clearTimetableCells() {
+        for (int row = 0; row < 5; row++) {
+            for (int col = 0; col < 12; col++) {
+                if (col != 2 && col != 5 && col != 8) { // Skip BREAK/LUNCH
+                    timetableCells[row][col].setLearningArea(null);
+                    String placeholder = String.valueOf((char) ('A' + row)) + (col + 1);
+                    model.setValueAt(placeholder, row, col);
+                }
+            }
+        }
+    }
+
+// Helper method 2: Process rules from rules table
+    private void processRuleBasedAllocation(List<String> learningAreas) {
+        DefaultTableModel rulesModel = (DefaultTableModel) tbl_rules.getModel();
+
+        for (int i = 0; i < rulesModel.getRowCount(); i++) {
+            String subject = rulesModel.getValueAt(i, 0).toString();
+            int lessons = Integer.parseInt(rulesModel.getValueAt(i, 1).toString());
+            String type = rulesModel.getValueAt(i, 2).toString();
+            String time = rulesModel.getValueAt(i, 3).toString();
+
+            // Remove from general pool if exists
+            learningAreas.remove(subject);
+
+            // Allocate according to rules
+            allocateSubjectWithRules(subject, lessons, type, time);
+        }
+    }
+
+// Helper method 3: Allocate subject with rules
+    private void allocateSubjectWithRules(String subject, int lessons, String type, String timeOfDay) {
+        List<Point> availableSlots = getAvailableCellsForTime(timeOfDay);
+        Collections.shuffle(availableSlots);
+
+        int requiredSlots = type.equals("Double") ? lessons / 2 : lessons;
+        int allocated = 0;
+
+        for (Point slot : availableSlots) {
+            int row = slot.x;
+            int col = slot.y;
+
+            if (isCellAvailable(row, col)) {
+                if (type.equals("Double") && isCellAvailable(row, col + 1)) {
+                    // Allocate double period
+                    setCellValue(row, col, subject);
+                    setCellValue(row, col + 1, subject);
+                    allocated++;
+                } else if (type.equals("Single")) {
+                    // Allocate single period
+                    setCellValue(row, col, subject);
+                    allocated++;
+                }
+
+                if (allocated >= requiredSlots) {
+                    break;
+                }
+            }
+        }
+
+        if (allocated < requiredSlots) {
+            showAllocationWarning(subject, allocated, requiredSlots);
+        }
+    }
+
+// Helper method 4: Fill remaining slots randomly
+    private void fillRemainingSlotsRandomly(List<String> subjects) {
+        Collections.shuffle(subjects);
+        int index = 0;
+
+        for (int row = 0; row < 5; row++) {
+            for (int col = 0; col < 12; col++) {
+                if (isCellAvailable(row, col) && index < subjects.size()) {
+                    setCellValue(row, col, subjects.get(index++));
+                }
+            }
+        }
+    }
+
+    // Helper method 5: to get available cells based on time of day
+    private List<Point> getAvailableCellsForTime(String timeOfDay) {
+        List<Point> cells = new ArrayList<>();
+
+        switch (timeOfDay) {
+            case "Morning":
+                // Cells A1-A4, B1-B4, etc. (rows 0-4, columns 0-3)
+                for (int row = 0; row < 5; row++) {
+                    for (int col = 0; col < 4; col++) {
+                        // Skip BREAK column (col 2)
+                        if (col != 2) {
+                            cells.add(new Point(row, col));
+                        }
+                    }
+                }
+                break;
+
+            case "Mid-Morning":
+                // Cells A5-A8, B5-B8, etc. (rows 0-4, columns 4-7)
+                for (int row = 0; row < 5; row++) {
+                    for (int col = 4; col < 8; col++) {
+                        // Skip BREAK column (col 5)
+                        if (col != 5) {
+                            cells.add(new Point(row, col));
+                        }
+                    }
+                }
+                break;
+
+            case "Evening":
+                // For rows 0 and 1 (Monday and Tuesday): columns 9-12 (indices 8-11)
+                for (int row = 0; row < 2; row++) { // Only first two rows
+                    for (int col = 8; col < 12; col++) {
+                        // Skip LUNCH column (col 8) and ensure we don't exceed column bounds
+                        if (col != 8 && col < timetableCells[0].length) {
+                            cells.add(new Point(row, col));
+                        }
+                    }
+                }
+                // For rows 2-4 (Wednesday-Friday): columns 9-10 (indices 8-9)
+                for (int row = 2; row < 5; row++) {
+                    for (int col = 8; col < 10; col++) {
+                        // Skip LUNCH column (col 8)
+                        if (col != 8) {
+                            cells.add(new Point(row, col));
+                        }
+                    }
+                }
+                break;
+
+            case "Last Lesson":
+                // Cells A12, B12, etc. (rows 0-4, column 11)
+                // Only add if column exists (some timetables might have fewer columns)
+                if (timetableCells[0].length > 11) {
+                    for (int row = 0; row < 5; row++) {
+                        cells.add(new Point(row, 11));
+                    }
+                }
+                break;
+        }
+
+        return cells;
+    }
+
+    // Helper method 6: Check cell availability
+    private boolean isCellAvailable(int row, int col) {
+        return (col != 2 && col != 5 && col != 8)
+                && // Not BREAK/LUNCH
+                timetableCells[row][col].getLearningArea() == null
+                && // Empty
+                model.getValueAt(row, col).toString().matches("[A-E]\\d+"); // Has placeholder
+    }
+
+// Helper method 7: Set cell value
+    private void setCellValue(int row, int col, String value) {
+        timetableCells[row][col].setLearningArea(value);
+        model.setValueAt(value, row, col);
+    }
+
+// Helper method 8: Show warning
+    private void showAllocationWarning(String subject, int allocated, int required) {
+        JOptionPane.showMessageDialog(this,
+                "Only allocated " + allocated + "/" + required + " slots for " + subject,
+                "Allocation Warning", JOptionPane.WARNING_MESSAGE);
+    }
+
+// Helper method 9: Refresh view
+    private void refreshTimetableView() {
+        jPanel1.revalidate();
+        jPanel1.repaint();
+        printTimetableData();
+    }
+
+// ... LOGIC ENDS HERE ...
 //    ... LOGIC OF SAVING THE GENERATED TIMETABLE TO THE DATABASE ...
     private void saveTimetableToDatabase() {
         if (table == null || cbo_grade.getSelectedItem() == null) {
@@ -1049,16 +1194,18 @@ public class LandingPage extends javax.swing.JFrame {
         // 3. Fetch learning areas from database
         List<String> learningAreas = fetchLearningAreasFromDatabase(selectedGrade);
 
+        // 3. Process rules-based allocation first
+        processRuleBasedAllocation(learningAreas);
+
+        // 4. Fill remaining slots with other subjects
+        fillRemainingSlotsRandomly(learningAreas);
         // 4. First apply rule-based allocation
-        applySchedulingRules(timetableCells, model, learningAreas);
+//        applySchedulingRules(timetableCells, model, learningAreas);
 
         // 5. Then fill remaining slots with other subjects
-        fillRemainingSlots(timetableCells, model, learningAreas);
-
+//        fillRemainingSlots(timetableCells, model, learningAreas);
         // 6. Refresh display
-        jPanel1.revalidate();
-        jPanel1.repaint();
-        printTimetableData();
+        refreshTimetableView();
     }
 
     private List<String> fetchLearningAreasFromDatabase(String grade) {
@@ -1237,70 +1384,6 @@ public class LandingPage extends javax.swing.JFrame {
         // txt_noOfLessons.setText("");
         // Clear radio button selections
         // buttonGroup1.clearSelection(); //e.t.c
-    }
-
-    // Helper method to get available cells based on time of day
-    private List<Point> getAvailableCellsForTime(String timeOfDay) {
-        List<Point> cells = new ArrayList<>();
-
-        switch (timeOfDay) {
-            case "Morning":
-                // Cells A1-A4, B1-B4, etc. (rows 0-4, columns 0-3)
-                for (int row = 0; row < 5; row++) {
-                    for (int col = 0; col < 4; col++) {
-                        // Skip BREAK column (col 2)
-                        if (col != 2) {
-                            cells.add(new Point(row, col));
-                        }
-                    }
-                }
-                break;
-
-            case "Mid-Morning":
-                // Cells A5-A8, B5-B8, etc. (rows 0-4, columns 4-7)
-                for (int row = 0; row < 5; row++) {
-                    for (int col = 4; col < 8; col++) {
-                        // Skip BREAK column (col 5)
-                        if (col != 5) {
-                            cells.add(new Point(row, col));
-                        }
-                    }
-                }
-                break;
-
-            case "Evening":
-                // For rows 0 and 1 (Monday and Tuesday): columns 9-12 (indices 8-11)
-                for (int row = 0; row < 2; row++) { // Only first two rows
-                    for (int col = 8; col < 12; col++) {
-                        // Skip LUNCH column (col 8) and ensure we don't exceed column bounds
-                        if (col != 8 && col < timetableCells[0].length) {
-                            cells.add(new Point(row, col));
-                        }
-                    }
-                }
-                // For rows 2-4 (Wednesday-Friday): columns 9-10 (indices 8-9)
-                for (int row = 2; row < 5; row++) {
-                    for (int col = 8; col < 10; col++) {
-                        // Skip LUNCH column (col 8)
-                        if (col != 8) {
-                            cells.add(new Point(row, col));
-                        }
-                    }
-                }
-                break;
-
-            case "Last Lesson":
-                // Cells A12, B12, etc. (rows 0-4, column 11)
-                // Only add if column exists (some timetables might have fewer columns)
-                if (timetableCells[0].length > 11) {
-                    for (int row = 0; row < 5; row++) {
-                        cells.add(new Point(row, 11));
-                    }
-                }
-                break;
-        }
-
-        return cells;
     }
 
 // Method to randomly allocate learning areas based on rules
@@ -1524,7 +1607,7 @@ public class LandingPage extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_noOfLessonsKeyTyped
 
     private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseClicked
-        saveTimetableToDatabase();
+//        saveTimetableToDatabase();
     }//GEN-LAST:event_jPanel1MouseClicked
 
     /**
