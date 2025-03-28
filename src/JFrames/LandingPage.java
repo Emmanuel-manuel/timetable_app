@@ -180,10 +180,11 @@ public class LandingPage extends javax.swing.JFrame {
 
             try (PreparedStatement pstmt = con.prepareStatement(insertSql)) {
                 // Get row header table (days)
-                JTable rowHeaderTable = (JTable) ((JScrollPane) jPanel1.getComponent(0)).getRowHeader().getView();
+//                JTable rowHeaderTable = (JTable) ((JScrollPane) jPanel1.getComponent(0)).getRowHeader().getView();
 
                 for (int row = 0; row < 5; row++) {
-                    String day = rowHeaderTable.getValueAt(row, 0).toString();
+                    String day = getDayForRow(row); // USING OUR HELPER METHOD HERE
+//                    String day = rowHeaderTable.getValueAt(row, 0).toString();
 
                     pstmt.setString(1, grade);
                     pstmt.setString(2, day);
@@ -429,6 +430,11 @@ public class LandingPage extends javax.swing.JFrame {
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, 70));
 
+        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel1MouseClicked(evt);
+            }
+        });
         jPanel1.setLayout(new java.awt.BorderLayout());
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 380, 1370, 390));
 
@@ -1494,6 +1500,10 @@ public class LandingPage extends javax.swing.JFrame {
             evt.consume();
         }
     }//GEN-LAST:event_txt_noOfLessonsKeyTyped
+
+    private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseClicked
+        saveTimetableToDatabase();
+    }//GEN-LAST:event_jPanel1MouseClicked
 
     /**
      * @param args the command line arguments
