@@ -48,6 +48,21 @@ public class LandingPage extends javax.swing.JFrame {
 
 //    ... LOGIC FOR RANDOM ALLOCATION OF LEARNONG AREAS ...
     // ==== SCHEDULING LOGIC ====
+    private boolean isSubjectOnDay(int row, String subject) {
+        if (subject == null) {
+            return false;
+        }
+        for (int col = 0; col < 12; col++) {
+            if (col != 2 && col != 5 && col != 8) {
+                String cellValue = timetableCells[row][col].getLearningArea();
+                if (subject.equals(cellValue)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     // Helper method 1: Clear timetable
     //    clearing the TimeTable cells
     private void clearTimetableCells() {
@@ -88,21 +103,45 @@ public class LandingPage extends javax.swing.JFrame {
         int requiredSlots = type.equals("Double") ? lessons / 2 : lessons;
         int allocated = 0;
 
+        boolean[] dayUsed = new boolean[5]; // Track which days have been used for this subject
+
         for (Point slot : availableSlots) {
+            int row = slot.x;
+            int col = slot.y;
 
-            boolean isDouble = type.equals("Double");
-            boolean success = setCellValue(slot.x, slot.y, subject, isDouble);
+            // Skip if we've already used this day for the subject
+            if (dayUsed[row] || isSubjectOnDay(row, subject)) {
+                continue;
+            }
 
-            if (success) {
-                allocated += isDouble ? 1 : 1; // Double lessons count as 1 slot (2 cells)
-                if (allocated >= requiredSlots) {
-                    break;
+            if (type.equals("Double")) {
+                if (isCellAvailable(row, col) && isCellAvailable(row, col + 1)) {
+                    setCellValue(row, col, subject, true); // Using the 4-arg version for double lessons
+                    allocated++;
+                    dayUsed[row] = true; // Mark day as used
+
+                    // Early exit if we've met requirements
+                    if (allocated >= requiredSlots) {
+                        break;
+                    }
+                }
+            } else { // Single lesson
+                if (isCellAvailable(row, col)) {
+                    setCellValue(row, col, subject); // Using the 3-arg version for single lessons
+                    allocated++;
+                    dayUsed[row] = true; // Mark day as used
+
+                    // Early exit if we've met requirements
+                    if (allocated >= requiredSlots) {
+                        break;
+                    }
                 }
             }
         }
 
         if (allocated < requiredSlots) {
-            showAllocationWarning(subject, allocated, requiredSlots);
+            showAllocationWarning(subject, type.equals("Double") ? allocated * 2 : allocated,
+                    type.equals("Double") ? requiredSlots * 2 : requiredSlots);
         }
     }
 
@@ -114,7 +153,13 @@ public class LandingPage extends javax.swing.JFrame {
         for (int row = 0; row < 5; row++) {
             for (int col = 0; col < 12; col++) {
                 if (isCellAvailable(row, col) && index < subjects.size()) {
-                    setCellValue(row, col, subjects.get(index++));
+                    String subject = subjects.get(index);
+
+                    // Ensure subject isn't already on this day
+                    if (!isSubjectOnDay(row, subject)) {
+                        setCellValue(row, col, subject);
+                        index++;
+                    }
                 }
             }
         }
@@ -126,59 +171,70 @@ public class LandingPage extends javax.swing.JFrame {
 
         switch (timeOfDay) {
             case "Morning":
-                // Cells A1-A4, B1-B4, etc. (rows 0-4, columns 0-3)
+                // Morning slots: columns 0,1,3,4 (skip BREAK at column 2)
                 for (int row = 0; row < 5; row++) {
-                    for (int col = 0; col < 4; col++) {
-                        // Skip BREAK column (col 2)
-                        if (col != 2) {
-                            cells.add(new Point(row, col));
-                        }
+                    // Column 0
+                    if (isCellAvailable(row, 0)) {
+                        cells.add(new Point(row, 0));
+                    }
+                    // Column 1
+                    if (isCellAvailable(row, 1)) {
+                        cells.add(new Point(row, 1));
+                    }
+                    // Column 3 (after morning break)
+                    if (isCellAvailable(row, 3)) {
+                        cells.add(new Point(row, 3));
+                    }
+                    // Column 4 (last morning slot)
+                    if (isCellAvailable(row, 4)) {
+                        cells.add(new Point(row, 4));
                     }
                 }
                 break;
 
             case "Mid-Morning":
-                // Cells A5-A8, B5-B8, etc. (rows 0-4, columns 4-7)
+                // Mid-Morning slots: columns 6,7 (after mid-morning break at column 5)
                 for (int row = 0; row < 5; row++) {
-                    for (int col = 4; col < 8; col++) {
-                        // Skip BREAK column (col 5)
-                        if (col != 5) {
-                            cells.add(new Point(row, col));
-                        }
+                    // Column 6
+                    if (isCellAvailable(row, 6)) {
+                        cells.add(new Point(row, 6));
+                    }
+                    // Column 7
+                    if (isCellAvailable(row, 7)) {
+                        cells.add(new Point(row, 7));
                     }
                 }
                 break;
 
             case "Evening":
-                // For rows 0 and 1 (Monday and Tuesday): columns 9-12 (indices 8-11)
-                for (int row = 0; row < 2; row++) { // Only first two rows
-                    for (int col = 8; col < 12; col++) {
-                        // Skip LUNCH column (col 8) and ensure we don't exceed column bounds
-                        if (col != 8) {
-                            cells.add(new Point(row, col));
-                        }
+                // Evening slots: columns 9,10,11 (after LUNCH at column 8)
+                // Exclude row 4 (Friday) for evening slots
+                for (int row = 0; row < 4; row++) { // Only rows 0-3 (Monday-Thursday)
+                    // Column 9
+                    if (isCellAvailable(row, 9)) {
+                        cells.add(new Point(row, 9));
                     }
-                }
-                // For rows 2-4 (Wednesday-Friday): columns 9-10 (indices 8-9)
-                for (int row = 2; row < 5; row++) {
-                    for (int col = 8; col < 10; col++) {
-                        // Skip LUNCH column (col 8)
-                        if (col != 8) {
-                            cells.add(new Point(row, col));
-                        }
+                    // Column 10
+                    if (isCellAvailable(row, 10)) {
+                        cells.add(new Point(row, 10));
+                    }
+                    // Column 11 (only for non-Friday)
+                    if (isCellAvailable(row, 11)) {
+                        cells.add(new Point(row, 11));
                     }
                 }
                 break;
 
             case "Last Lesson":
-                // Cells A12, B12, etc. (rows 0-4, column 11)
-                // Only add if column exists (some timetables might have fewer columns)
-                if (timetableCells[0].length > 11) {
-                    for (int row = 0; row < 5; row++) {
-                        cells.add(new Point(row, 11));
-                    }
+                // Last lesson slot: column 11 in last row (Friday)
+                int lastRow = 4; // Friday
+                if (isCellAvailable(lastRow, 11)) {
+                    cells.add(new Point(lastRow, 11));
                 }
                 break;
+
+            default:
+                throw new IllegalArgumentException("Unknown time of day: " + timeOfDay);
         }
 
         return cells;
@@ -194,10 +250,6 @@ public class LandingPage extends javax.swing.JFrame {
     }
 
 // Helper method 7: Set cell value
-    /**
-     * Sets a value in a cell (with validation for double lessons). Returns true
-     * if successful, false if cell is unavailable.
-     */
     // For single lessons (original)
     private void setCellValue(int row, int col, String value) {
         timetableCells[row][col].setLearningArea(value);
@@ -1328,79 +1380,6 @@ public class LandingPage extends javax.swing.JFrame {
         // txt_noOfLessons.setText("");
         // Clear radio button selections
         // buttonGroup1.clearSelection(); //e.t.c
-    }
-
-// Method to randomly allocate learning areas based on rules
-    private void randomAllocation(TimetableCell[][] timetableCells, DefaultTableModel model) {
-        // Get data from rules table
-        DefaultTableModel rulesModel = (DefaultTableModel) tbl_rules.getModel();
-        int rowCount = rulesModel.getRowCount();
-
-        // Process each rule
-        for (int i = 0; i < rowCount; i++) {
-            String learningArea = rulesModel.getValueAt(i, 0).toString();
-            int noOfLessons = Integer.parseInt(rulesModel.getValueAt(i, 1).toString());
-            String lessonType = rulesModel.getValueAt(i, 2).toString();
-            String timeOfDay = rulesModel.getValueAt(i, 3).toString();
-
-            // Calculate how many slots we need (double lessons take 2 slots)
-            int slotsNeeded = lessonType.equals("Double") ? noOfLessons / 2 : noOfLessons;
-
-            // Get available cells for this time of day
-            List<Point> availableCells = getAvailableCellsForTime(timeOfDay);
-            Collections.shuffle(availableCells); // Randomize
-
-            // Try to allocate the lessons
-            int allocated = 0;
-            for (Point cell : availableCells) {
-                int row = cell.x;
-                int col = cell.y;
-
-                // Skip BREAK/LUNCH columns (2,5,8)
-                if (col == 2 || col == 5 || col == 8) {
-                    continue;
-                }
-
-                // Check if cell is available (still has placeholder)
-                if (timetableCells[row][col].getLearningArea() == null
-                        && model.getValueAt(row, col).toString().matches("[A-E]\\d+")) {
-
-                    // For double lessons, check if next cell is also available (same row)
-                    if (lessonType.equals("Double") && col < model.getColumnCount() - 1
-                            && timetableCells[row][col + 1].getLearningArea() == null
-                            && model.getValueAt(row, col + 1).toString().matches("[A-E]\\d+")) {
-
-                        // Allocate double lesson
-                        timetableCells[row][col].setLearningArea(learningArea);
-                        timetableCells[row][col + 1].setLearningArea(learningArea);
-                        model.setValueAt(learningArea, row, col);
-                        model.setValueAt(learningArea, row, col + 1);
-                        allocated++;
-
-                        // Skip next cell since we used it
-                        i++;
-                    } // For single lessons
-                    else if (lessonType.equals("Single")) {
-                        timetableCells[row][col].setLearningArea(learningArea);
-                        model.setValueAt(learningArea, row, col);
-                        allocated++;
-                    }
-
-                    // If we've allocated all needed slots, move to next learning area
-                    if (allocated >= slotsNeeded) {
-                        break;
-                    }
-                }
-            }
-
-            // If we couldn't allocate all lessons
-            if (allocated < slotsNeeded) {
-                JOptionPane.showMessageDialog(this,
-                        "Could not fully allocate " + learningArea
-                        + ". Only allocated " + allocated + " out of " + slotsNeeded + " required slots.",
-                        "Allocation Warning", JOptionPane.WARNING_MESSAGE);
-            }
-        }
     }
 
     private void lbl_closeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_closeMouseClicked
